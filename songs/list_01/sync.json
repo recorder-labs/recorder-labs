@@ -1,0 +1,20 @@
+{
+  "Beat": 0.4875,
+  "beats": [
+    "7,0.5"
+  ],
+  "Chapters": [
+    {
+      "TimeStart": "0:04.6",
+      "TimeEnd": "0:12.4",
+      "Measures": "0,1,2,3",
+      "track": 1
+    },
+    {
+      "TimeStart": "0:12.5",
+      "TimeEnd": "0:20.6",
+      "Measures": "4,5,6,7",
+      "track": 1
+    }
+  ]
+}

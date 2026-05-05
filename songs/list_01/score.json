@@ -1,0 +1,151 @@
+{
+  "LineSets": [
+    {
+      "Lines": [
+        {
+          "Type": "m",
+          "clef": "G+a",
+          "noSol": false,
+          "Measures": [
+            {
+              "End": {
+                "Bar": 1
+              },
+              "key": "G",
+              "Layers": [
+                {
+                  "Inst": "voice",
+                  "Notes": [
+                    {"o":0,"P":"b","L":"4.","d":true,"ly":"시"},
+                    {"o":0,"P":"a","L":"8","d":false,"ly":"라"},
+                    {"o":0,"P":"g","L":"4","d":false,"ly":"솔"},
+                    {"o":0,"P":"a","L":"4","d":false,"ly":"라"}
+                  ]
+                }
+              ],
+              "time": "4/4"
+            },
+            {
+              "End": {
+                "Bar": 1
+              },
+              "Layers": [
+                {
+                  "Inst": "voice",
+                  "Notes": [
+                    {"o":0,"P":"b","L":"4","d":true,"ly":"시"},
+                    {"o":0,"P":"b","L":"4","d":true,"ly":"시"},
+                    {"o":0,"bm":"1","P":"b","L":"2","d":true,"ly":"시"}
+                  ]
+                }
+              ]
+            },
+            {
+              "End": {
+                "Bar": 1
+              },
+              "Layers": [
+                {
+                  "Inst": "voice",
+                  "Notes": [
+                    {"o":0,"P":"a","L":"4","d":false,"ly":"라"},
+                    {"o":0,"P":"a","L":"4","d":false,"ly":"라"},
+                    {"o":0,"P":"a","L":"2","d":false,"ly":"라"}
+                  ]
+                }
+              ]
+            },
+            {
+              "End": {
+                "Bar": 1
+              },
+              "Layers": [
+                {
+                  "Inst": "voice",
+                  "Notes": [
+                    {"o":0,"P":"b","L":"4","d":true,"ly":"시"},
+                    {"o":0,"P":"b","L":"4","d":true,"ly":"시"},
+                    {"o":0,"P":"b","L":"2","bm":"1","d":true,"ly":"시"}
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Lines": [
+        {
+          "Type": "m",
+          "clef": "G+a",
+          "noSol": false,
+          "Measures": [
+            {
+              "End": {
+                "Bar": 1
+              },
+              "key": "G",
+              "Layers": [
+                {
+                  "Inst": "voice",
+                  "Notes": [
+                    {"o":0,"P":"b","L":"4.","d":true,"ly":"시"},
+                    {"o":0,"P":"a","L":"8","d":false,"ly":"라"},
+                    {"o":0,"P":"g","L":"4","d":false,"ly":"솔"},
+                    {"o":0,"P":"a","L":"4","d":false,"ly":"라"}
+                  ]
+                }
+              ]
+            },
+            {
+              "End": {
+                "Bar": 1
+              },
+              "Layers": [
+                {
+                  "Inst": "voice",
+                  "Notes": [
+                    {"o":0,"P":"b","L":"4","d":true,"ly":"시"},
+                    {"o":0,"P":"b","L":"4","d":true,"ly":"시"},
+                    {"o":0,"bm":"1","P":"b","L":"2","d":true,"ly":"시"}
+                  ]
+                }
+              ]
+            },
+            {
+              "End": {
+                "Bar": 1
+              },
+              "Layers": [
+                {
+                  "Inst": "voice",
+                  "Notes": [
+                    {"o":0,"P":"a","L":"4","d":false,"ly":"라"},
+                    {"o":0,"P":"a","L":"4","d":false,"ly":"라"},
+                    {"o":0,"P":"b","L":"4.","d":true,"ly":"시"},
+                    {"o":0,"P":"a","L":"8","d":false,"ly":"라"}
+                  ]
+                }
+              ]
+            },
+            {
+              "End": {
+                "Bar": 3
+              },
+              "Layers": [
+                {
+                  "Inst": "voice",
+                  "Notes": [
+                    {"o":0,"P":"g","L":"2.","d":false,"ly":"솔"},
+                    {"L":"4"}
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
