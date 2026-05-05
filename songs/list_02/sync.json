@@ -1,0 +1,29 @@
+{
+  "Beat": 0.543,
+  "Chapters": [
+    {
+      "TimeStart": "0:09.7",
+      "TimeEnd": "0:18.4",
+      "Measures": "0,1,2,3",
+      "track": 1
+    },
+    {
+      "TimeStart": "0:18.5",
+      "TimeEnd": "0:27.3",
+      "Measures": "4,5,6,7",
+      "track": 1
+    },
+    {
+      "TimeStart": "0:27.4",
+      "TimeEnd": "0:35.9",
+      "Measures": "8,9,10,11",
+      "track": 1
+    },
+    {
+      "TimeStart": "0:36.3",
+      "TimeEnd": "0:45.0",
+      "Measures": "12,13,14,15",
+      "track": 1
+    }
+  ]
+}

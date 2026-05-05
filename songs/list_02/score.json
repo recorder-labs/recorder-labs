@@ -1,0 +1,293 @@
+{
+  "LineSets": [
+    {
+      "Lines": [
+        {
+          "Type": "m",
+          "Measures": [
+            {
+              "End": {
+                "Bar": 1
+              },
+              "key": "G",
+              "time": "4/4",
+              "Layers": [
+                {
+                  "Inst": "voice",
+                  "Notes": [
+                    {"o":1,"P":"d","L":"4","d":true,"ly":"레"},
+                    {"o":0,"P":"b","L":"4","d":true,"ly":"시"},
+                    {"o":0,"P":"b","L":"2","d":true,"ly":"시"}
+                  ]
+                }
+              ]
+            },
+            {
+              "End": {
+                "Bar": 1
+              },
+              "Layers": [
+                {
+                  "Inst": "voice",
+                  "Notes": [
+                    {"o":1,"P":"c","L":"4","d":true,"ly":"도"},
+                    {"o":0,"P":"a","L":"4","d":false,"ly":"라"},
+                    {"o":0,"P":"a","L":"2","d":false,"bm":"1","ly":"라"}
+                  ]
+                }
+              ]
+            },
+            {
+              "End": {
+                "Bar": 1
+              },
+              "Layers": [
+                {
+                  "Inst": "voice",
+                  "Notes": [
+                    {"o":0,"P":"g","L":"4","d":false,"ly":"솔"},
+                    {"o":0,"P":"a","L":"4","d":false,"ly":"라"},
+                    {"o":0,"P":"b","L":"4","d":true,"ly":"시"},
+                    {"o":1,"P":"c","L":"4","d":true,"ly":"도"}
+                  ]
+                }
+              ]
+            },
+            {
+              "End": {
+                "Bar": 1
+              },
+              "Layers": [
+                {
+                  "Inst": "voice",
+                  "Notes": [
+                    {"o":1,"P":"d","L":"4","d":true,"ly":"레"},
+                    {"o":1,"P":"d","L":"4","d":true,"ly":"레"},
+                    {"o":1,"P":"d","L":"2","d":true,"bm":"1","ly":"레"}
+                  ]
+                }
+              ]
+            }
+          ],
+          "clef": "G+a"
+        }
+      ]
+    },
+    {
+      "Lines": [
+        {
+          "Type": "m",
+          "Measures": [
+            {
+              "End": {
+                "Bar": 1
+              },
+              "key": "G",
+              "Layers": [
+                {
+                  "Inst": "voice",
+                  "Notes": [
+                    {"o":1,"P":"d","L":"4","d":true,"ly":"레"},
+                    {"o":0,"P":"b","L":"4","d":true,"ly":"시"},
+                    {"o":0,"P":"b","L":"2","d":true,"ly":"시"}
+                  ]
+                }
+              ]
+            },
+            {
+              "End": {
+                "Bar": 1
+              },
+              "Layers": [
+                {
+                  "Inst": "voice",
+                  "Notes": [
+                    {"o":1,"P":"c","L":"4","d":true,"ly":"도"},
+                    {"o":0,"P":"a","L":"4","d":false,"ly":"라"},
+                    {"o":0,"P":"a","L":"2","d":false,"bm":"1","ly":"라"}
+                  ]
+                }
+              ]
+            },
+            {
+              "End": {
+                "Bar": 1
+              },
+              "Layers": [
+                {
+                  "Inst": "voice",
+                  "Notes": [
+                    {"o":0,"P":"g","L":"4","d":false,"ly":"솔"},
+                    {"o":0,"P":"b","L":"4","d":true,"ly":"시"},
+                    {"o":1,"P":"d","L":"4","d":true,"ly":"레"},
+                    {"o":1,"P":"d","L":"4","d":true,"ly":"레"}
+                  ]
+                }
+              ]
+            },
+            {
+              "End": {
+                "Bar": 1
+              },
+              "Layers": [
+                {
+                  "Inst": "voice",
+                  "Notes": [
+                    {"o":0,"P":"g","L":"2.","d":false,"ly":"솔"},
+                    {"L":"4"}
+                  ]
+                }
+              ]
+            }
+          ],
+          "clef": "G+a"
+        }
+      ]
+    },
+    {
+      "Lines": [
+        {
+          "Type": "m",
+          "Measures": [
+            {
+              "End": {
+                "Bar": 1
+              },
+              "key": "G",
+              "Layers": [
+                {
+                  "Inst": "voice",
+                  "Notes": [
+                    {"o":0,"P":"a","L":"4","d":false,"ly":"라"},
+                    {"o":0,"P":"a","L":"4","d":false,"ly":"라"},
+                    {"o":0,"P":"a","L":"4","d":false,"ly":"라"},
+                    {"o":0,"P":"a","L":"4","d":false,"ly":"라"}
+                  ]
+                }
+              ]
+            },
+            {
+              "End": {
+                "Bar": 1
+              },
+              "Layers": [
+                {
+                  "Inst": "voice",
+                  "Notes": [
+                    {"o":0,"P":"a","L":"4","d":false,"ly":"라"},
+                    {"o":0,"P":"b","L":"4","d":true,"ly":"시"},
+                    {"o":1,"P":"c","L":"2","d":true,"bm":"1","ly":"도"}
+                  ]
+                }
+              ]
+            },
+            {
+              "End": {
+                "Bar": 1
+              },
+              "Layers": [
+                {
+                  "Inst": "voice",
+                  "Notes": [
+                    {"o":0,"P":"b","L":"4","d":true,"ly":"시"},
+                    {"o":0,"P":"b","L":"4","d":true,"ly":"시"},
+                    {"o":0,"P":"b","L":"4","d":true,"ly":"시"},
+                    {"o":0,"P":"b","L":"4","d":true,"ly":"시"}
+                  ]
+                }
+              ]
+            },
+            {
+              "End": {
+                "Bar": 1
+              },
+              "Layers": [
+                {
+                  "Inst": "voice",
+                  "Notes": [
+                    {"o":0,"P":"b","L":"4","d":true,"ly":"시"},
+                    {"o":1,"P":"c","L":"4","d":true,"ly":"도"},
+                    {"o":1,"P":"d","L":"2","d":true,"bm":"1","ly":"레"}
+                  ]
+                }
+              ]
+            }
+          ],
+          "clef": "G+a"
+        }
+      ]
+    },
+    {
+      "Lines": [
+        {
+          "Type": "m",
+          "Measures": [
+            {
+              "End": {
+                "Bar": 1
+              },
+              "key": "G",
+              "Layers": [
+                {
+                  "Inst": "voice",
+                  "Notes": [
+                    {"o":1,"P":"d","L":"4","d":true,"ly":"레"},
+                    {"o":0,"P":"b","L":"4","d":true,"ly":"시"},
+                    {"o":0,"P":"b","L":"2","d":true,"ly":"시"}
+                  ]
+                }
+              ]
+            },
+            {
+              "End": {
+                "Bar": 1
+              },
+              "Layers": [
+                {
+                  "Inst": "voice",
+                  "Notes": [
+                    {"o":1,"P":"c","L":"4","d":true,"ly":"도"},
+                    {"o":0,"P":"a","L":"4","d":false,"ly":"라"},
+                    {"o":0,"P":"a","L":"2","d":false,"bm":"1","ly":"라"}
+                  ]
+                }
+              ]
+            },
+            {
+              "End": {
+                "Bar": 1
+              },
+              "Layers": [
+                {
+                  "Inst": "voice",
+                  "Notes": [
+                    {"o":0,"P":"g","L":"4","d":false,"ly":"솔"},
+                    {"o":0,"P":"b","L":"4","d":true,"ly":"시"},
+                    {"o":1,"P":"d","L":"4","d":true,"ly":"레"},
+                    {"o":1,"P":"d","L":"4","d":true,"ly":"레"}
+                  ]
+                }
+              ]
+            },
+            {
+              "End": {
+                "Bar": 3
+              },
+              "Layers": [
+                {
+                  "Inst": "voice",
+                  "Notes": [
+                    {"o":0,"P":"g","L":"2.","d":false,"ly":"솔"},
+                    {"L":"4"}
+                  ]
+                }
+              ]
+            }
+          ],
+          "clef": "G+a"
+        }
+      ]
+    }
+  ],
+  "showInst": "inst1/i"
+}
