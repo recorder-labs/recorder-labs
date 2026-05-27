@@ -409,9 +409,13 @@
 .main-area--end-scroll #quizEndBar.quiz-end-bar--peek {
   transform: translateY(100%);
 }
+// 모바일: translateY를 0.4rem 덜 움직여 바 상단 0.4rem 슬라이버를 --bg 색 여백으로 남김
 @media (max-width: 767px) {
-  .main-area--end-scroll #quizEndBar.quiz-end-bar--peek::after {
-    bottom: calc(100% + 0.4rem);
+  .main-area--end-scroll #quizEndBar.quiz-end-bar--peek {
+    transform: translateY(calc(100% - 0.4rem));
+  }
+  .main-area--end-scroll #quizEndBar.quiz-end-bar--peek::before {
+    opacity: 0;
   }
 }
 .main-area--end-scroll-atbottom #quizEndBar,

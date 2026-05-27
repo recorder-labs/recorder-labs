@@ -2739,8 +2739,11 @@ body {
 }
 
 @media (max-width: 767px) {
-  .main-area--end-scroll #quizEndBar.quiz-end-bar--peek::after {
-    bottom: calc(100% + 0.4rem);
+  .main-area--end-scroll #quizEndBar.quiz-end-bar--peek {
+    transform: translateY(calc(100% - 0.4rem));
+  }
+  .main-area--end-scroll #quizEndBar.quiz-end-bar--peek::before {
+    opacity: 0;
   }
 }
 .main-area--end-scroll-atbottom #quizEndBar,
