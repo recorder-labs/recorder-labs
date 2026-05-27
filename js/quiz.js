@@ -2356,7 +2356,15 @@ function _qzEndMomTick(ts) {
   const dt = Math.min((ts - _qzEndMomLastT) / 1000, 0.05);
   _qzEndMomLastT = ts;
   const before = main.scrollTop;
-  main.scrollTop = before + _qzEndMomVel * dt;
+  const maxST = main.scrollHeight - main.clientHeight;
+  const next  = before + _qzEndMomVel * dt;
+  // 하단 오버슈트 → 스냅 후 즉시 정지 (바운스 제거)
+  if (_qzEndMomVel > 0 && next >= maxST) {
+    main.scrollTop = maxST;
+    _qzEndMomStop();
+    return;
+  }
+  main.scrollTop = next;
   // 경계에 부딪혀 더 이상 이동 못하면 velocity 즉시 0 (의미 있는 dt 일 때만 검사).
   if (dt > 0.001 && Math.abs(main.scrollTop - before) < 0.5 && Math.abs(_qzEndMomVel) > 1) {
     _qzEndMomStop();
@@ -2365,6 +2373,8 @@ function _qzEndMomTick(ts) {
   // 프레임당 지수 감쇠 (dt 보정).
   _qzEndMomVel *= Math.pow(_QZ_END_MOM_DECAY, dt * 60);
   if (Math.abs(_qzEndMomVel) < _QZ_END_MOM_MIN) {
+    // 가까운 바닥(100px 이내)에서 멈추면 스냅
+    if (_qzEndMomVel > 0 && maxST - main.scrollTop <= 100) main.scrollTop = maxST;
     _qzEndMomStop();
     return;
   }
