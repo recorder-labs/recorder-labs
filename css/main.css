@@ -2731,10 +2731,6 @@ body {
   transition: opacity 0.3s ease;
 }
 
-.main-area--end-scroll #quizEndBar.quiz-end-bar--hidden::after {
-  opacity: 0;
-}
-
 .main-area--end-scroll #quizEndBar.quiz-end-bar--hidden {
   transform: translateY(100%);
 }

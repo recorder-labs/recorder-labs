@@ -399,9 +399,7 @@
   z-index: 2;
   transition: opacity 0.3s ease;
 }
-.main-area--end-scroll #quizEndBar.quiz-end-bar--hidden::after {
-  opacity: 0;
-}
+// hidden: 바는 아래로 밀어 숨기되 ::after(라운드)는 항상 viewport 하단에 노출 유지
 .main-area--end-scroll #quizEndBar.quiz-end-bar--hidden {
   transform: translateY(100%);
 }
