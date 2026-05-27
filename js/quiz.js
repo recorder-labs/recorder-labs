@@ -2421,12 +2421,15 @@ function _qzEndMomStop() {
 }
 
 // position:sticky 인 #quizEndBar 는 translateY(100%) 로 숨겨도 scrollHeight 에 레이아웃 높이를
-// 그대로 기여한다. 실제 콘텐츠가 끝나는 maxST = raw - bar.offsetHeight.
+// 그대로 기여한다. bar 가 hidden/peek 일 때만 barHeight 를 빼서 빈 공간에 진입 차단.
+// bar 가 보이는 상태(normal) 면 raw 그대로 → 스크롤이 실제 끝에 도달 가능.
 function _qzEndRealMaxST(main) {
   const raw = main.scrollHeight - main.clientHeight;
   const bar = document.getElementById('quizEndBar');
   if (!bar) return raw;
-  return Math.max(0, raw - bar.offsetHeight);
+  const isHidden = bar.classList.contains('quiz-end-bar--hidden') ||
+                   bar.classList.contains('quiz-end-bar--peek');
+  return isHidden ? Math.max(0, raw - bar.offsetHeight) : raw;
 }
 
 // 맨 밑 도달 여부 체크 → .main-area--end-scroll-atbottom 클래스 토글.
