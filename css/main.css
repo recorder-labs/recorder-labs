@@ -1008,11 +1008,6 @@ body {
   text-shadow: 0 4px 0 #991B1B, 0 8px 22px rgba(220, 38, 38, 0.35);
 }
 
-.celebration-text.star-complete {
-  color: #f59e0b;
-  text-shadow: 0 4px 0 #b45309, 0 8px 22px rgba(245, 158, 11, 0.4);
-}
-
 @keyframes celebrate-pop {
   0% {
     opacity: 0;
@@ -1125,6 +1120,12 @@ body {
   color: #DC2626;
   background: #fff1f2;
   border: 1.5px solid #fecaca;
+}
+
+.feedback-flash.star-complete {
+  color: #f09b00;
+  background: #fffbeb;
+  border: 1.5px solid #ffd792;
 }
 
 @keyframes flash-rise {
@@ -1747,11 +1748,11 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   background: var(--white);
   border: 1.5px solid var(--border);
   border-radius: 16px;
-  padding: 10px 8px;
+  padding: 16px 12px;
   box-shadow: 0 2px 6px rgba(38, 116, 239, 0.2);
   z-index: 10;
 }
@@ -1760,7 +1761,7 @@ body {
   writing-mode: vertical-lr;
   direction: rtl;
   width: 6px;
-  height: 56px;
+  height: 84px;
   -webkit-appearance: none;
   -moz-appearance: none;
        appearance: none;
@@ -2093,7 +2094,7 @@ body {
     align-self: center;
   }
   #volumeWrap {
-    bottom: 1.25rem;
+    bottom: 0.75rem;
     right: 0.75rem;
     padding: 8px;
   }
