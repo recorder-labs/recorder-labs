@@ -2461,15 +2461,18 @@ function _qzEndOnScroll() {
   }
   _qzEndLastScrollTop = st;
   clearTimeout(_qzEndScrollStopTimer);
+  const _snapST = main.scrollTop;
   if (!isMobile) {
     _qzEndScrollStopTimer = setTimeout(() => {
+      if (main.scrollTop !== _snapST) return; // 아직 스크롤 중 → 발동 안 함
       bar.classList.remove('quiz-end-bar--hidden');
-    }, 16);
+    }, 50);
   } else {
     _qzEndScrollStopTimer = setTimeout(() => {
+      if (main.scrollTop !== _snapST) return;
       bar.classList.remove('quiz-end-bar--hidden');
       bar.classList.add('quiz-end-bar--peek');
-    }, 16);
+    }, 50);
   }
 }
 
