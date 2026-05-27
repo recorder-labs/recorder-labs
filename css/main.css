@@ -2000,7 +2000,7 @@ body {
 @media (max-width: 767px) {
   .practice-top-bar {
     flex-wrap: wrap;
-    gap: 8px 4px;
+    gap: 8px 6px;
     padding: 8px;
   }
   .pp-transport {
@@ -2013,19 +2013,25 @@ body {
   }
   .practice-view-toggle {
     flex: 1;
+    padding: 1px;
+    border-radius: 7px;
   }
   .pp-rate-toggle {
     flex: 1;
+    padding: 1px;
+    border-radius: 7px;
   }
   .pvt-btn {
     flex: 1;
     font-size: 12px;
     padding: 4px;
+    border-radius: 5px;
   }
   .ppr-btn {
     flex: 1;
     font-size: 12px;
     padding: 4px;
+    border-radius: 5px;
   }
   .pvt-btn[data-view=both] {
     display: none;
