@@ -488,13 +488,13 @@
 }
 
 @media (max-width: 767px) {
-  .practice-top-bar { flex-wrap: wrap; gap: $sp-8 $sp-4; padding: $sp-8; }
+  .practice-top-bar { flex-wrap: wrap; gap: $sp-8 $sp-6; padding: $sp-8; }
   .pp-transport { gap: $sp-4; }
   .pp-seek-group { order: 10; flex: 1 1 100%; margin: 0 $sp-8 $sp-8; }
-  .practice-view-toggle { flex: 1; }
-  .pp-rate-toggle { flex: 1; }
-  .pvt-btn { flex: 1; font-size: $fs-2xs; padding: $sp-4; }
-  .ppr-btn { flex: 1; font-size: $fs-2xs; padding: $sp-4; }
+  .practice-view-toggle { flex: 1; padding: 1px; border-radius: $radius-sm; }
+  .pp-rate-toggle { flex: 1; padding: 1px; border-radius: $radius-sm; }
+  .pvt-btn { flex: 1; font-size: $fs-2xs; padding: $sp-4; border-radius: 5px;}
+  .ppr-btn { flex: 1; font-size: $fs-2xs; padding: $sp-4; border-radius: 5px;}
   .pvt-btn[data-view="both"] { display: none; }
   .pp-vol .pp-vol-slider { display: none; }
   .pp-btn { font-size: $fs-2xs; padding: $sp-4 $sp-8; }
