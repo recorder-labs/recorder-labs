@@ -2675,7 +2675,7 @@ body {
 .main-area--end-scroll {
   overflow-y: auto;
   padding-bottom: 0;
-  overscroll-behavior: contain;
+  overscroll-behavior: none;
   scrollbar-gutter: stable;
 }
 
