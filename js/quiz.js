@@ -2362,6 +2362,7 @@ function _qzEndMomTick(ts) {
   if (_qzEndMomVel > 0 && next >= maxST) {
     main.scrollTop = maxST;
     _qzEndMomStop();
+    _qzEndShowBarAtBottom(main);
     return;
   }
   main.scrollTop = next;
@@ -2374,7 +2375,10 @@ function _qzEndMomTick(ts) {
   _qzEndMomVel *= Math.pow(_QZ_END_MOM_DECAY, dt * 60);
   if (Math.abs(_qzEndMomVel) < _QZ_END_MOM_MIN) {
     // 가까운 바닥(100px 이내)에서 멈추면 스냅
-    if (_qzEndMomVel > 0 && maxST - main.scrollTop <= 100) main.scrollTop = maxST;
+    if (_qzEndMomVel > 0 && maxST - main.scrollTop <= 100) {
+      main.scrollTop = maxST;
+      _qzEndShowBarAtBottom(main);
+    }
     _qzEndMomStop();
     return;
   }
@@ -2398,6 +2402,14 @@ function _qzEndMomPushVelocity(vPxPerSec) {
     _qzEndMomLastT = 0;
     _qzEndMomRAF = requestAnimationFrame(_qzEndMomTick);
   }
+}
+function _qzEndShowBarAtBottom(main) {
+  _qzEndUpdateAtBottom(main);
+  if (!main.classList.contains('main-area--end-scroll-atbottom')) return;
+  const bar = document.getElementById('quizEndBar');
+  if (!bar) return;
+  bar.classList.remove('quiz-end-bar--hidden');
+  bar.classList.remove('quiz-end-bar--peek');
 }
 function _qzEndMomStop() {
   _qzEndMomVel = 0;
