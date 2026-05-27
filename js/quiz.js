@@ -2527,7 +2527,7 @@ function _qzEndAttachPersistent(main) {
     _touchLastY = y;
     const maxST      = main.scrollHeight - main.clientHeight;
     const atTop      = main.scrollTop <= 0;
-    const nearBottom = maxST - main.scrollTop <= 100; // 바닥 100px 이내
+    const nearBottom = maxST - main.scrollTop <= 500; // 바닥 500px 이내
     if (atTop && dy > 0) { e.preventDefault(); return; }
     if (nearBottom && dy < 0) {
       // 마지막 100px 구간: native 차단 후 직접 이동 → rubber-band 완전 제거
