@@ -2356,7 +2356,7 @@ function _qzEndMomTick(ts) {
   const dt = Math.min((ts - _qzEndMomLastT) / 1000, 0.05);
   _qzEndMomLastT = ts;
   const before = main.scrollTop;
-  const maxST = main.scrollHeight - main.clientHeight;
+  const maxST = _qzEndRealMaxST(main);
   const next  = before + _qzEndMomVel * dt;
   // 하단 오버슈트 → 스냅 후 즉시 정지 (바운스 제거)
   if (_qzEndMomVel > 0 && next >= maxST) {
@@ -2420,10 +2420,20 @@ function _qzEndMomStop() {
   _qzEndMomLastT = 0;
 }
 
+// position:sticky 인 #quizEndBar 는 translateY(100%) 로 숨겨도 scrollHeight 에 레이아웃 높이를
+// 그대로 기여한다. 실제 콘텐츠가 끝나는 maxST = raw - bar.offsetHeight.
+function _qzEndRealMaxST(main) {
+  const raw = main.scrollHeight - main.clientHeight;
+  const bar = document.getElementById('quizEndBar');
+  if (!bar) return raw;
+  return Math.max(0, raw - bar.offsetHeight);
+}
+
 // 맨 밑 도달 여부 체크 → .main-area--end-scroll-atbottom 클래스 토글.
 // 스크롤 불가 케이스(콘텐츠 ≤ viewport)도 자동으로 atBottom=true → shadow 자동 숨김.
 function _qzEndUpdateAtBottom(main) {
-  const atBottom = (main.scrollTop + main.clientHeight) >= (main.scrollHeight - 1);
+  const realMax = _qzEndRealMaxST(main);
+  const atBottom = main.scrollTop >= realMax - 1;
   main.classList.toggle('main-area--end-scroll-atbottom', atBottom);
 }
 function _qzEndOnScroll() {
@@ -2432,6 +2442,11 @@ function _qzEndOnScroll() {
   if (!main || !bar) return;
   if (!main.classList.contains('main-area--end-scroll')) return;
   if (main.classList.contains('main-area--end-scroll-fit')) return;
+  // 스크롤이 실제 콘텐츠 끝(realMax)을 넘어간 경우 즉시 되돌림 (bar 레이아웃 높이로 생기는 빈 공간 방지)
+  const _realMax = _qzEndRealMaxST(main);
+  if (main.scrollTop > _realMax + 1) {
+    requestAnimationFrame(() => { if (main.scrollTop > _realMax + 1) main.scrollTop = _realMax; });
+  }
   _qzEndUpdateAtBottom(main);
   // fit→scroll 모드 전환 직후 짧은 시간만 보류 (레이아웃 변동 중 깜빡임 방지).
   // momentum 진행 중에도 scroll-direction 토글은 정상 동작 → 휠다운 시 bar 슬라이드 아웃.
@@ -2525,7 +2540,7 @@ function _qzEndAttachPersistent(main) {
     const y    = e.touches[0].clientY;
     const dy   = y - _touchLastY; // +: 손가락 아래 이동 = 콘텐츠 위로 (scrollTop 감소)
     _touchLastY = y;
-    const maxST      = main.scrollHeight - main.clientHeight;
+    const maxST      = _qzEndRealMaxST(main);
     const atTop      = main.scrollTop <= 0;
     const nearBottom = maxST - main.scrollTop <= 50; // 바닥 50px 이내
     if (atTop && dy > 0) { e.preventDefault(); return; }
