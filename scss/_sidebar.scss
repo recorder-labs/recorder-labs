@@ -38,7 +38,6 @@
   flex-shrink: 0;
   color: inherit;
 }
-// active 상태에서 outline → solid 로 토글
 .tab-icon-solid             { display: none; }
 .tab.active .tab-icon       { display: none; }
 .tab.active .tab-icon-solid { display: block; }
@@ -277,7 +276,6 @@
 }
 
 @media (max-width: 767px) {
-  // 모바일: 사이드바 숨김 (데스크탑 .sidebar 규칙보다 뒤에 와야 display:flex 를 이김).
   .sidebar { display: none; }
   .mobile-tabbar {
     display: flex;

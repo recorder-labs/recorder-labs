@@ -20,7 +20,6 @@
 }
 .quiz-stage.show { display: flex; }
 
-// 퀴즈 스테이지 배경 Lottie
 .quiz-stage-bg {
   position: absolute;
   inset: 0;
@@ -143,7 +142,6 @@
   letter-spacing: -0.01em;
   transition: opacity .2s;
 }
-// .qe-start (퀴즈 시작 버튼) 는 .btn 변형이라 _components 에서 .btn 뒤에 일괄 정의함.
 .qe-start-icon {
   width: 23px;
   height: 23px;
@@ -1000,7 +998,6 @@
 }
 
 // ── 태블릿(768-1179): 퀴즈 영역 오버라이드 ──
-// _sidebar 768-1179 블록에 있던 quiz 규칙을 여기로 이동 — @use 순서상 _quiz 데스크탑 뒤라야 적용됨.
 @media (min-width: 768px) and (max-width: 1179px) {
   // 퀴즈 엔트리
   .qe-title { font-size: $fs-disp-md; }
@@ -1052,7 +1049,6 @@
   .quiz-stage-hint   { font-size: $fs-md; line-height: 1.55; }
 
   // 정답/오답 플래시
-  // 피드백 팝업 모바일 — 데스크탑/태블릿은 base clamp 1.5배, 모바일은 과대해 1.5배 전 크기 유지.
   .feedback-flash {
     font-size: $fs-disp-sm;
     padding: 18px 28px;

@@ -23,8 +23,7 @@
 </head>
 <body>
 
-<!-- 공통 SVG gradient defs — .pp-icon-btn 아이콘이 fill="url(#ppIconGrad)" 로 참조.
-     CSS linear-gradient(330deg, #0980ff, #00bdff) 와 동등한 방향: 좌상↘우하 ≈ 330deg 근사. -->
+<!-- SVG gradient defs -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <linearGradient id="ppIconGrad" x1="1" y1="1" x2="0" y2="0">
@@ -320,9 +319,6 @@
             <g id="hole_6_2"><circle class="cls-2 hole" id="h6_2" cx="63.6" cy="555.229" r="5"/></g>
             <g id="hole_7_1"><ellipse class="cls-2 hole" id="h7_1" cx="38.999" cy="607.099" rx="6.5" ry="8.18"/></g>
             <g id="hole_7_2"><ellipse class="cls-2 hole" id="h7_2" cx="51.953" cy="608.065" rx="4.448" ry="5.583"/></g>
-            <!-- 세로 중앙정렬은 dominant-baseline 대신 dy=0.34em 로 처리.
-                 iOS Safari 가 SVG <text> 의 dominant-baseline 을 무시해 숫자가 구멍 위로 떠
-                 보이던 문제를 막기 위함 (dy 는 모든 브라우저 일관·em 단위라 SVG 스케일 무관). -->
             <g id="holeLabels" font-size="22" font-weight="700" text-anchor="end" font-family="'Pretendard',-apple-system,sans-serif">
               <text x="-6"  y="271.64"  dy="0.34em" fill="#e2568f">0</text>
               <text x="20"  y="304.688" dy="0.34em" fill="#e2568f">1</text>
@@ -344,19 +340,17 @@
 
         </div><!-- /.recorder-row -->
 
-        <!-- 정답/오답 플래시 (Type A/E) — #recorderStage 직접 자식으로 두어 헤더 포함 전체 stage 기준 세로 중앙 정렬. -->
-        <!-- 폭죽 lottie(.celebration-bubble)는 _spawnBubbleExplosionLottie 가 flash.parentElement(= #recorderStage)에 append → 동일 기준. -->
+        <!-- 정답/오답 플래시 (Type A/E) -->
         <div class="feedback-flash is-hidden" id="feedbackFlashRec"></div>
       </div>
 
       <!-- 퀴즈: 엔트리 (문제 수 + 유형 선택) -->
       <div class="quiz-stage" id="quizEntryStage">
 
-        <!-- ① 로띠 배경: Note Pattern.json 이 JS(_initQuizStageBg)로 이 div 안에 로드됨.
-             .qe-scroll-frame 바깥에 두어 스크롤과 무관하게 stage 전체를 덮음. -->
+        <!-- 퀴즈 스테이지 배경 -->
         <div class="quiz-stage-bg" aria-hidden="true"></div>
 
-        <!-- 커서 follower Lottie (position:fixed, scroll/3그룹과 분리) -->
+        <!-- 커서 트레일 데코 -->
         <div class="qe-deco" id="qeDecoLottie"></div>
 
         <!-- 스크롤 프레임 — 스크롤바가 stage 우측 끝에 표시됨. -->
@@ -423,7 +417,6 @@
       </div>
 
       <!-- 퀴즈: Type B (그림 찾기 4지선다) -->
-      <!-- .quiz-play-stage : Type A/B/C/E 플레이 상태 공통 클래스 — 추후 공통 스타일/동작 일괄 적용 hook. -->
       <div class="quiz-stage quiz-play-stage" id="quizGridStage">
         <div class="quiz-stage-header">
           <div class="quiz-stage-prompt">〈<b id="qbPromptNote">도</b>〉의 운지법은 어떤 그림일까요?</div>
@@ -440,7 +433,6 @@
           <div class="quiz-stage-prompt">이 음표의 계이름은 무엇일까요?</div>
           <div class="quiz-hint-slot" id="sheetHintSlot"></div>
         </div>
-        <!-- qc-body : 악보+버튼 묶음. 컨테이너 비율에 따라 column/row 자동 토글 (JS setupQcBodyLayout). -->
         <div class="qc-body" id="qcBody">
           <div class="qc-sheet-wrap" id="qcSheetWrap"></div>
           <div class="qc-options" id="qcOptions"></div>
@@ -468,22 +460,13 @@
 
       <!-- 퀴즈: 종료 화면 (액션 버튼은 .main-area 하단 #quizEndBar 로 분리됨) -->
       <div class="quiz-stage" id="quizEndStage">
-        <!-- 스크롤 래퍼 — overflow-y:auto + margin:12px 0 으로 스크롤바가 stage 모서리에서 떨어져 보임 -->
         <div class="qz-end-scroll">
-          <!-- 점수 요약 그룹 — ResizeObserver 가 width>=height 일 때 .qz-end-summary--horizontal 부여.
-               세로 모드: flex column → 이모지 → 제목 → 점수 → 메시지 1열 스택 (기존 순서 유지)
-               가로 모드: grid 3col(auto 1fr auto) × 2row
-                 col1 (badge) : row1~2 span, 세로 가운데
-                 col2 row1    : title
-                 col2 row2    : msg
-                 col3 (score) : row1~2 span, 세로 가운데 -->
           <div class="qz-end-summary" id="qzEndSummary">
             <div class="qz-end-badge" id="qzEndEmoji">🥳</div>
             <div class="qz-end-title" id="qzEndTitle">리코더 마스터 등장이요🩵</div>
             <div class="qz-end-score">맞힌 문제 <b id="qzEndCorrect">0</b><span class="qz-end-slash">/</span><b id="qzEndTotal">0</b></div>
             <div class="qz-end-msg"  id="qzEndMsg">멋져요! 다음 문제도 도전해 볼까요?</div>
           </div>
-          <!-- 틀린 문제 리뷰 — _renderWrongReview() 가 quizQueue 의 isCorrect=false 항목을 카드로 렌더 -->
           <div class="qz-divider is-hidden" id="qzDivider"></div>
           <div class="qz-review-section" id="qzReviewSection" style="display:none">
             <div class="qz-review-header">
@@ -500,7 +483,7 @@
         </div>
       </div>
 
-      <!-- 축하 오버레이 (Lottie 폭죽 + feedback-flash) -->
+      <!-- 축하 오버레이 -->
       <div class="celebration" id="celebrationOverlay">
         <div class="celebration-lottie" id="celebrationLottie"></div>
       </div>

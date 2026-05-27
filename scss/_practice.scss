@@ -139,8 +139,8 @@
   margin-bottom: auto;
   min-height: 0;
   overflow: hidden;
-  scrollbar-width: none;        // Firefox
-  -ms-overflow-style: none;     // IE/legacy Edge
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -153,7 +153,7 @@
   box-shadow: none;
 }
 .practice-score-panel .score-img-wrap::-webkit-scrollbar {
-  display: none;                // Chrome/Safari/WebKit
+  display: none;
 }
 
 // 오른쪽: 리코더 패널

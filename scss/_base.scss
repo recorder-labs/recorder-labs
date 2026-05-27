@@ -39,9 +39,6 @@ body {
 }
 .header-text h1 span { color: #ffffff; }
 .header-text p { font-size: $fs-2xs; color: rgba(255,255,255,.75); font-weight: 500; transform: translateY(6px); }
-// 컨테이너 크기는 40×40 그대로 유지(헤더 높이 안 커짐). Lottie 가 SVG 에 인라인 transform 을
-// 박아 넣어 SVG 직접 scale 이 밀리므로 inner wrapper 에 scale 적용.
-// filter: brightness(0) invert(1) → 모든 색을 흰색(#fff)으로 강제.
 .header-melody {
   width: 40px;
   height: 40px;
@@ -88,10 +85,7 @@ body {
 
 @media (max-width: 767px) {
   .app-body { flex-direction: column; }
-  // .sidebar 모바일 숨김은 _sidebar 767 에서 처리 (데스크탑 .sidebar 가 _sidebar 에 있어
-  // @use 순서상 _base 보다 뒤 → 여기서 display:none 을 두면 뒤의 display:flex 에 짐).
   .main-area { padding: .4rem .5rem; }
-  // end-scroll 모드는 모바일에서도 padding-bottom 0 — sticky #quizEndBar 가 mobile-tabbar 바로 위에 안착.
   .main-area--end-scroll { padding-bottom: 0; }
 
   .note-btn {
@@ -108,9 +102,6 @@ body {
     padding:       $sp-8 $sp-16 !important;
     border-radius: $sp-8 !important;
   }
-
-  // #volumeWrap / #volumeBar 모바일 오버라이드는 _practice 767 에서 처리
-  // (데스크탑 #volumeWrap 가 _practice 에 있어 @use 순서상 _base 보다 뒤 → 여기 두면 위치값이 짐).
 
   .header { padding: .5rem 1rem; gap: $sp-8; justify-content: center; }
   // 왼쪽 28×28 빈 공간 — 중앙 정렬 균형용 spacer
