@@ -41,6 +41,7 @@ function playPractice() {
     const songKeyAtCreate = _loadedSong;
     AudioManager.practice = new Audio(song.base + 'song.mp3');
     AudioManager.practice.volume = volume;
+    AudioManager.practice.muted  = (volume === 0);
     AudioManager.practice.playbackRate = _playbackRate;
     AudioManager.practice.addEventListener('ended', () => {
       updatePlayButtons(false); _hlStop();
@@ -173,20 +174,11 @@ function _ppUpdateVolIcon() {
   icon.setAttribute('aria-label', volume === 0 ? '음소거 해제' : '음소거');
 }
 function _ppVolInput(el) {
-  volume = parseFloat(el.value);
-  if (AudioManager.practice) AudioManager.practice.volume = volume;
-  _ppSeekRefreshFill(el);  // 볼륨 슬라이더도 동일 --seek-pct 변수 사용
-  _ppUpdateVolIcon();
+  setVolume(parseFloat(el.value));
 }
 function _ppToggleMute() {
-  const slider = document.getElementById('ppVolSlider');
-  if (!slider) return;
-  if (volume > 0) { _mutedVol = volume; volume = 0; }
-  else            { volume = _mutedVol; }
-  slider.value = volume;
-  if (AudioManager.practice) AudioManager.practice.volume = volume;
-  _ppSeekRefreshFill(slider);
-  _ppUpdateVolIcon();
+  if (volume > 0) { _mutedVol = volume; setVolume(0); }
+  else            { setVolume(_mutedVol || 0.8); }
 }
 
 function _updateLearnVolumeIcon() {
@@ -196,23 +188,23 @@ function _updateLearnVolumeIcon() {
     bot.setAttribute('aria-label', volume === 0 ? '음소거 해제' : '음소거');
   }
 }
-let _learnMutedVol = 0.8;
 function _toggleLearnMute() {
-  if (volume > 0) { _learnMutedVol = volume; setVolume(0); }
-  else            { setVolume(_learnMutedVol || 0.8); }
+  if (volume > 0) { _mutedVol = volume; setVolume(0); }
+  else            { setVolume(_mutedVol || 0.8); }
 }
 function setVolume(v) {
   volume = v;
   const vb = document.getElementById('volumeBar');
   if (vb) { vb.value = v; _ppSeekRefreshFill(vb); }
-  if (AudioManager.note)   AudioManager.note.volume = v;
-  if (AudioManager.practice)  AudioManager.practice.volume = v;
+  const ps = document.getElementById('ppVolSlider');
+  if (ps) { ps.value = v; _ppSeekRefreshFill(ps); }
+  if (AudioManager.note)     { AudioManager.note.volume = v;     AudioManager.note.muted = (v === 0); }
+  if (AudioManager.practice) { AudioManager.practice.volume = v; AudioManager.practice.muted = (v === 0); }
   _updateLearnVolumeIcon();
+  _ppUpdateVolIcon();
 }
 document.getElementById('volumeBar').addEventListener('input', e => {
-  volume = parseFloat(e.target.value);
-  if (AudioManager.practice) AudioManager.practice.volume = volume;
-  _ppSeekRefreshFill(e.target);
-  _updateLearnVolumeIcon();
+  setVolume(parseFloat(e.target.value));
 });
 _updateLearnVolumeIcon();
+_ppUpdateVolIcon();

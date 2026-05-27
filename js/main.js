@@ -635,15 +635,24 @@ function _syncPracticeBarLayout() {
     lbl.style.fontSize = fs(18, 14);
     lbl.style.marginBottom = Math.max(8, Math.round(9 * r)) + 'px';  // 최소 8px (CSS .bar-label margin-bottom 과 일치)
   }
+  const gapPx = Math.max(1, Math.round(10 * r));
   const grid = document.getElementById('practiceStarGrid');
-  if (grid) grid.style.gap = px(10);
+  if (grid) grid.style.gap = gapPx + 'px';
   // 세 bottom-bar 공통 _computeBarContentH(r) 사용 → note-btn / quiz-action-btn 과 동일 px.
   const starPx = _computeBarContentH(r);
-  const _starNowrap = window.innerWidth <= 767;
+  const isMobile = window.innerWidth <= 767;
+  let finalStarPx = starPx;
+  if (isMobile) {
+    // 10개 별 + 9개 gap이 화면 폭에 딱 맞도록 크기를 줄임
+    const padH = Math.max(1, Math.round(18 * r));
+    const available = window.innerWidth - 2 * padH;
+    const maxFit = Math.floor((available - 9 * gapPx) / 10);
+    finalStarPx = Math.min(starPx, Math.max(20, maxFit));
+  }
   bb.querySelectorAll('.star').forEach(s => {
-    s.style.width  = starPx + 'px';
-    // 모바일 nowrap: flex-shrink이 width를 줄일 때 CSS aspect-ratio:1이 height를 추적하도록 인라인 height 제거
-    s.style.height = _starNowrap ? '' : starPx + 'px';
+    s.style.width      = finalStarPx + 'px';
+    s.style.height     = finalStarPx + 'px';
+    s.style.flexShrink = isMobile ? '0' : '';
   });
 }
 
