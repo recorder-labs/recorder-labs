@@ -1314,8 +1314,8 @@ function _buildReviewCardShell(q) {
   const label = NOTES[q.note] ? NOTES[q.note].label : '';
   let headerText = '';
   if      (q.type === 'A') headerText = `<b>${label}</b>의 운지법은?`;
-  else if (q.type === 'B') headerText = `<b>${label}</b>의 운지법은 어떤 모양일까요?`;
-  else if (q.type === 'C') headerText = '아래 음표의 계이름은 무엇일까요?';
+  else if (q.type === 'B') headerText = `<b>${label}</b>의 운지법은 어떤 그림일까요?`;
+  else if (q.type === 'C') headerText = '이 음표의 계이름은 무엇일까요?';
   else if (q.type === 'D') headerText = `<b>${label}</b>의 위치는?`;
   else if (q.type === 'E') headerText = `<b>${label}</b>의 잘못된 운지법은?`;
   const card = document.createElement('div');
@@ -1784,16 +1784,16 @@ const _C_PICK_WRONG_OUTRO  = _makeRoundRobinPicker(_C_WRONG_OUTROS);
 
 /* Type D (음표 그리기) — 정답 칭찬 / 오답 outro 풀. 각 12개. */
 const _D_CORRECT_TEXTS = [
-  '{L}{S} 오선지 어느 자리에 있는지 정확히 클릭했어요! 음표 위치와 계이름을 잘 연결하고 있어요.',
+  '{L}{S} 오선지 어느 자리에 있는지 정확히 선택했어요! 음표 위치와 계이름을 잘 연결하고 있어요.',
   '{L}의 자리를 오선지 위에 정확히 찍었어요! 음표 위치를 또렷이 기억하고 있네요.',
-  '{L} 음표의 위치를 망설임 없이 클릭했어요! 음표와 계이름 연결이 자연스러워요.',
+  '{L} 음표의 위치를 망설임 없이 선택했어요! 음표와 계이름 연결이 자연스러워요.',
   '오선지 위 {L} 자리를 한 번에 찾아냈어요! 좋은 공간 감각이에요.',
   '{L}의 줄·칸 위치를 정확히 골랐어요! 악보 위에 음표를 잘 그릴 수 있겠네요.',
-  '{L} 자리를 빠르고 정확하게 클릭했어요! 음표 위치를 잘 외우고 있네요.',
+  '{L} 자리를 빠르고 정확하게 선택했어요! 음표 위치를 잘 외우고 있네요.',
   '{L}{S} 오선지 어디에 있는지 또렷이 알고 있네요! 멋진 집중력이에요.',
-  '{L} 자리를 헷갈리지 않고 클릭했어요! 음표 위치 감각이 점점 빨라지고 있어요.',
+  '{L} 자리를 헷갈리지 않고 선택했어요! 음표 위치 감각이 점점 빨라지고 있어요.',
   '오선지에서 {L}의 위치를 정확히 짚어냈어요! 좋은 악보 그리기 실력이에요.',
-  '{L} 자리를 자신 있게 클릭했어요! 줄과 칸의 차이를 정확히 알고 있네요.',
+  '{L} 자리를 자신 있게 선택했어요! 줄과 칸의 차이를 정확히 알고 있네요.',
   '{L}의 위치를 또렷이 그릴 수 있겠어요! 음표를 직접 적는 연습에도 도움 되겠네요.',
   '{L} 자리를 정확히 잡았어요! 악보 위에 음표를 표시하는 감각이 좋아요.',
 ];
@@ -1804,10 +1804,10 @@ const _D_WRONG_OUTROS = [
   '도부터 한 칸씩 올라가며 손가락으로 짚어 보면 정답 자리가 보여요.',
   '같은 이름의 음이라도 옥타브가 다르면 위치가 한참 떨어져 있어요. 헷갈리지 않게 주의해요.',
   '오선지의 줄과 칸 순서를 외울 때 기준 음 도를 먼저 기억하면 편해요.',
-  '높이가 올라갈수록 클릭 위치도 위쪽이 돼야 해요. 방향부터 다시 확인해 보세요.',
+  '높이가 올라갈수록 선택한 위치도 위쪽이 돼야 해요. 방향부터 다시 확인해 보세요.',
   '한 음마다 자리를 정확히 찍으려면 줄·칸 순서를 머릿속으로 세 보는 연습이 필요해요.',
   '실제 악보에 음표를 적을 일이 많아요. 위치 감각을 천천히 익혀 두세요.',
-  '클릭 위치가 조금만 어긋나도 다른 음이 돼요. 다음엔 더 또렷이 짚어 보세요.',
+  '선택한 위치가 조금만 어긋나도 다른 음이 돼요. 다음엔 더 또렷이 짚어 보세요.',
   '오선지 위쪽 음은 손가락을 적게, 아래쪽 음은 손가락을 많이 닫는다는 흐름도 함께 떠올려 보세요.',
   '음표 자리를 외울 때는 줄과 칸 위치를 소리 내어 말하며 외우면 더 잘 기억돼요.',
 ];
@@ -1821,7 +1821,7 @@ const _E_CORRECT_TEXTS = [
   '{L} 운지에서 어긋난 구멍을 또렷이 골라냈어요! 좋은 관찰력이에요.',
   '미세한 차이까지 잡아냈네요! {L} 운지법이 손과 눈에 잘 익었어요.',
   '{L} 모양과 다른 자리를 정확히 골랐어요! 비교하는 눈이 날카로워요.',
-  '잘못된 구멍을 망설임 없이 클릭했어요! {L} 운지에 대한 자신감이 느껴져요.',
+  '잘못된 구멍을 망설임 없이 선택했어요! {L} 운지에 대한 자신감이 느껴져요.',
   '{L} 운지의 정답 모양을 또렷이 머릿속에 그리고 있네요! 좋은 기억력이에요.',
   '비슷한 모양 사이에서 어긋난 구멍을 정확히 찾았어요! 멋진 집중력이에요.',
   '{L} 운지에서 틀린 자리를 한눈에 알아봤어요! 손가락 패턴을 잘 외우고 있네요.',
@@ -2102,15 +2102,15 @@ function _fillReviewD(q, prefix, compareArea, hintCol) {
   const dirWord = delta == null ? '' : (delta > 0 ? '위쪽' : '아래쪽');
   let pattern;
   if (!picked) {
-    pattern = `클릭한 위치가 없어요. ${targetLabel}의 자리는 오른쪽 초록 음표 위치예요. 모양을 기억해 두세요.`;
+    pattern = `선택한 위치가 없어요. ${targetLabel}의 자리는 오른쪽 초록 음표 위치예요. 모양을 기억해 두세요.`;
   } else if (isOctave) {
-    pattern = `같은 이름의 ${pickedLabel} 자리를 클릭했지만, 정답${_ko(targetLabel,'topic')} 한 옥타브 ${dirWord}의 ${targetLabel}예요.`;
+    pattern = `같은 이름의 ${pickedLabel} 자리를 선택했지만, 정답${_ko(targetLabel,'topic')} 한 옥타브 ${dirWord}의 ${targetLabel}예요.`;
   } else if (dist === 1) {
-    pattern = `정답보다 한 칸 ${delta > 0 ? '아래' : '위'}를 클릭했어요. ${targetLabel}${_ko(targetLabel,'topic')} 바로 한 칸 ${dirWord} 자리예요.`;
+    pattern = `정답보다 한 칸 ${delta > 0 ? '아래' : '위'}를 선택했어요. ${targetLabel}${_ko(targetLabel,'topic')} 바로 한 칸 ${dirWord} 자리예요.`;
   } else if (dist <= 3) {
-    pattern = `클릭한 위치 ${pickedLabel}에서 ${dist}칸 ${dirWord} 자리가 정답 ${targetLabel}${_ko(targetLabel,'ieyo')}.`;
+    pattern = `선택한 위치 ${pickedLabel}에서 ${dist}칸 ${dirWord} 자리가 정답 ${targetLabel}${_ko(targetLabel,'ieyo')}.`;
   } else {
-    pattern = `정답 ${targetLabel}${_ko(targetLabel,'topic')} 클릭한 위치보다 한참 ${dirWord} 자리예요. 오선지 줄·칸 순서를 다시 떠올려 보세요.`;
+    pattern = `정답 ${targetLabel}${_ko(targetLabel,'topic')} 선택한 위치보다 한참 ${dirWord} 자리예요. 오선지 줄·칸 순서를 다시 떠올려 보세요.`;
   }
   // 비반복 라운드로빈 픽커 — 같은 렌더 세션 내 오답 카드끼리 outro 동일 문장 안 나옴.
   // q._outroD 에 캐시 → 탭 전환(_renderReview 재호출)때도 같은 카드 문장 고정.

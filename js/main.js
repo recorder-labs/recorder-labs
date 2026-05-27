@@ -20,7 +20,7 @@ function resetSheetNote() {
   const label = document.getElementById('sheetNoteLabel');
   const hint  = document.getElementById('sheetHint');
   if (label) label.textContent = '';
-  if (hint)  hint.textContent = '버튼을 눌러봐요!';
+  if (hint)  hint.textContent = '아래에서 음을 골라 봐요!';
   document.getElementById('sheetWrap').classList.remove('visible');
 }
 
