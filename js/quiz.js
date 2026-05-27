@@ -2410,7 +2410,6 @@ function _qzEndShowBarAtBottom(main) {
   if (!bar) return;
   bar.classList.remove('quiz-end-bar--hidden');
   bar.classList.remove('quiz-end-bar--peek');
-  bar.classList.remove('quiz-end-near-btm');
 }
 function _qzEndMomStop() {
   _qzEndMomVel = 0;
@@ -2445,7 +2444,6 @@ function _qzEndOnScroll() {
   if (main.classList.contains('main-area--end-scroll-atbottom')) {
     bar.classList.remove('quiz-end-bar--hidden');
     bar.classList.remove('quiz-end-bar--peek');
-    bar.classList.remove('quiz-end-near-btm');
     _qzEndLastScrollTop = main.scrollTop;
     clearTimeout(_qzEndScrollStopTimer);
     return;
@@ -2462,9 +2460,6 @@ function _qzEndOnScroll() {
     bar.classList.remove('quiz-end-bar--hidden');
   }
   _qzEndLastScrollTop = st;
-  // 바닥 150px 이내 진입 시 ::after 미리 숨김 → atbottom snap-in 때 한꺼번에 등장
-  const maxST = main.scrollHeight - main.clientHeight;
-  bar.classList.toggle('quiz-end-near-btm', maxST - st <= 80);
   clearTimeout(_qzEndScrollStopTimer);
   const _snapST = main.scrollTop;
   if (!isMobile) {

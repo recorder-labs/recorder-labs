@@ -405,11 +405,7 @@
 .main-area--end-scroll #quizEndBar.quiz-end-bar--hidden {
   transform: translateY(100%);
 }
-// 바닥 80px 이내: 바·::after 모두 transition 없애 즉시 snap
-.main-area--end-scroll #quizEndBar.quiz-end-near-btm,
-.main-area--end-scroll #quizEndBar.quiz-end-near-btm::after {
-  transition: none;
-}
+
 // peek: 바는 숨기고 ::after(라운드 영역)만 노출 — 모바일 스크롤 멈춤 시 사용
 .main-area--end-scroll #quizEndBar.quiz-end-bar--peek {
   transform: translateY(100%);
