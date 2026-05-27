@@ -2676,6 +2676,7 @@ body {
   overflow-y: auto;
   padding-bottom: 0;
   overscroll-behavior: contain;
+  scrollbar-gutter: stable;
 }
 
 .main-area--end-scroll .stage {
@@ -2737,13 +2738,6 @@ body {
   transform: translateY(100%);
 }
 
-@media (max-width: 767px) {
-  .main-area--end-scroll #quizEndBar.quiz-end-bar--peek::after {
-    bottom: 100%;
-    height: calc(20px + 0.4rem);
-    background-color: var(--bg);
-  }
-}
 .main-area--end-scroll-atbottom #quizEndBar,
 .main-area--end-scroll-atbottom #quizEndBar::after {
   transition: none;

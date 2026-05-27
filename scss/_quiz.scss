@@ -352,6 +352,7 @@
   overflow-y: auto;
   padding-bottom: 0;
   overscroll-behavior: contain;
+  scrollbar-gutter: stable;
 }
 .main-area--end-scroll .stage {
   flex: 0 0 auto;
@@ -407,14 +408,6 @@
 // peek: 바는 숨기고 ::after(라운드 영역)만 노출 — 모바일 스크롤 멈춤 시 사용
 .main-area--end-scroll #quizEndBar.quiz-end-bar--peek {
   transform: translateY(100%);
-}
-// 모바일: peek 상태 — 라운드 영역 하단에 0.4rem 솔리드 채움으로 메뉴바 여백 확보 + 투명 구멍 제거
-@media (max-width: 767px) {
-  .main-area--end-scroll #quizEndBar.quiz-end-bar--peek::after {
-    bottom: 100%;
-    height: calc(20px + 0.4rem);
-    background-color: var(--bg);
-  }
 }
 .main-area--end-scroll-atbottom #quizEndBar,
 .main-area--end-scroll-atbottom #quizEndBar::after {
