@@ -1282,6 +1282,8 @@ body {
   }
   #bottomBar {
     flex-shrink: 0;
+  }
+  .bottom-bar {
     padding-top: 12px !important;
     padding-bottom: 12px !important;
   }
@@ -2031,13 +2033,13 @@ body {
   .pvt-btn {
     flex: 1;
     font-size: 12px;
-    padding: 4px;
+    padding: 6px 4px;
     border-radius: 5px;
   }
   .ppr-btn {
     flex: 1;
     font-size: 12px;
-    padding: 4px;
+    padding: 6px 4px;
     border-radius: 5px;
   }
   .pvt-btn[data-view=both] {
@@ -2725,6 +2727,10 @@ body {
 }
 
 .main-area--end-scroll #quizEndBar.quiz-end-bar--hidden {
+  transform: translateY(100%);
+}
+
+.main-area--end-scroll #quizEndBar.quiz-end-bar--peek {
   transform: translateY(100%);
 }
 

@@ -404,6 +404,10 @@
 .main-area--end-scroll #quizEndBar.quiz-end-bar--hidden {
   transform: translateY(100%);
 }
+// peek: 바는 숨기고 ::after(라운드 영역)만 노출 — 모바일 스크롤 멈춤 시 사용
+.main-area--end-scroll #quizEndBar.quiz-end-bar--peek {
+  transform: translateY(100%);
+}
 .main-area--end-scroll-atbottom #quizEndBar,
 .main-area--end-scroll-atbottom #quizEndBar::after {
   transition: none;

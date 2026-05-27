@@ -2417,19 +2417,22 @@ function _qzEndOnScroll() {
     _qzEndLastScrollTop = main.scrollTop;
     return;
   }
-  // 맨 아래 도달 시 — hidden 해제. atbottom 클래스가 트랜지션을 꺼두기 때문에 슬라이드인 없이
+  // 맨 아래 도달 시 — hidden/peek 해제. atbottom 클래스가 트랜지션을 꺼두기 때문에 슬라이드인 없이
   // 그 자리에 즉시 노출 → 바운스/깜빡임 없음. atbottom 이탈 시 트랜지션 자동 복구.
   if (main.classList.contains('main-area--end-scroll-atbottom')) {
     bar.classList.remove('quiz-end-bar--hidden');
+    bar.classList.remove('quiz-end-bar--peek');
     _qzEndLastScrollTop = main.scrollTop;
     clearTimeout(_qzEndScrollStopTimer);
     return;
   }
-  // 모바일(≤767px): 스크롤 멈춤·위스크롤 시 bar 노출 안 함 — 맨 아래(atbottom)에서만 노출.
+  // 모바일(≤767px): 스크롤 멈춤 시 bar는 숨기고 ::after(라운드 영역)만 노출(peek).
+  // 맨 아래(atbottom)에서만 bar 전체 노출.
   const isMobile = window.innerWidth <= 767;
   const st = main.scrollTop;
   const dy = st - _qzEndLastScrollTop;
   if (dy > 2 && st > 20) {
+    bar.classList.remove('quiz-end-bar--peek');
     bar.classList.add('quiz-end-bar--hidden');
   } else if (!isMobile && (dy < -2 || st <= 0)) {
     bar.classList.remove('quiz-end-bar--hidden');
@@ -2439,6 +2442,11 @@ function _qzEndOnScroll() {
   if (!isMobile) {
     _qzEndScrollStopTimer = setTimeout(() => {
       bar.classList.remove('quiz-end-bar--hidden');
+    }, 600);
+  } else {
+    _qzEndScrollStopTimer = setTimeout(() => {
+      bar.classList.remove('quiz-end-bar--hidden');
+      bar.classList.add('quiz-end-bar--peek');
     }, 600);
   }
 }
@@ -2458,7 +2466,7 @@ function _qzEndSwitchOffFit(main) {
   // atbottom (콘텐츠 ≤ viewport) 인 경우는 bar 가 계속 보여야 하므로 제외.
   if (!main.classList.contains('main-area--end-scroll-atbottom')) {
     const bar = document.getElementById('quizEndBar');
-    if (bar) bar.classList.add('quiz-end-bar--hidden');
+    if (bar) { bar.classList.remove('quiz-end-bar--peek'); bar.classList.add('quiz-end-bar--hidden'); }
   }
 }
 
@@ -2503,7 +2511,7 @@ function _qzEnterEndScrollMode() {
   main.scrollTop = 0;
   _qzEndLastScrollTop = 0;
   const bar = document.getElementById('quizEndBar');
-  if (bar) bar.classList.remove('quiz-end-bar--hidden');
+  if (bar) { bar.classList.remove('quiz-end-bar--hidden'); bar.classList.remove('quiz-end-bar--peek'); }
   _qzEndAttachPersistent(main);
   // atbottom 갱신은 첫 스크롤 이벤트(_qzEndOnScroll) 에서 처리 — 진입 시점엔 의도적으로 토글하지 않음.
   // 콘텐츠 ≤ viewport 라도 진입 직후 #quizEndBar::before (top shadow) 가 노출 상태로 유지됨.
@@ -2520,7 +2528,7 @@ function _qzLeaveEndScrollMode() {
   _qzEndLastScrollTop = 0;
   _qzEndTransitionUntil = 0;
   const bar = document.getElementById('quizEndBar');
-  if (bar) bar.classList.remove('quiz-end-bar--hidden');
+  if (bar) { bar.classList.remove('quiz-end-bar--hidden'); bar.classList.remove('quiz-end-bar--peek'); }
   clearTimeout(_qzEndScrollStopTimer);
   _qzEndMomStop();
   if (_qzEndFitCleanup) _qzEndFitCleanup();

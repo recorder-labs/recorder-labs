@@ -395,6 +395,8 @@
   #recorderStage { overflow: hidden; min-height: 0; }
   #bottomBar {
     flex-shrink: 0;
+  }
+  .bottom-bar {
     // JS(_syncLearnLayout) 가 padding 을 인라인으로 줄여도 상하 최소 12px 유지.
     padding-top: $sp-12 !important;
     padding-bottom: $sp-12 !important;
