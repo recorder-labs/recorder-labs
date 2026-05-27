@@ -2433,10 +2433,18 @@ function _qzEndRealMaxST(main) {
 }
 
 // 맨 밑 도달 여부 체크 → .main-area--end-scroll-atbottom 클래스 토글.
+// 판정 기준은 bar 가시성과 무관한 "콘텐츠 끝"(raw - barHeight) 으로 고정한다.
+//   _qzEndRealMaxST 는 bar 가 보이면 raw 를 돌려주므로, atBottom→bar 노출 직후 realMax 가
+//   barHeight 만큼 커져 다음 스크롤에서 atBottom 이 false 로 뒤집히는 순환이 생긴다.
+//   모바일은 그 틈에 stop-timer(50ms)가 bar 를 peek 로 강등 → 버튼이 끝내 안 보였음.
+//   콘텐츠 끝 기준으로 고정하면 한 번 바닥에 닿으면 atBottom 이 안정적으로 유지된다.
+//   (클램프/momentum 은 _qzEndRealMaxST 를 그대로 써서 "bar 노출 시 실제 끝까지 스크롤" 유지.)
 // 스크롤 불가 케이스(콘텐츠 ≤ viewport)도 자동으로 atBottom=true → shadow 자동 숨김.
 function _qzEndUpdateAtBottom(main) {
-  const realMax = _qzEndRealMaxST(main);
-  const atBottom = main.scrollTop >= realMax - 1;
+  const bar = document.getElementById('quizEndBar');
+  const raw = main.scrollHeight - main.clientHeight;
+  const contentEnd = bar ? Math.max(0, raw - bar.offsetHeight) : raw;
+  const atBottom = main.scrollTop >= contentEnd - 1;
   main.classList.toggle('main-area--end-scroll-atbottom', atBottom);
 }
 function _qzEndOnScroll() {
