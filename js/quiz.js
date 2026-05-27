@@ -393,7 +393,7 @@ function showTypeA() {
   const rec = document.getElementById('recorderStage');
   rec.style.display = '';
   document.getElementById('sheetWrap').classList.remove('visible');
-  document.getElementById('quizSideSub').textContent   = '구멍을 클릭해 알맞은 운지법을 만들어 보세요';
+  document.getElementById('quizSideSub').textContent   = '구멍을 선택해 알맞은 운지법을 만들어 보세요';
   // 스테이지 상단 프롬프트: 계이름 '<note>'의 운지법은?
   document.getElementById('quizStagePromptNote').textContent   = NOTES[currentQuestion.note].label;
   document.getElementById('quizStagePromptSuffix').textContent = '의 운지법은?';
@@ -740,7 +740,7 @@ function showTypeD() {
   document.getElementById('recorderStage').style.display = 'none';
   document.getElementById('quizDrawStage').classList.add('show');
   document.getElementById('qdPromptNote').textContent = NOTES[currentQuestion.note].label;
-  document.getElementById('quizSideSub').textContent = '오선지에서 음표 위치를 클릭해 보세요';
+  document.getElementById('quizSideSub').textContent = '오선지에서 음표 위치를 선택해 보세요';
   // 1) 노트 Y 매핑 — 원본 sheetSvg 의 각 노트를 임시 표시해 bbox 측정 후 원상복구.
   //    주의: getBBox 는 display:none 조상 아래에선 0×0 을 반환하므로, 이전 stage 가 B/C/D 였다면
   //    recorderStage 가 이미 hidden 상태일 수 있음. 그래서 측정 동안만 화면 밖(left:-99999px)에서
@@ -936,7 +936,7 @@ function showTypeE() {
   const rec = document.getElementById('recorderStage');
   rec.style.display = '';
   document.getElementById('sheetWrap').classList.remove('visible');
-  document.getElementById('quizSideSub').textContent   = '잘못된 구멍을 찾아 클릭해 보세요';
+  document.getElementById('quizSideSub').textContent   = '잘못된 구멍을 찾아 선택해 보세요';
   // 스테이지 상단 프롬프트: 계이름 '<note>'의 잘못된 운지법은?
   document.getElementById('quizStagePromptNote').textContent   = NOTES[currentQuestion.note].label;
   document.getElementById('quizStagePromptSuffix').textContent = '의 운지법에서 잘못된 구멍은?';

@@ -180,7 +180,7 @@
             <g id="C-major_re_high"><g style="clip-path:url(#clippath-12);"><path d="M460.814,870.185c-.557-2.199-2.218-3.895-4.982-5.089-2.509-1.131-5.371-1.696-8.587-1.696-3.074,0-5.866.583-8.375,1.749-2.715,1.242-4.305,2.92-4.77,5.036-.084.473-.119.968-.106,1.484.106,2.933,1.82,5.124,5.142,6.573,2.474,1.131,5.318,1.696,8.534,1.696,3.145,0,5.972-.583,8.481-1.749,3.286-1.484,4.912-3.657,4.876-6.52-.019-.518-.089-1.013-.212-1.484M450.425,866.687c.841,1.01,1.46,2.176,1.855,3.498.282.899.459,1.871.53,2.915.071,1.873-.177,3.216-.742,4.028-.53.777-1.519,1.272-2.968,1.484-1.661.247-3.198-.442-4.611-2.067-1.378-1.661-2.138-3.781-2.279-6.361-.106-1.873.124-3.216.689-4.028.53-.707,1.519-1.184,2.968-1.431,1.696-.247,3.216.406,4.558,1.961Z"/></g></g>
           </svg>
           <div class="sheet-note-label" id="sheetNoteLabel"></div>
-          <div class="sheet-hint" id="sheetHint">버튼을 눌러봐요!</div>
+          <div class="sheet-hint" id="sheetHint">아래에서 음을 골라 봐요!</div>
         </div>
 
         <!-- 오른쪽: 리코더 패널 -->
@@ -392,12 +392,12 @@
               <div class="qe-chips" id="qeTypeChips">
                 <button class="qe-chip active" data-type="ALL">전체</button>
                 <button class="qe-chip" data-type="A">운지법 만들기</button>
-                <button class="qe-chip" data-type="B">그림 찾기</button>
+                <button class="qe-chip" data-type="B">운지 그림 찾기</button>
                 <button class="qe-chip" data-type="C">계이름 읽기</button>
-                <button class="qe-chip" data-type="D">음표 그리기</button>
-                <button class="qe-chip" data-type="E">잘못된 구멍 찾기</button>
+                <button class="qe-chip" data-type="D">음표 위치 찾기</button>
+                <button class="qe-chip" data-type="E">잘못된 운지 찾기</button>
               </div>
-              <div class="qe-desc" id="qeDesc">모든 유형의 문제가 골고루 섞여서 출제됩니다.</div>
+              <div class="qe-desc" id="qeDesc">모든 유형의 문제가 골고루 나와요.</div>
             </div>
             </div>
             <button class="btn primary qe-start" data-action="quiz-start">
@@ -426,7 +426,7 @@
       <!-- .quiz-play-stage : Type A/B/C/E 플레이 상태 공통 클래스 — 추후 공통 스타일/동작 일괄 적용 hook. -->
       <div class="quiz-stage quiz-play-stage" id="quizGridStage">
         <div class="quiz-stage-header">
-          <div class="quiz-stage-prompt"><b id="qbPromptNote">도</b>의 운지법은 어떤 모양일까요?</div>
+          <div class="quiz-stage-prompt"><b id="qbPromptNote">도</b>의 운지법은 어떤 그림일까요?</div>
           <div class="quiz-hint-slot" id="gridHintSlot"></div>
         </div>
         <div class="qb-grid" id="qbGrid"></div>
@@ -437,7 +437,7 @@
       <!-- 퀴즈: Type C (계이름 읽기) -->
       <div class="quiz-stage quiz-play-stage" id="quizSheetStage">
         <div class="quiz-stage-header">
-          <div class="quiz-stage-prompt">아래 음표의 계이름은 무엇일까요?</div>
+          <div class="quiz-stage-prompt">이 음표의 계이름은 무엇일까요?</div>
           <div class="quiz-hint-slot" id="sheetHintSlot"></div>
         </div>
         <!-- qc-body : 악보+버튼 묶음. 컨테이너 비율에 따라 column/row 자동 토글 (JS setupQcBodyLayout). -->
@@ -452,7 +452,7 @@
       <!-- 퀴즈: Type D (음표 그리기 — 오선지 선택으로 음표 위치 지정) -->
       <div class="quiz-stage quiz-play-stage" id="quizDrawStage">
         <div class="quiz-stage-header">
-          <div class="quiz-stage-prompt"><b id="qdPromptNote">—</b>의 음표 위치를 선택해 보세요!</div>
+          <div class="quiz-stage-prompt"><b id="qdPromptNote">—</b>의 음표 위치를 오선지에서 골라 보세요.</div>
           <div class="quiz-hint-slot" id="drawHintSlot"></div>
         </div>
         <!-- qd-row: 좌(사용자 선택) / 우(오답 시 정답 악보) 분할 컨테이너.
