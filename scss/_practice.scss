@@ -339,7 +339,7 @@
 
 // ── 볼륨 슬라이더 ──
 #volumeWrap {
-  position: absolute;
+  position: fixed;
   right: 1.25rem;
   bottom: 1.25rem;
   display: flex;
