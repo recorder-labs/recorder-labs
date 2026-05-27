@@ -2521,14 +2521,19 @@ function _qzEndAttachPersistent(main) {
     _qzEndMomStop();
   };
   const onTouchMove = (e) => {
-    // 경계(상단/하단)에서 오버슈트 방향으로 움직일 때 preventDefault → native rubber-band 제거.
     if (!e.cancelable || !e.touches[0]) return;
-    const y  = e.touches[0].clientY;
-    const dy = y - _touchLastY; // +: 손가락 아래 이동 = 콘텐츠 위로 (scrollTop 감소)
+    const y    = e.touches[0].clientY;
+    const dy   = y - _touchLastY; // +: 손가락 아래 이동 = 콘텐츠 위로 (scrollTop 감소)
     _touchLastY = y;
-    const atTop    = main.scrollTop <= 0;
-    const atBottom = main.scrollTop >= main.scrollHeight - main.clientHeight - 1;
-    if ((atTop && dy > 0) || (atBottom && dy < 0)) e.preventDefault();
+    const maxST      = main.scrollHeight - main.clientHeight;
+    const atTop      = main.scrollTop <= 0;
+    const nearBottom = maxST - main.scrollTop <= 100; // 바닥 100px 이내
+    if (atTop && dy > 0) { e.preventDefault(); return; }
+    if (nearBottom && dy < 0) {
+      // 마지막 100px 구간: native 차단 후 직접 이동 → rubber-band 완전 제거
+      e.preventDefault();
+      main.scrollTop = Math.min(main.scrollTop - dy, maxST);
+    }
   };
   main.addEventListener('wheel',       onWheel,          { passive: false });
   main.addEventListener('touchstart',  onUserTouchStart, { passive: true });
