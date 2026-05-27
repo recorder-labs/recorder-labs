@@ -1188,20 +1188,15 @@ function _addPracticeStar(songKey) {
 function _showPracticeStarCelebration(songKey) {
   const overlay = document.getElementById('celebrationOverlay');
   if (!overlay) return;
-  const textEl = document.getElementById('celebrationText');
-  if (textEl) {
-    textEl.textContent = '🎼훌륭해요';
-    textEl.classList.remove('wrong');
-    textEl.classList.add('star-complete');
-    textEl.style.animation = 'none';
-    void textEl.offsetWidth;
-    textEl.style.animation = '';
-  }
+  const flash = document.createElement('div');
+  flash.className = 'feedback-flash star-complete';
+  flash.textContent = '🎼 오늘 연습 끝';
+  overlay.appendChild(flash);
   overlay.classList.add('show');
   if (typeof _spawnBubbleExplosionLottie === 'function') _spawnBubbleExplosionLottie(overlay);
   setTimeout(() => {
     overlay.classList.remove('show');
-    if (textEl) textEl.classList.remove('star-complete');
+    if (flash.parentNode) flash.parentNode.removeChild(flash);
     PRACTICE_STARS[songKey] = 0;
     _renderPracticeStars(songKey);
   }, 2200);

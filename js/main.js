@@ -504,21 +504,6 @@ function _syncLearnLayout() {
     }
   }
 
-  // #volumeWrap — 위치/패딩/래퍼/슬라이더/아이콘
-  const vw = document.getElementById('volumeWrap');
-  if (vw) {
-    vw.style.right = px(30);
-    vw.style.bottom = px(30);
-    vw.style.gap = '9px';
-    vw.style.padding = window.innerWidth > 767 ? '15px ' + px(11) : '';
-    // border-radius 는 실시간 가변 대상에서 제외 — CSS(#volumeWrap)의 고정값 사용.
-    vw.querySelectorAll('span').forEach(s => {
-      s.style.fontSize = fs(24, 17);
-    });
-    const vb = document.getElementById('volumeBar');
-    if (vb) vb.style.height = '84px';
-  }
-
   // 세 bottom-bar 공통 내부 콘텐츠 높이 — 단일 공식으로 픽셀 일치 보장.
   const barContentH = _computeBarContentH(rBtn);
 
@@ -545,7 +530,6 @@ function _syncLearnLayout() {
       btn.style.borderRadius = pxBtnMin(15, 8);
       // 자연 height 대신 단일 공식으로 explicit — star/quiz-btn 과 픽셀 일치.
       btn.style.height = barContentH + 'px';
-      btn.style.boxSizing = 'border-box';
     });
   }
 
@@ -566,7 +550,6 @@ function _syncLearnLayout() {
       btn.style.borderRadius = pxBtnMin(15, 8);
       // _computeBarContentH 단일 공식 → note-btn/star 와 동일 px 높이.
       btn.style.height = barContentH + 'px';
-      btn.style.boxSizing = 'border-box';
     });
   }
 
