@@ -1008,6 +1008,11 @@ body {
   text-shadow: 0 4px 0 #991B1B, 0 8px 22px rgba(220, 38, 38, 0.35);
 }
 
+.celebration-text.star-complete {
+  color: #f59e0b;
+  text-shadow: 0 4px 0 #b45309, 0 8px 22px rgba(245, 158, 11, 0.4);
+}
+
 @keyframes celebrate-pop {
   0% {
     opacity: 0;
@@ -1736,7 +1741,7 @@ body {
 }
 
 #volumeWrap {
-  position: absolute;
+  position: fixed;
   right: 1.25rem;
   bottom: 1.25rem;
   display: flex;
