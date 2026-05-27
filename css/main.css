@@ -2739,7 +2739,9 @@ body {
 
 @media (max-width: 767px) {
   .main-area--end-scroll #quizEndBar.quiz-end-bar--peek::after {
-    bottom: calc(100% + 0.4rem);
+    bottom: 100%;
+    height: calc(20px + 0.4rem);
+    background-color: var(--bg);
   }
 }
 .main-area--end-scroll-atbottom #quizEndBar,

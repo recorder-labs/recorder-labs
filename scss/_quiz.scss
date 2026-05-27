@@ -408,10 +408,12 @@
 .main-area--end-scroll #quizEndBar.quiz-end-bar--peek {
   transform: translateY(100%);
 }
-// 모바일: peek 상태에서 라운드 영역을 모바일 메뉴바와 여백 확보
+// 모바일: peek 상태 — 라운드 영역 하단에 0.4rem 솔리드 채움으로 메뉴바 여백 확보 + 투명 구멍 제거
 @media (max-width: 767px) {
   .main-area--end-scroll #quizEndBar.quiz-end-bar--peek::after {
-    bottom: calc(100% + 0.4rem);
+    bottom: 100%;
+    height: calc(20px + 0.4rem);
+    background-color: var(--bg);
   }
 }
 .main-area--end-scroll-atbottom #quizEndBar,
