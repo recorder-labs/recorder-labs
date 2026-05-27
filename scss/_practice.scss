@@ -345,11 +345,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: $sp-6;
+  gap: $sp-8;
   background: var(--white);
   border: $border-width solid var(--border);
   border-radius: $radius-xl;
-  padding: $sp-10 $sp-8;
+  padding: $sp-16 $sp-12;
   box-shadow: 0 2px 6px rgb(38, 116, 239, 0.2);
   z-index: 10;
 }
@@ -358,7 +358,7 @@
   writing-mode: vertical-lr;
   direction: rtl;
   width: 6px;
-  height: 56px;
+  height: 84px;
   -webkit-appearance: none;
   appearance: none;
   background: linear-gradient(to top, #4b47ff 0%, #549af5 var(--seek-pct, 0%), var(--border) var(--seek-pct, 0%), var(--border) 100%);
@@ -539,7 +539,7 @@
   .star { flex: 0 1 auto; min-width: 0; height: auto; aspect-ratio: 1; align-self: center; }
 
   // 볼륨 컨트롤 모바일 위치 (데스크탑 #volumeWrap 가 _practice 에 있으므로 여기서 오버라이드해야 이김).
-  #volumeWrap { bottom: 1.25rem; right: .75rem; padding: $sp-8; }
+  #volumeWrap { bottom: .75rem; right: .75rem; padding: $sp-8; }
   #volumeBar { display: none; }
   #volumeWrap .pp-icon-btn,
   #volumeWrap button {

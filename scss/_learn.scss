@@ -214,10 +214,6 @@
   color: #DC2626;
   text-shadow: 0 4px 0 #991B1B, 0 8px 22px rgba(220,38,38,.35);
 }
-.celebration-text.star-complete {
-  color: #f59e0b;
-  text-shadow: 0 4px 0 #b45309, 0 8px 22px rgba(245,158,11,.4);
-}
 @keyframes celebrate-pop {
   0%   { opacity: 0; transform: translate(-50%, -50%) scale(.4); }
   60%  { opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
@@ -294,6 +290,11 @@
   color: #DC2626;
   background: #fff1f2;
   border: $border-width solid #fecaca;
+}
+.feedback-flash.star-complete {
+  color: #f09b00;
+  background: #fffbeb;
+  border: $border-width solid #ffd792;
 }
 @keyframes flash-rise {
   0%   { opacity: 0; transform: translate(-50%, calc(-50% + 24px)) scale(0.85); }
