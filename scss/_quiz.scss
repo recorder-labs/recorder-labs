@@ -406,10 +406,6 @@
   transform: translateY(100%);
 }
 
-// 90% 이상 구간: transition 없이 즉시 snap (::after 혼자 남는 문제 방지)
-.main-area--end-scroll #quizEndBar.quiz-end-near-btm {
-  transition: none;
-}
 // peek: 바는 숨기고 ::after(라운드 영역)만 노출 — 모바일 스크롤 멈춤 시 사용
 .main-area--end-scroll #quizEndBar.quiz-end-bar--peek {
   transform: translateY(100%);
