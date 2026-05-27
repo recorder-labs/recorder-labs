@@ -411,7 +411,7 @@
 // 모바일: peek 상태에서 라운드 영역을 모바일 메뉴바와 여백 확보
 @media (max-width: 767px) {
   .main-area--end-scroll #quizEndBar.quiz-end-bar--peek::after {
-    bottom: calc(100% + $sp-12);
+    bottom: calc(100% + 0.4rem);
   }
 }
 .main-area--end-scroll-atbottom #quizEndBar,
