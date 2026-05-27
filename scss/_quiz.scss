@@ -116,7 +116,9 @@
   transition: background .15s, color .15s, border-color .15s, opacity .15s;
   letter-spacing: -0.018em;
 }
-.qe-chip:hover { background: var(--sky-light); color: var(--blue); }
+@media (hover: hover) {
+  .qe-chip:hover { background: var(--sky-light); color: var(--blue); }
+}
 .qe-chip.active {
   background: var(--blue); border-color: var(--blue); color: var(--white);
 }
@@ -209,7 +211,9 @@
   position: relative;
   min-height: 0;
 }
-.qb-card:hover { border-color: var(--cta); transform: translateY(-2px); }
+@media (hover: hover) {
+  .qb-card:hover { border-color: var(--cta); transform: translateY(-2px); }
+}
 .qb-card.picked  { border-color: var(--cta); background: var(--navi-light); transform: translateY(-2px); }
 .qb-card.picked.disabled { transform: translateY(0); }
 .qb-grid:has(.qb-card.correct) .qb-card.picked {
@@ -266,7 +270,9 @@
   align-items: center;
   justify-content: center;
 }
-.qc-option:hover { border-color: var(--cta); color: var(--cta); transform: translateY(-2px); }
+@media (hover: hover) {
+  .qc-option:hover { border-color: var(--cta); color: var(--cta); transform: translateY(-2px); }
+}
 .qc-option.picked  { background: var(--navi-light); border-color: var(--cta); color: var(--cta); transform: translateY(-2px); }
 .qc-option.picked.disabled { transform: translateY(0); }
 .qc-options:has(.qc-option.correct) .qc-option.picked {
@@ -632,10 +638,12 @@
   transition: transform .2s ease, box-shadow .2s ease,
               border-color .2s ease, opacity .2s ease;
 }
-.qz-review-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(91,150,245,.12);
-  border-color: #5b96f5;
+@media (hover: hover) {
+  .qz-review-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(91,150,245,.12);
+    border-color: #5b96f5;
+  }
 }
 .qz-review-card.focused {
   border-color: #5b96f5;

@@ -2279,11 +2279,12 @@ body {
   letter-spacing: -0.018em;
 }
 
-.qe-chip:hover {
-  background: var(--sky-light);
-  color: var(--blue);
+@media (hover: hover) {
+  .qe-chip:hover {
+    background: var(--sky-light);
+    color: var(--blue);
+  }
 }
-
 .qe-chip.active {
   background: var(--blue);
   border-color: var(--blue);
@@ -2404,11 +2405,12 @@ body {
   min-height: 0;
 }
 
-.qb-card:hover {
-  border-color: var(--cta);
-  transform: translateY(-2px);
+@media (hover: hover) {
+  .qb-card:hover {
+    border-color: var(--cta);
+    transform: translateY(-2px);
+  }
 }
-
 .qb-card.picked {
   border-color: var(--cta);
   background: var(--navi-light);
@@ -2512,12 +2514,13 @@ body {
   justify-content: center;
 }
 
-.qc-option:hover {
-  border-color: var(--cta);
-  color: var(--cta);
-  transform: translateY(-2px);
+@media (hover: hover) {
+  .qc-option:hover {
+    border-color: var(--cta);
+    color: var(--cta);
+    transform: translateY(-2px);
+  }
 }
-
 .qc-option.picked {
   background: var(--navi-light);
   border-color: var(--cta);
@@ -3064,12 +3067,13 @@ body {
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
 }
 
-.qz-review-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(91, 150, 245, 0.12);
-  border-color: #5b96f5;
+@media (hover: hover) {
+  .qz-review-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(91, 150, 245, 0.12);
+    border-color: #5b96f5;
+  }
 }
-
 .qz-review-card.focused {
   border-color: #5b96f5;
   box-shadow: 0 0 0 3px rgba(91, 150, 245, 0.18), 0 8px 24px rgba(91, 150, 245, 0.14);
