@@ -1101,7 +1101,7 @@ function setPracticeSong(song) {
   if (titleBar) titleBar.style.display = known ? '' : 'none';
   _currentPracticeSong = song;
   // 별 게이지 초기화
-  PRACTICE_STARS.airplane = 0; PRACTICE_STARS.hans = 0;
+  PRACTICE_STARS[song] = 0;
   _renderPracticeStars(song);
   // 계이름 상태를 ON 으로 초기화 (디폴트). 버튼 텍스트는 액션 기준 "계이름 OFF" (끄려면 클릭).
   _noteLabelVisible = true;

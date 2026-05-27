@@ -85,7 +85,7 @@ function setMode(mode) {
     setPracticeView(isMobile ? 'score' : 'both');
     setPracticeSong('airplane');
   }
-  else { stopPractice(); resetSheetNote(); setVolume(0.8); _learnMutedVol = 0.8; }
+  else { stopPractice(); resetSheetNote(); setVolume(0.8); _mutedVol = 0.8; }
   if (mode !== 'learn') resetSheetNote();
   _learnLayoutLastW = 0;
   _practiceBarLastR = 0;
@@ -639,9 +639,11 @@ function _syncPracticeBarLayout() {
   if (grid) grid.style.gap = px(10);
   // 세 bottom-bar 공통 _computeBarContentH(r) 사용 → note-btn / quiz-action-btn 과 동일 px.
   const starPx = _computeBarContentH(r);
+  const _starNowrap = window.innerWidth <= 767;
   bb.querySelectorAll('.star').forEach(s => {
-    s.style.width = starPx + 'px';
-    s.style.height = starPx + 'px';
+    s.style.width  = starPx + 'px';
+    // 모바일 nowrap: flex-shrink이 width를 줄일 때 CSS aspect-ratio:1이 height를 추적하도록 인라인 height 제거
+    s.style.height = _starNowrap ? '' : starPx + 'px';
   });
 }
 
@@ -875,6 +877,7 @@ document.querySelectorAll('[data-action]').forEach(el => {
       case 'song-hans':            setPracticeSong('hans');                           break;
       case 'practice-popup-yes':   _practicePopupYes();                               break;
       case 'practice-popup-no':    _practicePopupNo();                                break;
+      case 'quiz-start':           startQuizSession();                                break;
       case 'show-quiz-entry':      showQuizEntry();                                   break;
       case 'review-tab-all':       _setReviewTab('all');                              break;
       case 'review-tab-wrong':     _setReviewTab('wrong');                            break;
