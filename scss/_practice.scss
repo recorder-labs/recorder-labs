@@ -539,7 +539,7 @@
   .star { flex: 0 1 auto; min-width: 0; height: auto; aspect-ratio: 1; align-self: center; }
 
   // 볼륨 컨트롤 모바일 위치 (데스크탑 #volumeWrap 가 _practice 에 있으므로 여기서 오버라이드해야 이김).
-  #volumeWrap { bottom: .75rem; right: .75rem; padding: $sp-8; }
+  #volumeWrap { bottom: .75rem; right: .75rem; padding: $sp-6; }
   #volumeBar { display: none; }
   #volumeWrap .pp-icon-btn,
   #volumeWrap button {

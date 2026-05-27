@@ -2452,12 +2452,12 @@ function _qzEndOnScroll() {
   if (!isMobile) {
     _qzEndScrollStopTimer = setTimeout(() => {
       bar.classList.remove('quiz-end-bar--hidden');
-    }, 600);
+    }, 16);
   } else {
     _qzEndScrollStopTimer = setTimeout(() => {
       bar.classList.remove('quiz-end-bar--hidden');
       bar.classList.add('quiz-end-bar--peek');
-    }, 600);
+    }, 16);
   }
 }
 
