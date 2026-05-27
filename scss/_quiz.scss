@@ -405,7 +405,10 @@
 .main-area--end-scroll #quizEndBar.quiz-end-bar--hidden {
   transform: translateY(100%);
 }
-// 바닥 근접 구간: ::after 미리 숨겨두고 atbottom snap-in 때 한꺼번에 등장
+// 바닥 80px 이내: 바 transition 없애고 ::after 즉시 숨김
+.main-area--end-scroll #quizEndBar.quiz-end-near-btm {
+  transition: none;
+}
 .main-area--end-scroll #quizEndBar.quiz-end-near-btm::after {
   opacity: 0;
   transition: none;
