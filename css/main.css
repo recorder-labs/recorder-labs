@@ -1287,6 +1287,9 @@ body {
     padding-top: 12px !important;
     padding-bottom: 12px !important;
   }
+  .legend-circle.open {
+    border-width: 1px;
+  }
   .celebration-text {
     font-size: 64px;
   }
@@ -3656,6 +3659,15 @@ body {
   .feedback-flash {
     font-size: 32px;
     padding: 18px 28px;
+  }
+  .qz-review-card .qz-rev-wrong-mark {
+    stroke-width: 1.5px;
+  }
+  .qz-rev-purple-ring {
+    stroke-width: 1.5px !important;
+  }
+  .qz-rev-correct-mark {
+    stroke-width: 1.5px !important;
   }
   .recorder-row.quiz-wrong-split .quiz-answer-panel::after,
   .qd-row.qd-wrong-split > .qd-answer-wrap::after {

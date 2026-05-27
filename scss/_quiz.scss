@@ -1039,6 +1039,11 @@
     padding: 18px 28px;
   }
 
+  // 복습 카드 SVG 마크 두께
+  .qz-review-card .qz-rev-wrong-mark { stroke-width: $border-width; }
+  .qz-rev-purple-ring                { stroke-width: $border-width !important; }
+  .qz-rev-correct-mark               { stroke-width: $border-width !important; }
+
   // [정답] 뱃지
   .recorder-row.quiz-wrong-split .quiz-answer-panel::after,
   .qd-row.qd-wrong-split > .qd-answer-wrap::after {

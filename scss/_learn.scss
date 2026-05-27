@@ -401,6 +401,7 @@
     padding-top: $sp-12 !important;
     padding-bottom: $sp-12 !important;
   }
+  .legend-circle.open { border-width: $sp-1; }
   // 폭죽 "정답!" 텍스트 — 모바일에선 96px 가 과대 → 1.5배 전 크기(64px) 유지.
   .celebration-text { font-size: 64px; }
 }
