@@ -15,6 +15,7 @@ function playNote(name) {
   if (AudioManager.note) { AudioManager.note.pause(); AudioManager.note.currentTime = 0; AudioManager.note = null; }
   const audio = new Audio(BASE_URL + file);
   audio.volume = volume;
+  audio.muted  = (volume === 0);
   AudioManager.note = audio;
   audio.onended = () => {
     if (AudioManager.note === audio) {
