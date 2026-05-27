@@ -733,6 +733,7 @@ let _bubbleExplosionData = null;
 
 // 퀴즈 엔트리 화면 커서 follower Lottie (AI Searching.json) — lead + ghost 트레일
 (function _initQuizDecoLottie() {
+  if (window.matchMedia('(pointer: coarse)').matches) return;
   const lead = document.getElementById('qeDecoLottie');
   if (!lead || typeof lottie === 'undefined') return;
   const LOTTIE_PATH = RESOURCE_URLS.LOTTIE_AI;

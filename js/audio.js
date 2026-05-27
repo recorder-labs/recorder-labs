@@ -53,8 +53,9 @@ function playPractice() {
     AudioManager.practice.addEventListener('error', () => { alert('MP3 파일을 불러올 수 없어요.'); updatePlayButtons(false); _hlStop(); });
   }
   AudioManager.practice.volume = volume;
+  AudioManager.practice.muted  = (volume === 0);
   const p = AudioManager.practice.play();
-  if (p && p.then) p.then(() => { updatePlayButtons(true); _hlStart(); }).catch(() => {});
+  if (p && p.then) p.then(() => { AudioManager.practice.muted = (volume === 0); updatePlayButtons(true); _hlStart(); }).catch(() => {});
   else { updatePlayButtons(true); _hlStart(); }
 }
 function stopPractice() {
@@ -125,8 +126,9 @@ function _practicePopupYes() {
     return;
   }
   AudioManager.practice.volume = volume;
+  AudioManager.practice.muted  = (volume === 0);
   const p = AudioManager.practice.play();
-  if (p && p.then) p.then(() => { updatePlayButtons(true); _hlStart(); }).catch(() => {});
+  if (p && p.then) p.then(() => { AudioManager.practice.muted = (volume === 0); updatePlayButtons(true); _hlStart(); }).catch(() => {});
   else { updatePlayButtons(true); _hlStart(); }
 }
 function _practicePopupNo() {

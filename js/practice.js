@@ -1181,6 +1181,30 @@ function _addPracticeStar(songKey) {
     void next.offsetWidth;
     next.classList.add('pop');
   }
+  if (PRACTICE_STARS[songKey] >= PRACTICE_STAR_TOTAL) {
+    setTimeout(() => _showPracticeStarCelebration(songKey), 500);
+  }
+}
+function _showPracticeStarCelebration(songKey) {
+  const overlay = document.getElementById('celebrationOverlay');
+  if (!overlay) return;
+  const textEl = document.getElementById('celebrationText');
+  if (textEl) {
+    textEl.textContent = '🎼훌륭해요';
+    textEl.classList.remove('wrong');
+    textEl.classList.add('star-complete');
+    textEl.style.animation = 'none';
+    void textEl.offsetWidth;
+    textEl.style.animation = '';
+  }
+  overlay.classList.add('show');
+  if (typeof _spawnBubbleExplosionLottie === 'function') _spawnBubbleExplosionLottie(overlay);
+  setTimeout(() => {
+    overlay.classList.remove('show');
+    if (textEl) textEl.classList.remove('star-complete');
+    PRACTICE_STARS[songKey] = 0;
+    _renderPracticeStars(songKey);
+  }, 2200);
 }
 _buildPracticeStars();
 _renderPracticeStars(_currentPracticeSong);
