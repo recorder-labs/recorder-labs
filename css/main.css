@@ -950,10 +950,6 @@ body {
   transition: none;
 }
 
-#holeLabels text {
-  dominant-baseline: central;
-}
-
 .celebration {
   position: absolute;
   inset: 0;

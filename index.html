@@ -320,15 +320,18 @@
             <g id="hole_6_2"><circle class="cls-2 hole" id="h6_2" cx="63.6" cy="555.229" r="5"/></g>
             <g id="hole_7_1"><ellipse class="cls-2 hole" id="h7_1" cx="38.999" cy="607.099" rx="6.5" ry="8.18"/></g>
             <g id="hole_7_2"><ellipse class="cls-2 hole" id="h7_2" cx="51.953" cy="608.065" rx="4.448" ry="5.583"/></g>
-            <g id="holeLabels" font-size="22" font-weight="700" text-anchor="end" dominant-baseline="central" font-family="'Pretendard',-apple-system,sans-serif">
-              <text x="-6"  y="271.64"  fill="#e2568f">0</text>
-              <text x="20"  y="304.688" fill="#e2568f">1</text>
-              <text x="20"  y="351.849" fill="#e2568f">2</text>
-              <text x="20"  y="396.956" fill="#e2568f">3</text>
-              <text x="90"  y="445.593" fill="#0086cd" text-anchor="start">4</text>
-              <text x="90"  y="501.849" fill="#0086cd" text-anchor="start">5</text>
-              <text x="90"  y="552.0"   fill="#0086cd" text-anchor="start">6</text>
-              <text x="90"  y="607.5"   fill="#0086cd" text-anchor="start">7</text>
+            <!-- 세로 중앙정렬은 dominant-baseline 대신 dy=0.34em 로 처리.
+                 iOS Safari 가 SVG <text> 의 dominant-baseline 을 무시해 숫자가 구멍 위로 떠
+                 보이던 문제를 막기 위함 (dy 는 모든 브라우저 일관·em 단위라 SVG 스케일 무관). -->
+            <g id="holeLabels" font-size="22" font-weight="700" text-anchor="end" font-family="'Pretendard',-apple-system,sans-serif">
+              <text x="-6"  y="271.64"  dy="0.34em" fill="#e2568f">0</text>
+              <text x="20"  y="304.688" dy="0.34em" fill="#e2568f">1</text>
+              <text x="20"  y="351.849" dy="0.34em" fill="#e2568f">2</text>
+              <text x="20"  y="396.956" dy="0.34em" fill="#e2568f">3</text>
+              <text x="90"  y="445.593" dy="0.34em" fill="#0086cd" text-anchor="start">4</text>
+              <text x="90"  y="501.849" dy="0.34em" fill="#0086cd" text-anchor="start">5</text>
+              <text x="90"  y="552.0"   dy="0.34em" fill="#0086cd" text-anchor="start">6</text>
+              <text x="90"  y="607.5"   dy="0.34em" fill="#0086cd" text-anchor="start">7</text>
             </g>
           </svg>
           </div>

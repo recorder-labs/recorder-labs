@@ -178,8 +178,9 @@
 // ── 리코더 구멍 ──
 .hole { transition: fill .15s; }
 #recorderStage.no-hole-fade .hole { transition: none; }
-// dominant-baseline 속성 상속이 불안정한 모바일 브라우저 대응 — CSS로 직접 지정.
-#holeLabels text { dominant-baseline: central; }
+// #holeLabels 세로 중앙정렬은 dominant-baseline 대신 마크업의 dy=0.34em 로 처리한다
+// (iOS Safari 가 dominant-baseline:central 을 속성·CSS 모두 무시해 숫자가 구멍 위로 떴음).
+// 여기서 dominant-baseline 을 다시 주면 Chrome 에서 dy 와 이중 적용돼 숫자가 아래로 내려가므로 두지 않는다.
 
 // ── 폭죽/축하 오버레이 ──
 .celebration {
