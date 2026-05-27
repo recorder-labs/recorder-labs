@@ -2728,7 +2728,7 @@ body {
   background: radial-gradient(circle at top right, transparent 18.5px, var(--border) 19px, var(--border) 20px, var(--bg) 20.5px) top left/20px 20px no-repeat, radial-gradient(circle at top left, transparent 18.5px, var(--border) 19px, var(--border) 20px, var(--bg) 20.5px) top right/20px 20px no-repeat, linear-gradient(to bottom, transparent 18.5px, var(--border) 19px, var(--border) 20px) 20px 0/calc(100% - 40px) 20px no-repeat;
   pointer-events: none;
   z-index: 2;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.1s ease-out;
 }
 
 .main-area--end-scroll #quizEndBar.quiz-end-bar--hidden::after {
@@ -2739,12 +2739,8 @@ body {
   transform: translateY(100%);
 }
 
-.main-area--end-scroll #quizEndBar.quiz-end-near-btm {
-  transition: none;
-}
-
+.main-area--end-scroll #quizEndBar.quiz-end-near-btm,
 .main-area--end-scroll #quizEndBar.quiz-end-near-btm::after {
-  opacity: 0;
   transition: none;
 }
 
