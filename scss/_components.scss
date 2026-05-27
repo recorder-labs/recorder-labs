@@ -1,0 +1,179 @@
+// _components.scss
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ── 계이름 버튼 ──
+.note-btn {
+  padding: $sp-6 $sp-12;       // JS(_syncLearnLayout) override
+  border: none;
+  border-radius: $radius-md;   // JS(_syncLearnLayout) override
+  font-family: 'Pretendard', sans-serif;
+  font-size: 17px;             // JS(_syncLearnLayout) override
+  font-weight: 800;
+  cursor: pointer;
+  color: #fff;
+  transition: transform .1s, box-shadow .1s;
+  letter-spacing: -0.02em;
+  filter: saturate(1.3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+@media (hover: hover) {
+  .note-btn:hover   { filter: saturate(1.3) brightness(1.1); transform: translateY(-2px); }
+}
+.note-btn.active  { filter: saturate(1.3) brightness(.88); transform: translateY(2px); box-shadow: none !important; }
+.note-btn.disabled { background: #F1F5F9 !important; color: var(--text-light) !important; cursor: not-allowed; box-shadow: none !important; transform: none; filter: none; }
+
+[data-nidx="0"]  { @include gradient-btn(#b83535, #ff6b6b, #b83535); }
+[data-nidx="1"]  { @include gradient-btn(#b86620, #ff9f43, #b86620); }
+[data-nidx="2"]  { @include gradient-btn(#9a7a00, #f0c000, #9a7a00); }
+[data-nidx="3"]  { @include gradient-btn(#366823, #6ab04c, #366823); }
+[data-nidx="4"]  { @include gradient-btn(#0d6470, #22a6b3, #0d6470); }
+[data-nidx="5"]  { @include gradient-btn(#1c5299, #4a90d9, #1c5299); }
+[data-nidx="6"]  { @include gradient-btn(#5c40aa, #9b7fe8, #5c40aa); }
+[data-nidx="7"]  { @include gradient-btn(#b03d6a, #fd79a8, #b03d6a); }
+[data-nidx="8"]  { @include gradient-btn(#963520, #e17055, #963520); }
+[data-nidx="9"]  { @include gradient-btn(#3628a0, #6c5ce7, #3628a0); }
+[data-nidx="10"] { @include gradient-btn(#006650, #00b894, #006650); }
+
+// ── 퀴즈 제출/다음 버튼 ──
+.quiz-action-btn {
+  padding: $sp-16 28px;
+  border-radius: $radius-lg;
+  font-family: 'Pretendard', sans-serif;
+  font-size: $fs-lg;
+  font-weight: 700;
+  cursor: pointer;
+  color: #fff;
+  transition: transform .1s, box-shadow .1s;
+  letter-spacing: -0.02em;
+  filter: saturate(1.3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+@media (hover: hover) {
+  .quiz-action-btn:hover    { filter: saturate(1.3) brightness(1.1); transform: translateY(-2px); }
+}
+.quiz-action-btn:active   { filter: saturate(1.3) brightness(.88); transform: translateY(2px); box-shadow: none !important; }
+.quiz-action-btn:disabled { background: #F1F5F9 !important; color: var(--text-light) !important; cursor: not-allowed; box-shadow: none !important; transform: none; filter: none; border-color: var(--border) !important; }
+.quiz-action-btn.submit   { @include gradient-btn(#506bff, #5ba6f4, #506bff); }
+.quiz-action-btn.next     { @include gradient-btn(#007b80, #02d0d8, #007b80); }
+.quiz-action-btn.replay   { @include gradient-btn(#5016FF, #4A66FF); }
+.quiz-action-btn.mode     { background: var(--white); color: var(--text-sub); border: $border-width solid var(--border); }
+@media (hover: hover) {
+  .quiz-action-btn.mode:hover { color: var(--cta); border-color: var(--cta); }
+}
+.quiz-action-btn.is-hidden { display: none; }
+.quiz-action-icon {
+  width: 1.1em;
+  height: 1.1em;
+  flex-shrink: 0;
+  margin-right: 0.2em;
+}
+
+// ── 공통 버튼 ──
+.btn {
+  padding: $sp-10 $sp-18;
+  border: $border-width solid var(--border);
+  border-radius: $radius-md;
+  background: var(--bg);
+  color: var(--text-sub);
+  font-family: 'Pretendard', sans-serif;
+  font-size: $fs-md;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .15s, color .15s, border-color .15s, filter .15s, transform .15s;
+  letter-spacing: -0.01em;
+}
+@media (hover: hover) {
+  .btn:hover { background: var(--sky-light); border-color: var(--sky-mid); color: var(--sky); }
+}
+.btn.primary { @include gradient-btn(#5016FF, #4A66FF, #5016FF); font-weight: 800; }
+.btn.popup-confirm { @include gradient-btn(#5016FF, #4A66FF); font-weight: 800; }
+@media (hover: hover) {
+  .btn.popup-confirm:hover { filter: saturate(1.3) brightness(1.1); transform: translateY(-2px); }
+}
+@media (hover: hover) {
+  .btn.primary:hover { filter: saturate(1.3) brightness(1.2); transform: translateY(-2px); }
+}
+.btn:disabled { opacity: .45; cursor: not-allowed; transform: none; box-shadow: none; }
+
+// ── 퀴즈 시작 버튼 (.btn.primary 확장) ──
+// .btn 보다 뒤에 와야 .btn 의 padding/font-size/border-radius 를 덮어쓸 수 있음.
+// (학습/연습/퀴즈 파티션은 _components 보다 먼저 컴파일되므로 여기서 일괄 관리.)
+.qe-start {
+  margin-top: $sp-24;
+  padding: $sp-12 44px;
+  font-size: $fs-xl;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $sp-8;
+}
+@media (min-width: 768px) and (max-width: 1179px) {
+  .qe-start { margin-top: $sp-10; font-size: $fs-lg; }
+}
+@media (max-width: 767px) {
+  .qe-start { font-size: $fs-lg; }
+}
+@media (max-width: 430px) {
+  .qe-start { margin-top: 0; }
+}
+
+.practice-controls { display: flex; gap: $sp-8; justify-content: center; margin-bottom: $sp-8; }
+.quiz-btns { display: flex; gap: $sp-6; justify-content: center; }
+
+// ── 악보+리코더 (both) 뷰: 75:25 분할 ──
+.practice-content.view-both .practice-score-panel:not(.hidden) {
+  flex: 0 0 75%;
+  max-width: 75%;
+}
+.practice-content.view-both .practice-recorder-panel:not(.hidden) {
+  flex: 0 0 25%;
+  max-width: 25%;
+}
+.practice-content.view-both .practice-score-panel:not(.hidden)::after {
+  width: 1px;
+}
+// ── 악보 단독 뷰 ──
+.practice-content.view-score .practice-score-panel {
+  flex: 1 1 0%;
+  max-width: 100%;
+}
+// ── 리코더 단독 뷰 ──
+.practice-content.view-recorder .practice-recorder-panel {
+  flex: 1 1 0%;
+  max-width: 100%;
+}
+
+// ── iOS 슬라이더 webkit 대응 ──
+.pp-seek,
+.pp-vol-slider,
+#volumeBar {
+  -webkit-appearance: none;
+  appearance: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: linear-gradient(330deg, #0980ff, #00bdff);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0,0,0,.18);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: linear-gradient(330deg, #0980ff, #00bdff);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0,0,0,.18);
+}

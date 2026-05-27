@@ -1,0 +1,72 @@
+// _mixins.scss
+@use 'variables' as *;
+
+// ── 플렉스 ──
+@mixin flex-center($gap: null) {
+  display: flex;
+  align-items: center;
+  @if $gap { gap: $gap; }
+}
+
+@mixin flex-between($align: center) {
+  display: flex;
+  justify-content: space-between;
+  align-items: $align;
+}
+
+@mixin flex-column($gap: null) {
+  display: flex;
+  flex-direction: column;
+  @if $gap { gap: $gap; }
+}
+
+// ── 보더 / 카드 ──
+@mixin border-default {
+  border: $border-width solid $border-color;
+}
+
+@mixin card($radius: $radius-lg) {
+  @include border-default;
+  border-radius: $radius;
+  background: var(--white);
+}
+
+// ── 그라데이션 버튼 (330deg 패턴) ──
+// 사용 예: @include gradient-btn(#b83535, #ff6b6b, #b83535)
+@mixin gradient-btn($from, $to, $shadow-color: null) {
+  background: linear-gradient(330deg, $from, $to);
+  border: $border-width solid $from;
+  color: #fff;
+  @if $shadow-color {
+    box-shadow: 0 4px 0 $shadow-color;
+  }
+}
+
+// ── 그림자 ──
+@mixin cta-shadow {
+  box-shadow: 0 2px 8px rgba(68, 42, 255, .3);
+}
+
+// ── 슬라이더 thumb (pp-seek, pp-vol-slider, volumeBar 공통) ──
+@mixin slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: linear-gradient(330deg, #0980ff, #00bdff);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .18);
+}
+
+// ── 유틸 ──
+@mixin text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin hover-lift($y: -2px) {
+  &:hover { transform: translateY($y); }
+}

@@ -1,0 +1,121 @@
+// _base.scss
+@use 'variables' as *;
+@use 'mixins' as *;
+
+body {
+  font-family: $font-pretendard;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  overflow: hidden;
+  color: var(--text);
+  min-width: 375px;
+  min-height: 480px;
+}
+
+// ── 헤더 ──
+.header {
+  background: linear-gradient(to right, #5B72F5, #5BB8F5);
+  padding: .75rem 1.25rem;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: $sp-10;
+}
+.header-icon { line-height: 1; display: flex; align-items: center; }
+.header-icon svg { width: 40px; height: 40px; }
+.header-icon img { width: 40px; height: 40px; }
+.header-text { display: flex; align-items: baseline; gap: $sp-8; }
+.header-text h1 {
+  font-size: $fs-head;
+  font-weight: 800;
+  color: #2cfff7;
+  letter-spacing: -0.03em;
+  font-family: $font-keris;
+  transform: translateY(3px);
+}
+.header-text h1 span { color: #ffffff; }
+.header-text p { font-size: $fs-2xs; color: rgba(255,255,255,.75); font-weight: 500; transform: translateY(6px); }
+// 컨테이너 크기는 40×40 그대로 유지(헤더 높이 안 커짐). Lottie 가 SVG 에 인라인 transform 을
+// 박아 넣어 SVG 직접 scale 이 밀리므로 inner wrapper 에 scale 적용.
+// filter: brightness(0) invert(1) → 모든 색을 흰색(#fff)으로 강제.
+.header-melody {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.header-melody-inner {
+  width: 100%;
+  height: 100%;
+  transform: scale(2);
+  transform-origin: center;
+  filter: brightness(0) invert(1);
+}
+.header-melody-inner svg { display: block; width: 100%; height: 100%; }
+
+// ── 앱 바디 (사이드바 + 메인) ──
+.app-body {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+// ── 메인 영역 ──
+.main-area {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: .6rem .75rem;
+  position: relative;
+  overflow: hidden;
+}
+.stage {
+  flex: 1 1 0;
+  min-height: 0;
+  position: relative;
+  display: flex;
+}
+
+@media (max-width: 767px) {
+  .app-body { flex-direction: column; }
+  // .sidebar 모바일 숨김은 _sidebar 767 에서 처리 (데스크탑 .sidebar 가 _sidebar 에 있어
+  // @use 순서상 _base 보다 뒤 → 여기서 display:none 을 두면 뒤의 display:flex 에 짐).
+  .main-area { padding: .4rem .5rem; }
+  // end-scroll 모드는 모바일에서도 padding-bottom 0 — sticky #quizEndBar 가 mobile-tabbar 바로 위에 안착.
+  .main-area--end-scroll { padding-bottom: 0; }
+
+  .note-btn {
+    min-height:    44px !important;
+    min-width:     48px !important;
+    font-size:     $fs-base !important;
+    padding:       $sp-8 $sp-16 !important;
+    border-radius: $sp-8 !important;
+  }
+  .quiz-action-btn {
+    min-height:    44px !important;
+    min-width:     48px !important;
+    font-size:     $fs-base !important;
+    padding:       $sp-8 $sp-16 !important;
+    border-radius: $sp-8 !important;
+  }
+
+  // #volumeWrap / #volumeBar 모바일 오버라이드는 _practice 767 에서 처리
+  // (데스크탑 #volumeWrap 가 _practice 에 있어 @use 순서상 _base 보다 뒤 → 여기 두면 위치값이 짐).
+
+  .header { padding: .5rem 1rem; gap: $sp-8; justify-content: center; }
+  // 왼쪽 28×28 빈 공간 — 중앙 정렬 균형용 spacer
+  .header::before { content: ''; width: 28px; height: 28px; flex-shrink: 0; }
+  .header-icon svg,
+  .header-icon img { width: 28px; height: 28px; }
+  .header-melody   { width: 28px; height: 28px; }
+  .header-text p   { display: none; }
+  .header-text h1 { font-size: $fs-2xl; }
+}

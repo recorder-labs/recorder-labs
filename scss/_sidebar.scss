@@ -1,0 +1,314 @@
+// _sidebar.scss
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ── 사이드바 ──
+.sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  background: #fff;
+  border-right: $border-width solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: $sp-12 $sp-12;
+  gap: $sp-8;
+}
+.tab {
+  width: 100%;
+  padding: $sp-16;
+  border: $border-width solid var(--border);
+  border-radius: $radius-lg;
+  background: var(--white);
+  color: var(--text-sub);
+  font-family: 'Pretendard', sans-serif;
+  font-size: $fs-lg;
+  font-weight: 700;
+  cursor: pointer;
+  transition: $transition-base;
+  letter-spacing: -0.01em;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: $sp-10;
+}
+.tab-icon,
+.tab-icon-solid {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  color: inherit;
+}
+// active 상태에서 outline → solid 로 토글
+.tab-icon-solid             { display: none; }
+.tab.active .tab-icon       { display: none; }
+.tab.active .tab-icon-solid { display: block; }
+@media (hover: hover) {
+  .tab:hover  { background: var(--navi-light); border-color: var(--border); color: var(--cta); }
+}
+.tab.active { background: var(--cta); border-color: var(--cta); color: #fff; box-shadow: 0 2px 8px rgba(68,42,255,.3); }
+
+// ── 퀴즈 정보 배너 (스테이지 위 단일 행 카드) ──
+.quiz-side-info {
+  display: none;
+  flex-shrink: 0;
+  align-items: center;
+  margin-bottom: 0.4rem;
+  padding: $sp-10 $sp-12;
+  background: var(--white);
+  border: $border-width solid var(--border);
+  border-radius: 14px;
+  gap: $sp-10;
+}
+// --quiz-chip-h: 배너 행 모든 요소의 공통 높이 기준 (= quiz-type-badge 자연 높이 32px).
+.quiz-banner-row {
+  --quiz-chip-h: 32px;
+  display: flex; align-items: center; gap: $sp-12; flex: 1 1 0; min-width: 0;
+}
+// 배너 내 유형 배지: 가장 긴 텍스트('잘못된 구멍 찾기') 기준 고정 너비 + 가운데 정렬
+.quiz-banner-row .quiz-type-badge {
+  min-width: 7.2rem;
+  justify-content: center;
+}
+
+// 진행 바 + 라벨 그룹
+.quiz-progress-group {
+  flex: 1 1 0; min-width: 0;
+  display: flex; align-items: center; gap: $sp-4;
+}
+// 진행 바 — chip 높이의 1/4 (얇은 슬림 바)
+.quiz-progress-track {
+  flex: 1 1 0; min-width: 0;
+  position: relative;
+  height: calc(var(--quiz-chip-h) / 4);
+  background: var(--bg);
+  border: $border-width solid var(--border);
+  border-radius: $radius-pill;
+  overflow: hidden;
+}
+.quiz-progress-fill {
+  position: absolute; top: 0; left: 0; bottom: 0;
+  width: 0%;
+  background: linear-gradient(to left, #549af5, #4b47ff);
+  border-radius: $radius-pill;
+  transition: width $transition-smooth;
+}
+// 진행 라벨은 트랙 밖 인라인 형제로 배치
+.quiz-progress-label {
+  flex-shrink: 0;
+  font-size: 15px; font-weight: 800; color: var(--text-sub);
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+// ×/✓ 카운트 그룹
+.quiz-count-group { display: flex; gap: $sp-4; flex-shrink: 0; }
+// ×/✓ 카운트 chip
+.quiz-count-chip {
+  flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center; gap: $sp-6;
+  height: var(--quiz-chip-h);
+  min-width: calc(44px + var(--quiz-count-digits, 2) * 1ch);
+  padding: 0 $sp-12;
+  border-radius: $radius-pill;
+  font-size: $fs-sm; font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+.quiz-count-chip.wrong   { background: linear-gradient(330deg, #F5515F, #e10a2b); }
+.quiz-count-chip.correct { background: linear-gradient(330deg, #08bb68, #088979); }
+.quiz-count-icon { font-size: $fs-md; line-height: 1; }
+
+// 인라인 feedback chip (stage header 슬롯 내)
+#quizHintArea .feedback {
+  margin: 0; padding: 5px $sp-12;
+  font-size: $fs-2xs; font-weight: 700;
+  border-radius: $radius-pill;
+  border-width: $border-width;
+}
+.feedback { margin-top: .5rem; padding: .5rem .7rem; border-radius: $radius-md; font-size: $fs-sm; line-height: 1.55; font-weight: 700; }
+.feedback.correct { background: #effff4; color: #00b548; border: $border-width solid #00b548; }
+.feedback.wrong   { background: #FFF1F2; color: #DC2626; border: $border-width solid #DC2626; }
+
+// ── 연습하기 그룹 래퍼 (탭 + 서브탭 통합 카드) ──
+.practice-group {
+  border: $border-width solid var(--border);
+  border-radius: $radius-lg;
+  overflow: hidden;
+  transition: border-color .25s, box-shadow .25s;
+}
+.practice-group.active {
+  border-color: var(--cta);
+  box-shadow: 0 2px 8px rgba(68,42,255,.3);
+}
+.practice-group .tab {
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+// 서브탭 그룹 슬라이드 애니메이션
+.subtab-group {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height $transition-smooth;
+}
+.subtab-group.open {
+  max-height: 200px;
+}
+
+// 서브탭 버튼
+.subtab {
+  display: block;
+  width: 100%;
+  padding: $sp-16;
+  border: none;
+  background: var(--white);
+  color: var(--text-sub);
+  font-family: 'Pretendard', sans-serif;
+  font-size: $fs-base;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: background .15s, color .15s;
+  letter-spacing: -0.01em;
+}
+@media (hover: hover) {
+  .subtab:hover  { background: var(--navi-light); color: var(--cta); }
+}
+.subtab.active { background: var(--white); color: var(--cta); font-weight: 700; }
+
+// ── 데스크탑 기본 숨김 (반응형 미디어쿼리에서 다시 표시) ──
+.mobile-tabbar { display: none; }
+.mobile-tab-icon-solid { display: none; }
+.mobile-song-selector { display: none; }
+
+@media (min-width: 768px) and (max-width: 1179px) {
+  .sidebar {
+    width: 75px;
+    padding: $sp-12;
+    border-right: $border-width solid $border-color;
+  }
+  .tab {
+    justify-content: center;
+    padding: $sp-12;
+    gap: 0;
+    position: relative;
+  }
+  .tab span { display: none; }
+  .tab-icon,
+  .tab-icon-solid { width: 24px; height: 24px; }
+
+  // 호버 툴팁
+  .tab::after {
+    content: attr(data-label);
+    position: absolute;
+    left: calc(100% + 8px);
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--white);
+    border: $border-width solid $border-color;
+    border-radius: 8px;
+    padding: $sp-8 $sp-16;
+    font-size: $fs-base;
+    font-weight: 700;
+    color: var(--cta);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 200;
+    box-shadow: 0 2px 8px rgb(27 24 47 / 12%);
+    transition: opacity .15s;
+  }
+  @media (hover: hover) {
+    .tab:hover::after { opacity: 1; }
+  }
+
+  .practice-group {
+    border: none;
+    border-radius: 0;
+    overflow: visible;
+    box-shadow: none;
+    background: transparent;
+  }
+  .practice-group.active { border: none; box-shadow: none; }
+  .practice-group .tab {
+    border: $border-width solid $border-color !important;
+    border-radius: $radius-lg !important;
+    box-shadow: none !important;
+  }
+  .practice-group .tab.active { border-color: var(--cta) !important; box-shadow: 0 2px 8px rgba(68,42,255,.3) !important; }
+  .subtab-group { display: none !important; }
+
+  .mobile-song-selector {
+    display: flex;
+    gap: $sp-8;
+    padding: $sp-4 0;
+    flex-shrink: 0;
+  }
+  .mobile-song-btn {
+    flex: 1;
+    border-radius: $radius-md;
+    border: $border-width solid $border-color;
+    background: var(--white);
+    color: var(--text-sub);
+    font-family: $font-pretendard;
+    font-size: $fs-base;
+    font-weight: 700;
+    padding: $sp-12;
+    cursor: pointer;
+    transition: $transition-fast;
+    letter-spacing: -0.01em;
+  }
+  @media (hover: hover) {
+    .mobile-song-btn:hover {
+      background: var(--navi-light);
+      border-color: var(--cta);
+      color: var(--cta);
+    }
+  }
+  .mobile-song-btn.active {
+    background: var(--white);
+    border-color: var(--cta);
+    color: var(--cta);
+    box-shadow: 0 1px 4px rgba(68,42,255,.15);
+  }
+}
+
+@media (max-width: 767px) {
+  // 모바일: 사이드바 숨김 (데스크탑 .sidebar 규칙보다 뒤에 와야 display:flex 를 이김).
+  .sidebar { display: none; }
+  .mobile-tabbar {
+    display: flex;
+    flex-shrink: 0;
+    background: var(--white);
+    border-top: $border-width solid $border-color;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .mobile-tab {
+    flex: 1;
+    @include flex-column($gap: $sp-8);
+    align-items: center;
+    justify-content: center;
+    padding: $sp-10 $sp-8;
+    min-height: 56px;
+    border: none;
+    background: transparent;
+    color: var(--text-sub);
+    font-family: $font-pretendard;
+    cursor: pointer;
+    transition: $transition-fast;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .mobile-tab.active { color: var(--cta); }
+  // hover: hover 가드 — 터치 기기 고스트(끈적) hover 방지
+  @media (hover: hover) {
+    .mobile-tab:hover { color: var(--cta); }
+  }
+  .mobile-tab-icon       { display: block; width: 24px; height: 24px; }
+  .mobile-tab-icon-solid { display: none;  width: 24px; height: 24px; }
+  .mobile-tab.active .mobile-tab-icon       { display: none; }
+  .mobile-tab.active .mobile-tab-icon-solid { display: block; }
+  .mobile-tab-label { font-size: $fs-xs; font-weight: 700; letter-spacing: -0.01em; white-space: nowrap; }
+}

@@ -1,0 +1,79 @@
+// _variables.scss
+
+// ── CSS Custom Properties (런타임 참조용) ──
+:root {
+  font-size: 16px; /* 1rem = 16px 기준 */
+  --sky:        #5BB8F5;
+  --sky-light:  #EAF5FF;
+  --sky-mid:    #BBE0FA;
+  --blue:       #297cff;
+  --navi-light: #EEF1FF;
+  --cta:        #442AFF;
+  --cta-text:   #04F1FD;
+  --cta-shadow: #2810CC;
+  --green:      #08BB68;
+  --bg:         #F2F6FF;
+  --white:      #FFFFFF;
+  --border:     #D8E6F8;
+  --text:       #0F172A;
+  --text-sub:   #64748B;
+  --text-light: #94A3B8;
+  --master-gradient: conic-gradient(
+    from 0deg,
+    var(--cta), var(--sky), var(--green), var(--sky), var(--cta)
+  );
+}
+
+// ── 초기 상태 유틸리티 ──
+.is-hidden { display: none; }
+
+// ── SCSS 변수 (컴파일 타임, 믹스인 전용) ──
+$border-width : 1.5px;
+$border-color : #D8E6F8;   // = --border
+
+$radius-sm  : 7px;
+$radius-md  : 10px;
+$radius-lg  : 12px;
+$radius-xl  : 16px;
+$radius-2xl : 20px;
+$radius-pill: 999px;
+
+$transition-fast  : all .15s;
+$transition-base  : all .2s;
+$transition-smooth: .35s cubic-bezier(.4, 0, .2, 1);
+
+$font-pretendard: 'Pretendard', -apple-system, '맑은 고딕', sans-serif;
+$font-keris     : 'KerisKedyuche', 'Pretendard', sans-serif;
+
+// ── 폰트 사이즈 ──
+$fs-2xs     : 12px;   // header 부제, pp-time, bar-label, feedback 인라인 등 보조 텍스트
+$fs-xs      : 11px;   // mobile-tab-label, quiz-type-badge
+$fs-sm      : 13px;   // pvt/ppr/pp-btn (모바일)
+$fs-md      : 14px;   // note-btn, pvt/ppr/pp-btn (태블릿), qe 요소 (모바일)
+$fs-base    : 16px;   // 툴팁, mobile-song-btn, qe 요소 (태블릿)
+$fs-lg      : 18px;   // qe-start; header h1 모바일 (통합 전 20px)
+$fs-xl      : 21px;   // qc-option 모바일 (통합 전 22px); qz-end-score b (통합 전 17/20px)
+$fs-hint    : 22px;   // popup-title
+$fs-2xl     : 24px;   // qz-end-title 태블릿
+$fs-head    : 30px;   // quiz-stage-prompt
+$fs-disp-sm : 32px;   // qe-title 모바일
+$fs-3xl     : 36px;   // qz-end-badge 모바일
+$fs-disp-md : 42px;   // qe-title 태블릿
+$fs-score   : 96px;   // celebration-text (정답 폭죽 텍스트 — 기존 64px 의 1.5배)
+$fs-4xl     : 48px;   // qz-end-badge 태블릿
+
+// ── 간격 (Spacing) ──
+$sp-2  :  2px;   // 토글 그룹 내부 gap/padding
+$sp-4  :  4px;   // legend-item gap (통합 전 2px), note-grid gap (통합 전 5px), mobile-song-selector padding 등
+$sp-6  :  6px;   // pvt/ppr/pp-btn 상하 padding
+$sp-8  :  8px;   // practice-top-bar, mobile-song-btn, sidebar padding 등
+$sp-10 : 10px;   // note-btn 좌우 padding, mobile-tab padding, qe-start margin-top 등
+$sp-12 : 12px;   // practice-top-bar gap, sidebar padding, pp-btn 좌우 padding 등
+$sp-14 : 14px;   // popup-icon margin-bottom
+$sp-16 : 16px;   // sheet-wrap, 툴팁 좌우 padding, pp-btn 태블릿 좌우 padding 등
+$sp-18 : 18px;   // .btn padding 좌우
+$sp-20 : 20px;   // qz-end-score 가로 padding 태블릿
+$sp-24 : 24px;   // qe-form padding (통합 전 28px·22px), qz-c-sheet-compare 등; qz-end-actions btn 가로 padding (통합 전 22px)
+$sp-28 : 28px;   // popup-card padding, qz-end padding
+$sp-32 : 32px;   // qe-sections gap
+$sp-36 : 36px;   // popup-card padding-top/bottom

@@ -1,0 +1,552 @@
+// _practice.scss
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ── 연습하기 스테이지 ──
+#practiceStage {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  overflow: hidden;
+}
+
+// 상단 컨트롤 바
+.practice-top-bar {
+  display: flex;
+  align-items: center;
+  gap: $sp-12;
+  padding: $sp-8 $sp-12;
+  border: $border-width solid var(--border);
+  border-radius: $radius-lg;
+  background: var(--white);
+  flex-shrink: 0;
+}
+.pp-transport {
+  display: flex;
+  align-items: center;
+  gap: $sp-2;
+  flex-shrink: 0;
+}
+.pp-seek-group {
+  display: flex;
+  align-items: center;
+  gap: $sp-8;
+  flex: 1 1 0;
+  min-width: 0;
+}
+.practice-view-toggle {
+  display: flex;
+  gap: $sp-2;
+  background: var(--bg);
+  border: $border-width solid var(--border);
+  border-radius: $radius-md;
+  padding: $sp-2;
+  flex-shrink: 0;
+}
+.pvt-btn {
+  padding: $sp-6 $sp-12;
+  border: none;
+  border-radius: $radius-sm;
+  background: transparent;
+  color: var(--text-sub);
+  font-family: 'Pretendard', sans-serif;
+  font-size: $fs-base;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: $transition-fast;
+  letter-spacing: -0.01em;
+}
+@media (hover: hover) {
+  .pvt-btn:hover  { color: #0599ff; }
+}
+.pvt-btn.active { background: linear-gradient(330deg, #0980ff, #00bdff); color: var(--white); }
+
+// 재생 속도 토글 (x0.5 / x1.0 / x1.5)
+.pp-rate-toggle {
+  display: flex;
+  gap: $sp-2;
+  background: var(--bg);
+  border: $border-width solid var(--border);
+  border-radius: $radius-md;
+  padding: $sp-2;
+  flex-shrink: 0;
+}
+.ppr-btn {
+  padding: $sp-4 $sp-8;
+  border: none;
+  border-radius: $radius-sm;
+  background: transparent;
+  color: var(--text-sub);
+  font-family: 'Pretendard', sans-serif;
+  font-size: $fs-sm;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: $transition-fast;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+@media (hover: hover) {
+  .ppr-btn:hover  { color: #0599ff; }
+}
+.ppr-btn.active { background: linear-gradient(330deg, #0980ff, #00bdff); color: var(--white); }
+
+// 연습 메인 콘텐츠 (악보 + 리코더 수평 분할)
+.practice-content {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  border: $border-width solid var(--border);
+  border-radius: $radius-2xl;
+  background: var(--white);
+}
+
+// 왼쪽: 악보 패널
+.practice-score-panel {
+  flex: 0 0 75%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  padding-bottom: 60px;
+}
+.practice-score-panel.hidden {
+  flex: 0 0 0%;
+  max-width: 0;
+  opacity: 0;
+}
+.practice-content.view-both .practice-score-panel:not(.hidden)::after {
+  content: '';
+  position: absolute;
+  right: 0; top: $sp-4; bottom: $sp-4;
+  background: var(--border);
+}
+.practice-score-top {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: $sp-10 $sp-12 0;
+  flex-shrink: 0;
+}
+.practice-score-panel .score-img-wrap {
+  flex: 0 1 auto;
+  margin-bottom: auto;
+  min-height: 0;
+  overflow: hidden;
+  scrollbar-width: none;        // Firefox
+  -ms-overflow-style: none;     // IE/legacy Edge
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: $sp-8 28px;
+  width: 100%;
+  max-width: none;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+.practice-score-panel .score-img-wrap::-webkit-scrollbar {
+  display: none;                // Chrome/Safari/WebKit
+}
+
+// 오른쪽: 리코더 패널
+.practice-recorder-panel {
+  flex: 0 0 25%;
+  min-width: 0;
+  position: relative;
+  overflow: hidden;
+}
+.practice-recorder-panel.hidden {
+  flex: 0 0 0%;
+  max-width: 0;
+  min-width: 0;
+  opacity: 0;
+}
+.pp-btn {
+  padding: 5px $sp-16;
+  border-radius: $sp-8;
+  border: $border-width solid var(--blue);
+  background: var(--white);
+  box-shadow: 0 2px 6px rgb(38, 116, 239, 0.2);
+  color: var(--blue);
+  font-family: 'Pretendard', sans-serif;
+  font-size: $fs-base;
+  font-weight: 700;
+  cursor: pointer;
+  transition: $transition-fast;
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+  flex-shrink: 0;
+}
+@media (hover: hover) {
+  .pp-btn:hover { background: var(--sky-light); border-color: var(--blue); color: var(--blue); }
+}
+.pp-btn.on { background: var(--blue); border-color: var(--blue); color: var(--white); }
+// SVG 아이콘 버튼 정렬
+.pp-btn { display: inline-flex; align-items: center; justify-content: center; }
+.pp-btn > svg { width: 1.15em; height: 1.15em; stroke: currentColor; }
+// 플레이어 바 아이콘 버튼 (재생/중지/볼륨) — SVG gradient 는 url(#ppIconGrad) 참조.
+.pp-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $sp-6;
+  border: none;
+  border-radius: $radius-pill;
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  user-select: none;
+  transition: filter .15s, transform .1s;
+}
+@media (hover: hover) {
+  .pp-icon-btn:hover  { background: #dff7ff; }
+}
+.pp-icon-btn:active { transform: scale(0.95); }
+.pp-icon-btn > svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+  fill: url(#ppIconGrad);
+}
+// 시크/볼륨 슬라이더 — 공통 스타일 (track 채움 그라데이션 + thumb 원형 그라데이션).
+.pp-seek,
+.pp-vol-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  background: linear-gradient(to right, #4b47ff 0%, #549af5 var(--seek-pct, 0%), var(--border) var(--seek-pct, 0%), var(--border) 100%);
+  border-radius: $radius-pill;
+  outline: none;
+  cursor: pointer;
+}
+.pp-seek       { flex: 1 1 0; min-width: 60px; }
+.pp-vol-slider { width: 58px; }
+.pp-seek::-webkit-slider-thumb,
+.pp-vol-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: linear-gradient(330deg, #0980ff, #00bdff);
+  border: none;
+  margin-top: 0;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.18);
+}
+.pp-seek::-moz-range-thumb,
+.pp-vol-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: linear-gradient(330deg, #0980ff, #00bdff);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.18);
+}
+.pp-seek::-moz-range-track,
+.pp-vol-slider::-moz-range-track {
+  height: 6px;
+  background: linear-gradient(to right, var(--cta) 0%, var(--cta) var(--seek-pct, 0%), var(--border) var(--seek-pct, 0%), var(--border) 100%);
+  border-radius: $radius-pill;
+  border: none;
+}
+.pp-time {
+  font-size: $fs-2xs;
+  font-weight: 600;
+  color: var(--text-sub);
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-width: 82px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.pp-vol {
+  display: flex;
+  align-items: center;
+  gap: $sp-2;
+  flex-shrink: 0;
+}
+
+.score-img-wrap {
+  background: var(--white);
+  border: $border-width solid var(--border);
+  border-radius: $radius-xl;
+  padding: $sp-12 $sp-16;
+  width: 100%;
+  max-width: 1100px;
+  box-shadow: 0 4px 16px rgba(68,42,255,.06);
+}
+.score-img { display: block; width: 100%; height: auto; object-fit: contain; }
+.perf-score-svg { display: block; width: 100%; height: auto; }
+.perf-note { cursor: default; transition: opacity .15s; }
+.highlight path, .highlight circle, .highlight use, .highlight ellipse { fill: #FF0000 !important; }
+.highlight ellipse, .highlight line { stroke: #FF0000 !important; }
+.practice-error { padding: $sp-16; color: #c00; background: #fff0f0; border: $border-width solid #ffbbbb; border-radius: $radius-lg; text-align: center; font-size: $fs-sm; line-height: 1.6; }
+
+// ── 악보 제목 ──
+.score-title-bar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 100%;
+  margin: auto auto 0 auto;
+  padding: $sp-32 0;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+.score-title-main { font-size: 44px; font-weight: 800; color: var(--text); letter-spacing: -0.04em; text-align: center; }  // font-size: JS(_syncTitleFontSize) override
+.score-title-tempo { font-size: 20px; font-weight: 500; color: var(--text); flex: 1; position: relative; }  // font-size: JS(_syncTitleFontSize) override
+
+// ── 연습하기 카운트다운 ──
+.countdown-num {
+  position: fixed;
+  font-family: $font-keris;
+  font-size: 100px;
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: -0.04em;
+  padding: 0.1em 0.05em 0.15em;
+  opacity: 0;
+  pointer-events: none;
+  white-space: nowrap;
+  transform-origin: left bottom;
+  z-index: 9999;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.countdown-num.cycle {
+  animation: count-cycle var(--beat-dur, 0.5s) ease forwards;
+}
+@keyframes count-cycle {
+  0%   { opacity: 0; transform: translate(0, -100%) scale(0.7); }
+  18%  { opacity: 1; transform: translate(0, -100%) scale(1); }
+  72%  { opacity: 1; transform: translate(0, -100%) scale(1); }
+  100% { opacity: 0; transform: translate(0, -100%) scale(1.6); }
+}
+.score-title-composer { font-size: 20px; font-weight: 500; color: var(--text); flex: 1; text-align: right; }  // font-size: JS(_syncTitleFontSize) override
+
+// ── 볼륨 슬라이더 ──
+#volumeWrap {
+  position: absolute;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $sp-6;
+  background: var(--white);
+  border: $border-width solid var(--border);
+  border-radius: $radius-xl;
+  padding: $sp-10 $sp-8;
+  box-shadow: 0 2px 6px rgb(38, 116, 239, 0.2);
+  z-index: 10;
+}
+// 학습 모드 볼륨 바 — 세로 슬라이더.
+#volumeBar {
+  writing-mode: vertical-lr;
+  direction: rtl;
+  width: 6px;
+  height: 56px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: linear-gradient(to top, #4b47ff 0%, #549af5 var(--seek-pct, 0%), var(--border) var(--seek-pct, 0%), var(--border) 100%);
+  border-radius: $radius-pill;
+  outline: none;
+  cursor: pointer;
+}
+#volumeBar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: linear-gradient(330deg, #0980ff, #00bdff);
+  border: none;
+  margin: 0;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.18);
+}
+#volumeBar::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: linear-gradient(330deg, #0980ff, #00bdff);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.18);
+}
+#volumeBar::-moz-range-track {
+  width: 6px;
+  background: linear-gradient(to top, #4b47ff 0%, #549af5 var(--seek-pct, 0%), var(--border) var(--seek-pct, 0%), var(--border) 100%);
+  border-radius: $radius-pill;
+  border: none;
+}
+
+// ── 하단 바 ──
+.bottom-bar {
+  flex-shrink: 0;
+  padding: 0.75rem;
+}
+#quizEndBar.bottom-bar {
+  padding: .85rem .75rem;
+}
+.bar-label { text-align: center; font-size: $fs-2xs; color: var(--text-light); font-weight: 700; margin-bottom: $sp-8; letter-spacing: -0.01em; }
+.note-grid { display: flex; flex-wrap: wrap; gap: $sp-8; justify-content: center; }
+
+// ── 연습하기 별 게이지 ──
+.star-grid { display: flex; flex-wrap: wrap; gap: $sp-8; justify-content: center; }
+.star { width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center; align-self: center; }
+.star svg { width: 100%; height: 100%; overflow: visible; display: block; }
+.star .s-outer { fill: var(--border); transition: fill .25s ease; }
+.star .s-inner {
+  fill: #FFFFFF;
+  stroke: #FFFFFF;
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+  transition: fill .25s ease, stroke .25s ease;
+}
+.star.filled .s-outer { fill: #FBBF24; stroke: #ffae00; stroke-width: 1; vector-effect: non-scaling-stroke; }
+.star.filled .s-inner { fill: #FBBF24; stroke: #FBBF24; }
+.star.filled { filter: drop-shadow(0 1px 2px rgba(245, 158, 11, .35)); }
+.star.pop { animation: star-pop .4s ease; }
+@keyframes star-pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.35); }
+  100% { transform: scale(1); }
+}
+
+// ── 연습 확인 팝업 ──
+.popup-overlay {
+  position: fixed; inset: 0;
+  background: rgba(15, 23, 42, .55);
+  display: none;
+  align-items: center; justify-content: center;
+  z-index: 1000;
+  animation: popup-fade .18s ease;
+}
+.popup-overlay.show { display: flex; }
+.popup-card {
+  background: var(--white);
+  border-radius: 22px;
+  padding: $sp-36 44px 30px;
+  box-shadow: 0 14px 44px rgba(15, 23, 42, .28);
+  max-width: 90%;
+  text-align: center;
+  animation: popup-rise .22s ease;
+}
+.popup-icon {
+  width: 48px;
+  height: 48px;
+  color: var(--cta);
+  margin: 0 auto $sp-14;
+  display: block;
+}
+.popup-title {
+  font-size: $fs-hint;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: $sp-24;
+  letter-spacing: -0.02em;
+}
+.popup-actions { display: flex; gap: $sp-12; justify-content: center; }
+.popup-actions .btn { font-size: $fs-base; padding: $sp-12 28px; border-radius: $radius-lg; }
+@media (hover: hover) {
+  .popup-actions .btn:not(.popup-confirm):hover { transform: translateY(-2px); }
+}
+@keyframes popup-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes popup-rise {
+  from { opacity: 0; transform: translateY(8px) scale(.97); }
+  to   { opacity: 1; transform: translateY(0)   scale(1); }
+}
+
+@media (min-width: 768px) and (max-width: 1179px) {
+  .pp-vol .pp-vol-slider { display: none; }
+
+  // 연습하기 플레이어 바
+  .practice-top-bar { padding: $sp-8; }
+  .pvt-btn, .ppr-btn { font-size: $fs-md; }
+  .pp-btn { font-size: $fs-md; padding: $sp-6 $sp-16; }
+  .practice-score-top { padding: $sp-8 $sp-8 0; }
+
+  // 팝업
+  .popup-card { padding: $sp-28 $sp-32 $sp-24; }
+  .popup-icon { width: 40px; height: 40px; margin-bottom: $sp-10; }
+  .popup-title { font-size: $fs-lg; margin-bottom: $sp-16; }
+  .popup-actions .btn { font-size: $fs-md; padding: $sp-10 $sp-24; }
+}
+
+@media (max-width: 767px) {
+  .practice-top-bar { flex-wrap: wrap; gap: $sp-8 $sp-4; padding: $sp-8; }
+  .pp-transport { gap: $sp-4; }
+  .pp-seek-group { order: 10; flex: 1 1 100%; margin: 0 $sp-8 $sp-8; }
+  .practice-view-toggle { flex: 1; }
+  .pp-rate-toggle { flex: 1; }
+  .pvt-btn { flex: 1; font-size: $fs-2xs; padding: $sp-4; }
+  .ppr-btn { flex: 1; font-size: $fs-2xs; padding: $sp-4; }
+  .pvt-btn[data-view="both"] { display: none; }
+  .pp-vol .pp-vol-slider { display: none; }
+  .pp-btn { font-size: $fs-2xs; padding: $sp-4 $sp-8; }
+
+  // ── 모바일 곡 선택 바 ──
+  .mobile-song-selector {
+    display: flex;
+    gap: $sp-8;
+    flex-shrink: 0;
+  }
+  .mobile-song-btn {
+    flex: 1;
+    border-radius: $radius-md;
+    border: $border-width solid var(--border);
+    background: var(--white);
+    color: var(--text-sub);
+    font-family: $font-pretendard;
+    font-size: $fs-md;
+    font-weight: 700;
+    padding: $sp-8;
+    cursor: pointer;
+    transition: $transition-fast;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .mobile-song-btn.active {
+    background: var(--white);
+    border-color: var(--cta);
+    color: var(--cta);
+    box-shadow: 0 1px 4px rgba(68,42,255,.15);
+  }
+  // hover: hover 가드 — 터치 기기 고스트(끈적) hover 방지
+  @media (hover: hover) {
+    .mobile-song-btn:hover {
+      background: var(--navi-light);
+      border-color: var(--cta);
+      color: var(--cta);
+    }
+  }
+
+  // 별 게이지: 한 줄 유지 + 비율 고정 축소
+  .star-grid { flex-wrap: nowrap; }
+  .star { flex: 0 1 auto; min-width: 0; height: auto; aspect-ratio: 1; align-self: center; }
+
+  // 볼륨 컨트롤 모바일 위치 (데스크탑 #volumeWrap 가 _practice 에 있으므로 여기서 오버라이드해야 이김).
+  #volumeWrap { bottom: 70px; right: .75rem; padding: $sp-8; }
+  #volumeBar { display: none; }
+  #volumeWrap .pp-icon-btn,
+  #volumeWrap button {
+    min-width:  34px;
+    min-height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

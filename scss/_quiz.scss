@@ -1,0 +1,1160 @@
+// _quiz.scss
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ──────────────────────────────────────────────
+//  퀴즈 시스템 (entry / type B grid / type C sheet / type D draw / end / review)
+// ──────────────────────────────────────────────
+.quiz-stage {
+  width: 100%;
+  height: 100%;
+  display: none;
+  flex-direction: column;
+  align-items: stretch;
+  background: var(--white);
+  border-radius: $radius-2xl;
+  border: $border-width solid var(--border);
+  overflow: hidden;
+  position: relative;
+  isolation: isolate;     // .quiz-stage-bg(z-index:-1) 를 내부에 가둠
+}
+.quiz-stage.show { display: flex; }
+
+// 퀴즈 스테이지 배경 Lottie
+.quiz-stage-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.35;
+  overflow: hidden;
+}
+.quiz-stage-bg > svg {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+// ── 엔트리 화면 ──
+#quizEntryStage { padding: 0; }
+.qe-scroll-frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 1;
+}
+.qe-scroll-row {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+.qe-scroll {
+  flex: 1 1 auto;
+  min-width: 0;
+  position: relative;
+}
+.qe-form {
+  min-height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $sp-32;
+  padding: 44px $sp-32;
+  box-sizing: border-box;
+}
+// 엔트리 화면 마우스 트레일 데코
+.qe-deco {
+  position: fixed;
+  top: 0; left: 0;
+  width: 112px;
+  height: 112px;
+  pointer-events: none;
+  z-index: 1000;
+  transform: translate(-300px, -300px);
+}
+.qe-title {
+  font-size: 52px; font-weight: 800; letter-spacing: -0.03em; text-align: center;
+  font-family: $font-keris;
+  background: linear-gradient(to bottom,
+    var(--cta) 0%,
+    color-mix(in srgb, var(--cta) 70%, #fff) 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+          color: transparent;
+}
+.qe-title span {
+  background: linear-gradient(to bottom,
+    var(--text) 0%,
+    color-mix(in srgb, var(--text) 70%, #fff) 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+          color: transparent;
+}
+.qe-section { width: 100%; display: flex; flex-direction: column; gap: $sp-12; }
+.qe-sections { display: flex; flex-direction: column; gap: $sp-32; }
+.qe-section-label { font-size: $fs-lg; font-weight: 800; color: var(--text); letter-spacing: -0.02em; display: flex; align-items: center; gap: $sp-6; }
+.qe-section-label::before { content: ''; width: 4px; height: var(--qe-bar-h, 15px); background: var(--cta); border-radius: 2px; }
+.qe-chips { display: flex; flex-wrap: wrap; gap: $sp-8; }
+.qe-chip {
+  padding: $sp-10 $sp-20;
+  border: $border-width solid var(--border);
+  border-radius: $radius-pill;
+  background: var(--white);
+  color: var(--text-sub);
+  font-family: 'Pretendard', sans-serif;
+  font-size: $fs-lg;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s, color .15s, border-color .15s, opacity .15s;
+  letter-spacing: -0.018em;
+}
+.qe-chip:hover { background: var(--sky-light); color: var(--blue); }
+.qe-chip.active {
+  background: var(--blue); border-color: var(--blue); color: var(--white);
+}
+.qe-chip:disabled,
+.qe-chip.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+  background: var(--white);
+  border-color: var(--border);
+  color: var(--text-light);
+}
+.qe-desc {
+  width: 100%;
+  padding: $sp-20 18px;
+  background: var(--sky-light);
+  border: $border-width solid var(--sky-light);
+  border-radius: $radius-lg;
+  font-size: $fs-lg;
+  font-weight: 600;
+  color: #0053d7;
+  letter-spacing: -0.01em;
+  transition: opacity .2s;
+}
+// .qe-start (퀴즈 시작 버튼) 는 .btn 변형이라 _components 에서 .btn 뒤에 일괄 정의함.
+.qe-start-icon {
+  width: 23px;
+  height: 23px;
+  flex-shrink: 0;
+}
+
+// 엔트리 양옆 캐릭터 컬럼
+.qe-bgimg-col {
+  flex: 0 0 22%;
+  max-width: 22%;
+  display: flex;
+  align-items: flex-end;
+  pointer-events: none;
+  z-index: 0;
+  padding-bottom: $sp-16;
+}
+.qe-bgimg-col-left  { justify-content: flex-start; padding-left: 28px; }
+.qe-bgimg-col-right { justify-content: flex-end;   padding-right: 28px; }
+.qe-bgimg-side {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 38vh;
+  object-fit: contain;
+}
+
+// 유형 배지 (배너 내)
+.quiz-type-badge {
+  flex-shrink: 0;
+  display: inline-flex; align-items: center;
+  height: var(--quiz-chip-h);
+  font-size: 0.8125rem; font-weight: 700; color: var(--text-sub);
+  background: var(--white); padding: 0 $sp-12; border-radius: $radius-pill;
+  border: $border-width solid var(--border); letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+// ── Type B (그림 찾기) ──
+#quizGridStage { padding: 0 0 $sp-16; gap: $sp-16; align-items: center; justify-content: flex-start; }
+.qb-grid {
+  flex: 1 1 0; min-height: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: $sp-12;
+  width: 100%;
+  margin: 0 auto;
+  padding: $sp-12 $sp-16;
+  position: relative;
+}
+.qb-grid.qb-grid--row {
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 1fr;
+}
+.qb-card {
+  border: 2.5px solid var(--border);
+  border-radius: $radius-xl;
+  background: var(--white);
+  outline: none;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  padding: $sp-16;
+  transition: $transition-fast;
+  position: relative;
+  min-height: 0;
+}
+.qb-card:hover { border-color: var(--cta); transform: translateY(-2px); }
+.qb-card.picked  { border-color: var(--cta); background: var(--navi-light); transform: translateY(-2px); }
+.qb-card.picked.disabled { transform: translateY(0); }
+.qb-grid:has(.qb-card.correct) .qb-card.picked {
+  border-color: #94A3B8;
+  background: #f3f4f6;
+}
+.qb-card.correct { border-color: #00b548; background: #effff4; }
+.qb-card.wrong   { border-color: #DC2626; background: #FFF1F2; }
+.qb-card.disabled { pointer-events: none; }
+.qb-card svg { height: 100%; max-height: 100%; width: auto; display: block; }
+.qb-grid--row .qb-card svg { transform: translateX(-5px); }
+
+// ── Type C (계이름 읽기) ──
+#quizSheetStage { padding: 0 0 $sp-16; gap: $sp-16; align-items: center; }
+.qc-body {
+  flex: 1 1 0; min-height: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: relative;
+}
+.qc-sheet-wrap {
+  flex: 6 1 0;   // 악보 : 버튼 = 6 : 4
+  min-height: 0;
+  width: 100%;
+  display: flex; align-items: center; justify-content: center;
+  transform: translateY(-10px);
+}
+.qc-sheet-wrap svg { height: 65%; max-height: 65%; width: 65%; padding: 0 $sp-16; box-sizing: border-box; }
+.qc-options {
+  flex: 4 1 0;        // 악보 : 버튼 = 6 : 4
+  min-height: 0;
+  align-content: stretch;  // grid 행이 40% 영역을 꽉 채우도록
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $sp-12;
+  padding: $sp-12 $sp-16 0 $sp-16;
+}
+.qc-option {
+  padding: $sp-16 $sp-32;   // 세로 48px → 영역(40%)이 높이를 정하므로 축소, 텍스트는 flex 로 중앙 정렬
+  border-radius: $radius-lg;
+  font-family: 'Pretendard', sans-serif;
+  font-size: max(16px, min(2.2vw, 5vh)); font-weight: 800;  // 버튼/악보에 맞춰 가변 — 하한 16px, 상한 없음(큰 화면에서 계속 커짐)
+  cursor: pointer;
+  border: 2px solid var(--border);
+  background: var(--white);
+  color: var(--text);
+  transition: $transition-fast;
+  letter-spacing: -0.02em;
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.qc-option:hover { border-color: var(--cta); color: var(--cta); transform: translateY(-2px); }
+.qc-option.picked  { background: var(--navi-light); border-color: var(--cta); color: var(--cta); transform: translateY(-2px); }
+.qc-option.picked.disabled { transform: translateY(0); }
+.qc-options:has(.qc-option.correct) .qc-option.picked {
+  background: #f3f4f6;
+  border-color: #94A3B8;
+  color: #94A3B8;
+}
+.qc-option.correct { background: #effff4; border-color: #00b548; color: #00b548; }
+.qc-option.wrong   { background: #FFF1F2; border-color: #DC2626; color: #DC2626; }
+.qc-option.disabled { pointer-events: none; }
+
+// ── Type D (음표 그리기) ──
+#quizDrawStage { align-items: center; }
+.qd-sheet-wrap {
+  flex: 1 1 0; min-height: 0;
+  width: 100%;
+  display: flex; align-items: center; justify-content: center;
+}
+.qd-sheet-wrap svg { height: 55%; max-height: 55%; width: 55%; cursor: default; pointer-events: none; padding: 0 $sp-16; box-sizing: border-box; }
+.qd-sheet-wrap .qd-preview-hover { fill: var(--cta); opacity: 0.55; }
+.qd-sheet-wrap .qd-preview       { fill: var(--cta); opacity: 1; }
+.qd-sheet-wrap .qd-preview path[style*="stroke:#000"],
+.qd-sheet-wrap .qd-preview-hover path[style*="stroke:#000"] {
+  stroke: var(--cta) !important;
+}
+.qd-sheet-wrap .qd-preview-correct path[style*="stroke:#000"],
+.qd-answer-wrap .qd-preview-correct path[style*="stroke:#000"] {
+  stroke: #00b548 !important;
+}
+.qd-sheet-wrap:has(.qd-preview-correct) .qd-preview { fill: #94A3B8; }
+.qd-sheet-wrap .qd-preview-correct,
+.qd-answer-wrap .qd-preview-correct { fill: #00b548; opacity: 1; }
+.qd-sheet-wrap .qd-preview-wrong,
+.qd-answer-wrap .qd-preview-wrong   { fill: #DC2626; opacity: 1; }
+.qd-row {
+  flex: 1 1 0; min-height: 0;
+  width: 100%;
+  display: flex; flex-direction: row;
+  align-items: stretch;
+  position: relative;
+}
+.qd-row > .qd-sheet-wrap { width: auto; flex: 1 1 50%; min-width: 0; }
+.qd-answer-wrap {
+  display: none;
+  flex: 1 1 50%; min-width: 0;
+  align-items: center; justify-content: center;
+  position: relative;
+}
+.qd-answer-wrap svg { height: 55%; max-height: 55%; width: 55%; padding: 0 $sp-16; box-sizing: border-box; }
+.qd-row.qd-wrong-split > .qd-answer-wrap { display: flex; }
+.qd-row.qd-wrong-split::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0px;
+  bottom: $sp-4;
+  width: 1px;
+  background: var(--border);
+}
+
+// ── 엔드 화면 ──
+#quizEndStage {
+  padding: 0;
+}
+.qz-end-scroll {
+  width: 100%;
+  padding: $sp-32;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: $sp-12;
+  box-sizing: border-box;
+}
+.qz-end-scroll > .qz-end-summary,
+.qz-end-scroll > .qz-divider,
+.qz-end-scroll > .qz-review-section {
+  max-width: 1060px;
+}
+
+// ── 결과 화면 한정 — .main-area 를 스크롤 컨테이너로 전환 ──
+.main-area--end-scroll {
+  overflow-y: auto;
+  padding-bottom: 0;
+  overscroll-behavior: contain;
+}
+.main-area--end-scroll .stage {
+  flex: 0 0 auto;
+  min-height: 0;
+}
+.main-area--end-scroll #quizEndStage {
+  height: auto;
+}
+.main-area--end-scroll #quizEndBar {
+  margin-top: auto;
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  background: var(--bg);
+  transition: transform 0.3s ease;
+  will-change: transform;
+}
+.main-area--end-scroll #quizEndBar::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  height: 28px;
+  background: linear-gradient(to bottom, transparent, rgb(255, 255, 255));
+  -webkit-mask-image: linear-gradient(to right, transparent, white 35%, white 65%, transparent);
+          mask-image: linear-gradient(to right, transparent, white 35%, white 65%, transparent);
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+.main-area--end-scroll #quizEndBar::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background:
+    radial-gradient(circle at top right, transparent 18.5px, var(--border) 19px, var(--border) 20px, var(--bg) 20.5px) top left  / 20px 20px no-repeat,
+    radial-gradient(circle at top left,  transparent 18.5px, var(--border) 19px, var(--border) 20px, var(--bg) 20.5px) top right / 20px 20px no-repeat,
+    linear-gradient(to bottom, transparent 18.5px, var(--border) 19px, var(--border) 20px) 20px 0 / calc(100% - 40px) 20px no-repeat;
+  pointer-events: none;
+  z-index: 2;
+  transition: opacity 0.3s ease;
+}
+.main-area--end-scroll #quizEndBar.quiz-end-bar--hidden::after {
+  opacity: 0;
+}
+.main-area--end-scroll #quizEndBar.quiz-end-bar--hidden {
+  transform: translateY(100%);
+}
+.main-area--end-scroll-atbottom #quizEndBar,
+.main-area--end-scroll-atbottom #quizEndBar::after {
+  transition: none;
+}
+.main-area--end-scroll-fit {
+  overflow-y: hidden;
+}
+.main-area--end-scroll-fit .stage {
+  flex: 1 1 0;
+  min-height: 0;
+}
+.main-area--end-scroll-fit #quizEndStage {
+  height: 100%;
+}
+.main-area--end-scroll-fit #quizEndBar {
+  margin-top: 0;
+}
+.main-area--end-scroll-fit #quizEndBar::before,
+.main-area--end-scroll-atbottom #quizEndBar::before {
+  opacity: 0;
+}
+.qz-end-summary {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $sp-12;
+  flex-shrink: 0;
+}
+.qz-end-summary--horizontal {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: auto auto;
+  column-gap: $sp-16;
+  row-gap: 2px;
+  align-items: center;
+  background: var(--navi-light);
+  padding: $sp-32;
+  border-radius: $radius-xl;
+}
+.qz-end-summary--horizontal .qz-end-title { line-height: 1.2; }
+
+// ── 성공률 구간별 색상 ──
+.qz-end-summary--horizontal.qz-tier-1 { background: rgba(255, 45, 85, 0.12); }
+.qz-end-summary--horizontal.qz-tier-2 { background: rgba(255, 149, 0, 0.12); }
+.qz-end-summary--horizontal.qz-tier-3 { background: rgba(52, 199, 89, 0.12); }
+// tier-4 (마스터 레벨) — 회전 conic 그라데이션 테두리.
+.qz-end-summary--horizontal.qz-tier-4 {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.qz-end-summary--horizontal.qz-tier-4::before {
+  content: '';
+  position: absolute;
+  inset: -100vmax;
+  background: var(--master-gradient);
+  animation: qzMasterRotate 1.2s linear infinite;
+  z-index: -2;
+}
+.qz-end-summary--horizontal.qz-tier-4::after {
+  content: '';
+  position: absolute;
+  inset: $sp-4;
+  background: #E0EFFF;
+  border-radius: $radius-lg;
+  z-index: -1;
+}
+@keyframes qzMasterRotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.qz-end-summary--horizontal.qz-tier-1 .qz-end-title { color: #FF2D55; }
+.qz-end-summary--horizontal.qz-tier-2 .qz-end-title { color: #FF9500; }
+.qz-end-summary--horizontal.qz-tier-3 .qz-end-title { color: #34C759; }
+.qz-end-summary--horizontal.qz-tier-4 .qz-end-title { color: #007AFF; }
+.qz-end-summary--horizontal .qz-end-badge {
+  grid-column: 1; grid-row: 1 / span 2;
+  align-self: center;
+}
+.qz-end-summary--horizontal .qz-end-title {
+  grid-column: 2; grid-row: 1;
+  text-align: left;
+}
+.qz-end-summary--horizontal .qz-end-msg {
+  grid-column: 2; grid-row: 2;
+  text-align: left;
+  max-width: none;
+}
+.qz-end-summary--horizontal .qz-end-score {
+  grid-column: 3; grid-row: 1 / span 2;
+  align-self: center;
+}
+
+.qz-end-badge { font-size: 60px; line-height: 1; }
+.qz-end-title { font-size: 28px; font-weight: 800; color: var(--cta); letter-spacing: -0.03em; text-align: center; }
+.qz-end-score {
+  font-size: $fs-lg; font-weight: 700; color: var(--text);
+  background: var(--white);
+  padding: $sp-10 $sp-24; border-radius: $radius-pill;
+  display: flex; align-items: center;
+  flex-shrink: 0;
+}
+.qz-end-score b { font-size: 22px; margin: 0 $sp-4; }
+.qz-end-score b:first-of-type  { color: var(--cta); }
+.qz-end-score b:last-of-type   { color: var(--text-sub); }
+.qz-end-score .qz-end-slash    { color: var(--text-sub); }
+.qz-end-msg { font-size: $fs-md; color: var(--text-sub); text-align: center; line-height: 1.6; max-width: 520px; }
+
+.qz-end-actions {
+  display: flex;
+  gap: $sp-10;
+  justify-content: center;
+  align-items: center;
+}
+.qz-end-icon { width: 1.1em; height: 1.1em; flex-shrink: 0; margin-right: 0.4em; }
+
+// ── 틀린 문제 리뷰 섹션 ──
+.qz-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+  margin: $sp-16 0 $sp-4;
+  flex-shrink: 0;
+}
+.qz-review-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: $sp-24;
+  flex-shrink: 0;
+}
+.qz-review-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.qz-review-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+.qz-review-tab-row {
+  display: flex;
+  align-items: center;
+  gap: $sp-6;
+}
+// 탭 버튼은 .qe-chip 재사용 + font-size 오버라이드.
+.qz-review-chip { font-size: $fs-base; }
+
+// 정답 카드 — 우측 정답 카드·헬퍼 텍스트 숨김.
+.qz-review-card.is-correct .qz-cmp-arrow,
+.qz-review-card.is-correct .qz-cmp-arrow + .qz-cmp-half,
+.qz-review-card.is-correct .qz-cmp-label.correct,
+.qz-review-card.is-correct .qz-rev-opts,
+.qz-review-card.is-correct .qz-rev-subtext--cd,
+.qz-review-card.is-correct .qz-review-hint-text {
+  display: none;
+}
+
+// 정답/오답 뱃지 — 카드 헤더 우측 끝
+.qz-card-result-badge {
+  margin-left: auto;
+  flex-shrink: 0;
+  padding: $sp-4 $sp-8;
+  border-radius: $radius-pill;
+  font-size: $fs-sm;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.qz-card-result-badge.correct {
+  background: #effff4;
+  color: var(--green);
+  border: $border-width solid var(--green);
+}
+.qz-card-result-badge.wrong {
+  background: #FFF1F2;
+  color: #DC2626;
+  border: $border-width solid #DC2626;
+}
+// 카드 레이아웃 — 기본 1열, --cols-2 시 2열 메이슨리.
+.qz-review-list {
+  display: flex;
+  flex-direction: column;
+  gap: $sp-12;
+  width: 100%;
+}
+.qz-review-list.qz-review-list--cols-2 {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: $sp-24;
+}
+.qz-review-col {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $sp-24;
+}
+.qz-review-list .quiz-type-badge { padding: $sp-8 $sp-12; gap: $sp-2; }
+.qz-review-card {
+  background: var(--white);
+  border: $border-width solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease,
+              border-color .2s ease, opacity .2s ease;
+}
+.qz-review-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(91,150,245,.12);
+  border-color: #5b96f5;
+}
+.qz-review-card.focused {
+  border-color: #5b96f5;
+  box-shadow: 0 0 0 3px rgba(91,150,245,.18), 0 8px 24px rgba(91,150,245,.14);
+  transform: translateY(-2px);
+}
+.qz-review-card.focused .qz-card-header {
+  background: #eaf5ff;
+  border-bottom: 1px solid #eaf5ff;
+}
+.qz-review-section.has-focus .qz-review-card:not(.focused),
+.qz-review-list.has-focus    .qz-review-card:not(.focused) {
+  opacity: .45;
+  transform: none;
+  box-shadow: none;
+  border-color: var(--border);
+}
+.qz-card-header {
+  display: flex;
+  align-items: center;
+  gap: $sp-8;
+  padding: $sp-12;
+  line-height: 1;
+  background: #FAFCFF;
+  border-bottom: 1px solid var(--border);
+}
+.qz-card-header .q-label {
+  font-size: $fs-lg;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+.qz-card-body { display: flex; flex-direction: column; padding: $sp-12; }
+.qz-compare-area {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: $sp-12 0px $sp-24;
+}
+.qz-cmp-half {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: $sp-8;
+  flex: 1 1 0;
+  min-width: 0;
+}
+.qz-cmp-half svg { max-width: 100%; height: auto; max-height: 360px; }
+.qz-cmp-arrow {
+  display: flex; align-items: center; justify-content: center;
+  align-self: center;
+  flex-shrink: 0;
+  color: var(--text-light);
+}
+.qz-cmp-arrow svg { width: 40px; height: 40px; stroke: currentColor; }
+.qz-cmp-label {
+  font-size: $fs-base; font-weight: 700;
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+.qz-cmp-label.user    { color: #442AFF; }
+.qz-cmp-label.correct { color: #08bb68; }
+.qz-cmp-card {
+  background: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  width: 100%;
+}
+
+// ── 유형별 그룹 modifier ──
+.qz-compare-area--abe {
+  padding: $sp-12 $sp-4 $sp-24 $sp-4;
+}
+.qz-compare-area--abe .qz-cmp-label {
+  transform: translateX(4px);
+}
+.qz-compare-area--cd .qz-cmp-card {
+  padding: $sp-6;
+}
+.qz-compare-area--cd .qz-cmp-card svg {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 240px;
+  padding: 0 $sp-16;
+}
+.qz-compare-area--c .qz-cmp-card svg {
+  min-height: 140px;
+}
+.qz-compare-area--d .qz-cmp-card svg {
+  min-height: 140px;
+}
+.qz-compare-area--cd .qz-cmp-label {
+  transform: translateX(8px);
+}
+.qz-compare-area--cd .qz-cmp-arrow {
+  align-self: stretch;
+  padding-top: 40px;
+}
+
+// ── Type C 오답 악보 비교 ──
+.qz-c-sheet-compare {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  gap: $sp-8;
+  width: 100%;
+  background: #fff;
+  padding: $sp-24 $sp-8 $sp-12 $sp-8;
+  border-radius: $radius-lg;
+}
+.qz-c-sheet-half {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1 1 0;
+  min-width: 0;
+}
+.qz-c-sheet-compare .qz-cmp-card {
+  padding: $sp-6;
+  width: 100%;
+}
+.qz-c-sheet-compare .qz-cmp-card svg {
+  width: 100%;
+  height: auto;
+  padding: 0 $sp-8;
+}
+.qz-c-sheet-compare .qz-cmp-arrow {
+  align-self: stretch;
+  padding-top: $sp-32;
+}
+
+// 설명 컬럼
+.qz-hint-col {
+  flex: 0 0 auto;
+  padding: $sp-20;
+  display: flex;
+  flex-direction: column;
+  gap: $sp-12;
+  background: #f6fbff;
+  border-radius: $radius-lg;
+  transition: background .2s ease;
+}
+.qz-review-card.focused .qz-hint-col {
+  background: #eaf5ff;
+}
+.qz-hint-title {
+  font-size: $fs-lg; font-weight: 800; color: var(--text-sub);
+  letter-spacing: -0.01em;
+}
+.qz-hint-box {
+  font-size: $fs-lg;
+  line-height: 1.6;
+  color: var(--text);
+}
+.qz-hint-box b { color: inherit; font-weight: inherit; }
+
+// 리뷰용 SVG 마킹
+.qz-rev-fill-purple { fill: #442AFF !important; }
+.qz-rev-fill-black  { fill: #111 !important; }
+.qz-rev-fill-green  { fill: #08bb68 !important; }
+.qz-review-card .qz-rev-wrong-mark {
+  stroke: #E11D48;
+  stroke-width: 2.5px;
+  vector-effect: non-scaling-stroke;
+}
+.qz-rev-correct-mark {
+  stroke: #08bb68 !important;
+  stroke-width: 2.5px !important;
+  vector-effect: non-scaling-stroke !important;
+}
+.qz-rev-purple-ring {
+  stroke: #442AFF !important;
+  stroke-width: 2.5px !important;
+  vector-effect: non-scaling-stroke !important;
+}
+// hole 번호 라벨(0~7) — 카드 focused 시 stagger 페이드 인.
+.qz-rev-hole-labels text {
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+}
+.qz-review-card.focused .qz-rev-hole-labels text {
+  opacity: 1;
+}
+.qz-review-card.focused .qz-rev-hole-labels text:nth-child(1) { transition-delay: 0.05s; }
+.qz-review-card.focused .qz-rev-hole-labels text:nth-child(2) { transition-delay: 0.10s; }
+.qz-review-card.focused .qz-rev-hole-labels text:nth-child(3) { transition-delay: 0.15s; }
+.qz-review-card.focused .qz-rev-hole-labels text:nth-child(4) { transition-delay: 0.20s; }
+.qz-review-card.focused .qz-rev-hole-labels text:nth-child(5) { transition-delay: 0.25s; }
+.qz-review-card.focused .qz-rev-hole-labels text:nth-child(6) { transition-delay: 0.30s; }
+.qz-review-card.focused .qz-rev-hole-labels text:nth-child(7) { transition-delay: 0.35s; }
+.qz-review-card.focused .qz-rev-hole-labels text:nth-child(8) { transition-delay: 0.40s; }
+
+// Type C 리뷰 선택지 행
+.qz-rev-opts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $sp-4;
+  width: 100%;
+  padding: 0 $sp-12 $sp-36;
+}
+.qz-rev-opt {
+  font-size: $fs-base;
+  font-weight: 700;
+  text-align: center;
+  padding: $sp-12 $sp-4;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-sub);
+  background: var(--white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.qz-rev-opt.user    { background: var(--navi-light); border-color: #442AFF; color: #442AFF; }
+.qz-rev-opt.correct { background: #effff4; border-color: #08bb68; color: #08bb68; }
+
+// Type C 계이름 라벨 한글 + ♭/♯ 분리 정렬
+.qz-review-badge .qz-note-wrap,
+.qz-rev-opt .qz-note-wrap {
+  display: inline-flex;
+  align-items: center;
+}
+.qz-review-badge .qz-note-base,
+.qz-rev-opt .qz-note-base,
+.qz-review-badge .qz-note-acc,
+.qz-rev-opt .qz-note-acc {
+  display: inline-flex;
+  align-items: center;
+}
+
+// Type D 리뷰 — 음표 fill
+.qz-rev-d-picked  { fill: #442AFF !important; opacity: 1; }
+.qz-rev-d-correct { fill: #08bb68 !important; opacity: 1; }
+.qz-rev-d-picked path[style*="stroke:#000"] {
+  stroke: #442AFF !important;
+}
+.qz-rev-d-correct path[style*="stroke:#000"] {
+  stroke: #08bb68 !important;
+}
+.qz-rev-d-x {
+  font-family: 'Pretendard', sans-serif;
+  font-size: 22px;
+  font-weight: 900;
+  fill: #E11D48;
+}
+.qz-rev-subtext--cd {
+  font-size: $fs-base;
+  font-weight: 700;
+  text-align: center;
+  transform: translateX(8px);
+}
+.qz-rev-subtext--cd.user    { color: #E11D48; }
+.qz-rev-subtext--cd.correct { color: #08bb68; }
+
+// Type A/B/E — 알약 뱃지 (user/correct)
+.qz-review-badge {
+  padding: $sp-6 $sp-12;
+  border-radius: $radius-pill;
+  font-size: $fs-md;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  gap: $sp-4;
+  align-self: center;
+  transform: translateX(8px);
+}
+.qz-review-badge b { font-weight: 800; margin: 0 $sp-2; }
+.qz-review-badge.user {
+  background: #efebff;
+  color: #442AFF;
+  border: $border-width solid #efebff;
+}
+.qz-review-badge.correct {
+  background: #e6ffee;
+  color: #008f4d;
+  border: $border-width solid #e6ffee;
+}
+.qz-review-hint-text {
+  margin-top: $sp-4;
+  font-size: $fs-sm;
+  font-weight: 600;
+  color: #DC2626;
+  text-align: center;
+  line-height: 1.5;
+}
+.qz-review-hint-text > div {
+  white-space: nowrap;
+  display: inline-block;
+  line-height: 1.5;
+}
+.qz-hint-hole {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 2px solid #E11D48;
+  box-sizing: border-box;
+  vertical-align: -1px;
+  margin: 0 $sp-2;
+}
+.qz-hint-hole.open   { background: #fff; }
+.qz-hint-hole.closed { background: #442AFF; }
+.qz-review-hint-text--e .qz-hint-hole.closed { background: #000; }
+.qz-review-hint-text--e .qz-hint-hole.red    { border-color: #E11D48; }
+.qz-review-hint-text--e .qz-hint-hole.purple { border-color: #442AFF; }
+.qz-rev-outer-ring {
+  fill: none;
+  stroke: #E11D48;
+  stroke-width: 2.5px;
+  vector-effect: non-scaling-stroke;
+  pointer-events: none;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.qz-review-card.focused:not(.is-correct) .qz-rev-outer-ring {
+  animation: rev-outer-ring-pulse 1.4s ease-out 0.8s infinite;
+}
+.qz-rev-purple-outer-ring {
+  fill: none;
+  stroke: #442AFF;
+  stroke-width: 2.5px;
+  vector-effect: non-scaling-stroke;
+  pointer-events: none;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.qz-review-card.focused:not(.is-correct) .qz-rev-purple-outer-ring {
+  animation: rev-outer-ring-pulse 1.4s ease-out 0.8s infinite;
+}
+@keyframes rev-outer-ring-pulse {
+  0%   { transform: scale(1);   opacity: 1; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+.qz-rev-arrow-mark {
+  fill: #E11D48;
+  transform-box: fill-box;
+  opacity: 0;
+}
+.qz-review-card.focused .qz-rev-arrow-mark {
+  display: none;
+}
+@keyframes rev-arrow-slide-left {
+  0%, 100% { opacity: 1; transform: translateX(0); }
+  50%      { opacity: 1; transform: translateX(-6px); }
+}
+@keyframes rev-arrow-slide-right {
+  0%, 100% { opacity: 1; transform: translateX(0); }
+  50%      { opacity: 1; transform: translateX(6px); }
+}
+
+// ── 태블릿(768-1179): 퀴즈 영역 오버라이드 ──
+// _sidebar 768-1179 블록에 있던 quiz 규칙을 여기로 이동 — @use 순서상 _quiz 데스크탑 뒤라야 적용됨.
+@media (min-width: 768px) and (max-width: 1179px) {
+  // 퀴즈 엔트리
+  .qe-title { font-size: $fs-disp-md; }
+  .qe-form { padding: $sp-24; }
+  .qe-section-label, .qe-chip, .qe-desc { font-size: $fs-base; }
+  .qe-bgimg-col { flex: 0 0 20%; max-width: 20%; }
+
+  // Type B qb-card
+  .qb-card { padding: $sp-12; }
+
+  // Type D 좌우 분할선 — 데스크탑 베이스와 동일.
+  .qd-row.qd-wrong-split::before {
+    left: 50%;
+    top: 0;
+    bottom: $sp-4;
+    width: 1px;
+    background: var(--border);
+  }
+
+  // 퀴즈 종료 요약 — 데스크탑 3열 레이아웃을 더 컴팩트하게.
+  .qz-end-summary--horizontal {
+    column-gap: $sp-8;
+    row-gap: 0;
+    padding: $sp-24;
+  }
+  .qz-end-badge { font-size: $fs-4xl; }
+  .qz-end-title { font-size: $fs-2xl; }
+  .qz-end-score { font-size: $fs-base; padding: $sp-8 $sp-16; }
+  .qz-end-score b { font-size: 20px; }
+
+  // 리뷰 타이틀
+  .qz-review-title { font-size: $fs-2xl; }
+}
+
+@media (max-width: 767px) {
+  .qe-bgimg-col { display: none; }
+  .qe-title { font-size: $fs-disp-sm; }
+  .qe-section-label, .qe-chip, .qe-desc { font-size: $fs-md; }
+  .qe-desc { line-height: 1.55; }
+  .qe-section-label::before { width: 3px; height: var(--qe-bar-h, 12px); }
+  // .qe-start 모바일 오버라이드는 _components 의 .qe-start 블록에서 관리.
+  .quiz-type-badge     { font-size: 0.6875rem; padding: 0 $sp-10; }
+  .quiz-progress-label { font-size: 0.8125rem; }
+
+  // 퀴즈 스테이지 헤더
+  .quiz-stage-header { padding: $sp-12 $sp-16; gap: 0; }
+  .quiz-stage-prompt { font-size: $fs-xl; line-height: 1.55; }
+  .quiz-stage-hint   { font-size: $fs-md; line-height: 1.55; }
+
+  // 정답/오답 플래시
+  // 피드백 팝업 모바일 — 데스크탑/태블릿은 base clamp 1.5배, 모바일은 과대해 1.5배 전 크기 유지.
+  .feedback-flash {
+    font-size: $fs-disp-sm;
+    padding: 18px 28px;
+  }
+
+  // [정답] 뱃지
+  .recorder-row.quiz-wrong-split .quiz-answer-panel::after,
+  .qd-row.qd-wrong-split > .qd-answer-wrap::after {
+    font-size: $fs-md;
+    top: 14px;
+    left: 14px;
+  }
+
+  // 퀴즈 종료 화면
+  .qz-end-scroll { padding: $sp-16; gap: $sp-10; }
+  .qz-end-summary--horizontal {
+    padding: $sp-24;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto;
+    column-gap: 0;
+    row-gap: $sp-4;
+  }
+  .qz-end-summary--horizontal .qz-end-badge { grid-column: 1; grid-row: 1; justify-self: center; margin-bottom: $sp-4; }
+  .qz-end-summary--horizontal .qz-end-title { grid-column: 1; grid-row: 2; text-align: center; }
+  .qz-end-summary--horizontal .qz-end-msg   { grid-column: 1; grid-row: 3; text-align: center; }
+  .qz-end-summary--horizontal .qz-end-score { grid-column: 1; grid-row: 4; justify-self: center; padding: $sp-8 $sp-16; margin-top: $sp-4; }
+  .qz-end-badge  { font-size: $fs-3xl; }
+  .qz-end-title  { font-size: $fs-xl; }
+  .qz-end-score  { font-size: $fs-md; padding: $sp-6 $sp-16; }
+  .qz-end-score b { font-size: $fs-lg; }
+  .qz-end-msg    { font-size: 12px; }
+  .qz-end-actions { gap: $sp-6; }
+  .qz-divider { margin: $sp-8 0 $sp-8; }
+
+  // 팝업
+  .popup-card { padding: $sp-24 $sp-24 $sp-16; }
+  .popup-icon { width: 32px; height: 32px; margin-bottom: $sp-8; }
+  .popup-title { font-size: $fs-base; margin-bottom: $sp-12; }
+  .popup-actions .btn { font-size: $fs-sm; padding: $sp-8 $sp-16; border-radius: 7px; }
+
+  // Type B qb-card
+  .qb-grid { padding: 0 $sp-16; }
+  .qb-card { padding: $sp-8; }
+
+  // 퀴즈 리뷰
+  .qz-review-section { gap: $sp-20; }
+  .qz-review-title { font-size: $fs-lg; }
+  .qz-review-chip { font-size: $fs-sm; }
+  .qz-review-list { gap: $sp-12; }
+  .qz-review-list.qz-review-list--cols-2 { gap: $sp-10; }
+  .qz-review-col { gap: $sp-10; }
+  .qz-card-header { padding: $sp-8 $sp-12; gap: $sp-6; }
+  .qz-card-header .q-label { font-size: $fs-base; }
+  .qz-card-body { padding: $sp-8; }
+  .qz-hint-title { font-size: $fs-base; }
+  .qz-hint-box { font-size: $fs-base; }
+  .qz-rev-opt { font-size: $fs-sm; padding: $sp-8 $sp-4; }
+  .qz-review-badge { font-size: $fs-sm; padding: $sp-8 $sp-12; transform: translateX($sp-4); }
+
+  // Type C: 선택지 2×2 — 모바일은 6:4 고정 해제. 악보(.qc-sheet-wrap)가 먼저 축소되고
+  // 버튼은 자연 크기 그대로 유지돼 2×2 가 잘리지 않음 (세로가 모자라면 악보가 0까지 줄어듦).
+  .qc-sheet-wrap { flex: 1 1 auto; }
+  .qc-options { flex: 0 0 auto; grid-template-columns: repeat(2, 1fr); gap: $sp-8; padding: 0 $sp-12; }
+  .qc-option  { font-size: clamp(14px, 4.5vw, 20px); }  // 모바일 2×2 가변
+
+  // 리코더 유형 — 481~767px 구간 SVG 높이 축소 (480px 이하는 별도 쿼리에서 200px)
+  .qz-cmp-half svg { max-height: 260px; }
+
+  // Type C: 악보 비교 카드
+  .qz-c-sheet-compare .qz-cmp-card svg { min-height: 100px; }
+  .qz-c-sheet-compare .qz-cmp-card { padding-bottom: $sp-6; }
+  .qz-c-sheet-compare .qz-cmp-arrow { padding-top: $sp-28; }
+
+  // Type D: 오답 분할 위아래 전환
+  .qd-row.qd-wrong-split { flex-direction: column; }
+  .qd-row.qd-wrong-split > .qd-sheet-wrap,
+  .qd-row.qd-wrong-split > .qd-answer-wrap { flex: 0 0 50%; width: 100%; min-height: 0; }
+  .qd-row.qd-wrong-split::before {
+    top: 50%; bottom: auto; left: $sp-4; right: $sp-4; width: auto; height: 1px;
+  }
+}
+
+// ── 480px 이하: 퀴즈 살펴보기 좁은 화면 대응 ──
+@media (max-width: 480px) {
+  // quiz-type-badge 숨김 → q-label 전체 너비 확보
+  .qz-card-header .quiz-type-badge { display: none; }
+  .qz-card-header {
+    padding: $sp-12 $sp-16;
+  }
+  .qz-card-body { padding: $sp-4; }
+  .qz-card-header .q-label {
+    flex: 1 1 0;
+    min-width: 0;
+    white-space: normal;
+    transform: translateY(1px);
+  }
+
+  .qz-hint-col { padding: $sp-12; }
+  .qz-review-hint-text { margin: 0; }
+
+  // 계이름 읽기 — 악보 SVG 최소 높이
+  .qz-c-sheet-compare .qz-cmp-card svg { min-height: 80px; }
+  .qz-c-sheet-compare .qz-cmp-card { padding: 0; }
+
+  // Type D — SVG 최소 높이 + padding
+  .qz-compare-area--d .qz-cmp-card svg { min-height: 80px; padding: 0 $sp-8; }
+
+  // 리코더 유형 — 비교 영역 SVG 최대 높이 축소
+  .qz-cmp-half svg { max-height: 240px !important; }
+  .qz-cmp-half { gap: $sp-6; }
+
+  .qz-compare-area { padding: $sp-16 0 $sp-24; }
+  .qz-compare-area--cd .qz-cmp-arrow { padding-top: $sp-28; }
+  .qz-compare-area--c .qz-cmp-card svg { margin-bottom: $sp-8; }
+
+  .qz-review-badge { font-size: $fs-xs; padding: $sp-6 $sp-8; }
+  .qe-chip { padding: $sp-8 $sp-20; }
+}
+
+// ── 420px 이하: 퀴즈 살펴보기 초좁은 화면 추가 대응 ──
+@media (max-width: 420px) {
+  .qz-hint-col { padding: $sp-20 $sp-12; }
+  .qz-compare-area { padding: $sp-20 0; }
+  .qz-cmp-half { gap: $sp-4; }
+  .qz-compare-area--cd .qz-cmp-card { padding: 0; }
+  .qz-cmp-arrow svg { width: 30px; height: 30px; }
+  .qz-review-hint-text { font-size: $fs-xs; }
+  .qz-hint-hole { width: 9px; height: 9px; }
+  .qz-review-badge { transform: translateX($sp-4); }
+  .qz-compare-area--c .qz-cmp-card svg { min-height: 80px; }
+  .qz-c-sheet-compare { padding: $sp-12; }
+  .qz-c-sheet-compare .qz-cmp-card svg { padding: 0; }
+}

@@ -1,0 +1,10 @@
+// main.scss — 전체 @use 진입점
+@use 'reset';
+@use 'variables';
+@use 'mixins';
+@use 'base';
+@use 'sidebar';
+@use 'learn';
+@use 'practice';
+@use 'quiz';
+@use 'components';

@@ -1,0 +1,70 @@
+// _reset.scss
+
+// ── 웹폰트 (KerisKedyuche — 제목/숫자용) ──
+@font-face {
+  font-family: 'KerisKedyuche';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-3@1.0/KERISKEDU_R.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'KerisKedyuche';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-3@1.0/KERISKEDU_B.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body { height: 100%; }
+// html 에 overflow 명시 → body 의 overflow:hidden 이 viewport 로 전파되는 것을 차단.
+// body 가 min-width/min-height 로 viewport 보다 커지면 html 이 자체적으로 스크롤.
+html { overflow: auto; }
+
+body { line-height: 1; vertical-align: baseline; }
+
+h1, h2, h3, h4, h5, h6,
+p, blockquote, pre,
+a, abbr, address, cite, code,
+del, dfn, em, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  border: 0;
+  vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+ol, ul { list-style: none; }
+
+blockquote, q { quotes: none; }
+blockquote::before, blockquote::after,
+q::before, q::after { content: ''; content: none; }
+
+table { border-collapse: collapse; border-spacing: 0; }
+
+button {
+  background: inherit;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  overflow: visible;
+  cursor: pointer;
+}
+
+img { display: block; }

@@ -1,0 +1,392 @@
+// _learn.scss
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ── learn/quiz 스테이지 ──
+#recorderStage {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;     // header(top) + recorder-row(bottom)
+  align-items: stretch;
+  overflow: hidden;
+  background: var(--white);
+  border-radius: $radius-2xl;
+  border: $border-width solid var(--border);
+  position: relative;
+}
+// 본체 (sheet | recorder)
+.recorder-row {
+  flex: 1 1 0; min-height: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  width: 100%;
+  position: relative;
+}
+// 퀴즈 Type A/E: 손 legend, hole 숫자 라벨 숨김 (학습 모드는 그대로)
+#recorderStage.quiz-rec .hand-legend        { display: none; }
+#recorderStage.quiz-rec #holeLabels         { display: none; }
+#recorderStage.quiz-rec .legend             { display: none; }
+#recorderStage.quiz-rec .recorder-panel-top { justify-content: flex-end; }
+
+// 열기/닫기 범례
+.legend {
+  font-size: $fs-base;  // JS(_syncLearnLayout) override
+  font-weight: 700;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: $sp-10;          // JS(_syncLearnLayout) override
+  letter-spacing: -0.01em;
+  background: var(--navi-light);
+  padding: $sp-8 $sp-12;  // JS(_syncLearnLayout) override
+  border-radius: $radius-pill;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: $sp-4;
+}
+.legend-circle {
+  display: inline-block;
+  width: 14px;   // JS(_syncLearnLayout) override
+  height: 14px;  // JS(_syncLearnLayout) override
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.legend-circle.open   { background: #fff; border: 2px solid #000; }
+.legend-circle.closed { background: #000; }
+
+// ── 악보 패널 (왼쪽 35%, 전환 애니메이션) ──
+.sheet-wrap {
+  flex: 0 0 0%;
+  max-width: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $sp-6;
+  padding: 0;
+  overflow: hidden;
+  opacity: 0;
+  position: relative;
+  transition: flex-basis $transition-smooth,
+              max-width  $transition-smooth,
+              padding    $transition-smooth,
+              opacity    .28s ease;
+}
+.sheet-wrap.visible {
+  flex: 0 0 35%;
+  max-width: 35%;
+  opacity: 1;
+  padding: $sp-16;
+}
+.sheet-wrap.visible::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: $sp-4;
+  bottom: $sp-4;
+  width: 1px;
+  background: var(--border);
+}
+#sheetSvg { width: auto; height: auto; max-width: 100%; flex-shrink: 0; }
+#sheetSvg [id^="C-major"] { display: none; }
+.sheet-note-label { font-weight: 800; color: var(--text); letter-spacing: -0.03em; text-align: center; width: 100%; flex-shrink: 0; }
+.sheet-hint { font-size: $fs-xs; color: var(--text-light); font-weight: 500; text-align: center; line-height: 1.55; }
+
+// ── 리코더 패널 (오른쪽) ──
+.recorder-panel {
+  flex: 1 1 0;
+  min-width: 0;
+  position: relative;
+  overflow: hidden;
+}
+.recorder-panel-top {
+  position: absolute;
+  top: $sp-12;
+  left: $sp-16;
+  right: $sp-16;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+}
+.recorder-panel-top > * { pointer-events: auto; }
+.hand-legend {
+  display: flex;
+  gap: $sp-12;          // JS(_syncLearnLayout) override
+  font-size: $fs-base;  // JS(_syncLearnLayout) override
+  font-weight: 700;
+  color: var(--text);
+}
+// 연습하기 탭 리코더 패널 legend: 1920px 기준 16px, 실시간 가변, 최소 12px
+.practice-recorder-panel .hand-legend,
+.practice-recorder-panel .legend {
+  font-size: max(12px, calc(100vw * 16 / 1920));
+}
+// ── 리코더 래퍼 ──
+.recorder-wrap {
+  position: absolute;
+  top: $sp-16;
+  left: 0;
+  right: 0;
+  bottom: $sp-16;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.recorder-wrap svg {
+  display: block;
+  height: 100%;
+  width: auto;
+}
+// Type A hole 드래그 시 터치 스크롤 방지 (pointermove preventDefault 와 함께 동작).
+#recorderSvg { touch-action: none; }
+.practice-recorder-panel {
+  display: flex;
+  flex-direction: column;
+}
+.practice-recorder-panel .recorder-panel-top {
+  position: relative;
+  top: auto; left: auto; right: auto;
+  flex-shrink: 0;
+  padding: $sp-8 $sp-12;
+  pointer-events: auto;
+}
+.practice-recorder-panel .recorder-panel-top > * {
+  pointer-events: auto;
+}
+.practice-recorder-panel .recorder-wrap {
+  position: relative;
+  top: auto; left: auto; right: auto; bottom: auto;
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: $sp-12 0 40px;
+}
+.practice-recorder-panel .recorder-wrap svg {
+  height: 100%;
+  width: auto;
+}
+
+// ── 리코더 구멍 ──
+.hole { transition: fill .15s; }
+#recorderStage.no-hole-fade .hole { transition: none; }
+
+// ── 폭죽/축하 오버레이 ──
+.celebration {
+  position: absolute; inset: 0;
+  pointer-events: none;
+  display: none;
+  z-index: 50;
+  overflow: hidden;
+}
+.celebration.show { display: block; }
+.celebration-lottie {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.celebration-lottie > div { width: 100%; height: 100%; max-width: 900px; max-height: 900px; }
+// 정답 Bubble Explosion Lottie 컨테이너 — feedback-flash(70) 아래, 일반 콘텐츠 위.
+.celebration-bubble {
+  position: absolute; inset: 0;
+  pointer-events: none;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 60;
+}
+.celebration-bubble > div { width: 100%; height: 100%; max-width: 1800px; max-height: 1800px; }
+.celebration-text {
+  position: absolute; left: 50%; top: 30%;
+  transform: translate(-50%, -50%);
+  font-size: $fs-score; font-weight: 900;
+  color: var(--cta);
+  text-shadow: 0 4px 0 var(--cta-shadow), 0 8px 22px rgba(68,42,255,.35);
+  letter-spacing: -0.04em;
+  animation: celebrate-pop .55s cubic-bezier(.34,1.56,.64,1);
+}
+.celebration-text.wrong {
+  color: #DC2626;
+  text-shadow: 0 4px 0 #991B1B, 0 8px 22px rgba(220,38,38,.35);
+}
+@keyframes celebrate-pop {
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(.4); }
+  60%  { opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+// CSS 폴백 confetti (Lottie 실패 시)
+.css-confetti { position: absolute; inset: 0; }
+.css-confetti span {
+  position: absolute; top: -20px;
+  width: 10px; height: 14px;
+  border-radius: 2px;
+  animation: confetti-fall 2.2s linear forwards;
+}
+@keyframes confetti-fall {
+  0%   { transform: translateY(-20px) rotate(0); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+// ── Type A 오답 5:5 분할 ──
+.quiz-answer-panel { display: none; }
+.recorder-row.quiz-wrong-split .quiz-answer-panel { display: block; }
+// 가운데 세로선
+.recorder-row.quiz-wrong-split .quiz-answer-panel::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: $sp-4;
+  width: 1px;
+  background: var(--border);
+}
+// 정답 영역 좌상단 [정답] 뱃지 — Type A/D/E 공통.
+.recorder-row.quiz-wrong-split .quiz-answer-panel::after,
+.qd-row.qd-wrong-split > .qd-answer-wrap::after {
+  content: '정답';
+  position: absolute;
+  top: $sp-16;
+  left: $sp-16;
+  font-size: $fs-base;
+  font-weight: 800;
+  color: #00b548;
+  background: #effff4;
+  border: $border-width solid #00b548;
+  padding: $sp-6 $sp-12;
+  border-radius: $radius-pill;
+  z-index: 5;
+  pointer-events: none;
+  letter-spacing: -0.01em;
+}
+// 정답 hole pulse
+.qans-hole {
+  animation: ans-hole-pulse 0.5s ease-in-out 3 1.116s;
+}
+@keyframes ans-hole-pulse {
+  0%   { fill: #08bb68; }
+  50%  { fill: #088979; }
+  100% { fill: #08bb68; }
+}
+
+// ── 정답/오답 플래시 (모든 quiz 유형 공통) ──
+.feedback-flash {
+  position: absolute; left: 50%; top: 50%;
+  font-size: clamp(30px, 5.25vw, 84px); font-weight: 900; letter-spacing: -0.04em;
+  line-height: 1.5;
+  color: #00b548;
+  background: #effff4;
+  border: $border-width solid #00b548;
+  padding: clamp(18px, 3vw, 54px) clamp(27px, 4.5vw, 72px);
+  border-radius: $radius-pill;
+  white-space: nowrap;
+  z-index: 70; pointer-events: none;
+  animation: flash-rise 1.8s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+.feedback-flash.wrong {
+  color: #DC2626;
+  background: #fff1f2;
+  border: $border-width solid #fecaca;
+}
+@keyframes flash-rise {
+  0%   { opacity: 0; transform: translate(-50%, calc(-50% + 24px)) scale(0.85); }
+  18%  { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  62%  { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, calc(-50% - 80px)) scale(1); }
+}
+
+// ── 스테이지 헤더 (모든 quiz 유형 공통) ──
+.quiz-stage-header {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $sp-8;
+  padding: 18px $sp-16;
+  width: 100%;
+  background: var(--white);
+  position: relative;
+}
+// 좌우 4px 인셋 border-bottom
+.quiz-stage-header::after {
+  content: '';
+  position: absolute;
+  left: $sp-4; right: $sp-4; bottom: 0;
+  height: 1px;
+  background: var(--border);
+}
+// recorderStage 의 헤더는 학습 모드(.quiz-rec 미적용)에선 숨김
+#recorderStage > .quiz-stage-header { display: none; }
+#recorderStage.quiz-rec > .quiz-stage-header { display: flex; }
+
+// 모든 stage header 의 질문 텍스트
+.quiz-stage-prompt {
+  font-size: $fs-head; font-weight: 800; color: var(--text);
+  letter-spacing: -0.03em;
+  text-align: center;
+}
+.quiz-stage-prompt b { line-height: 1; }
+
+// 힌트 슬롯
+.quiz-hint-slot {
+  display: flex; gap: $sp-8; align-items: center; justify-content: center;
+  flex-wrap: wrap;
+}
+#quizHintArea { display: flex; gap: $sp-8; align-items: center; flex-wrap: wrap; justify-content: center; }
+.quiz-stage-hint {
+  font-size: 15px; font-weight: 500; color: var(--text-sub);
+  letter-spacing: -0.01em;
+}
+
+@media (min-width: 768px) and (max-width: 1179px) {
+  .practice-recorder-panel .recorder-panel-top { padding: $sp-8; }
+  .legend-item { gap: $sp-4; }
+
+  // 퀴즈 스테이지 헤더
+  .quiz-stage-header { padding: $sp-16 $sp-12; gap: $sp-8; }
+  .quiz-stage-prompt { font-size: $fs-2xl; }
+  .quiz-stage-hint   { font-size: $fs-sm; }
+
+  // [정답] 뱃지 — 모든 유형에서 top/left 동일 (대칭).
+  .recorder-row.quiz-wrong-split .quiz-answer-panel::after,
+  .qd-row.qd-wrong-split > .qd-answer-wrap::after {
+    font-size: $fs-md;
+    top: $sp-12;
+    left: $sp-12;
+  }
+}
+
+@media (max-width: 767px) {
+  .recorder-row { flex-direction: column; contain: layout; overflow: hidden; }
+  // 퀴즈 Type A/E 오답 5:5 분할은 좌우(row) 유지.
+  .recorder-row.quiz-wrong-split { flex-direction: row; }
+  .sheet-wrap {
+    max-width: 100%;
+    transition: flex-basis .35s cubic-bezier(.4,0,.2,1),
+                padding    .35s cubic-bezier(.4,0,.2,1),
+                opacity    .28s ease;
+  }
+  .sheet-wrap.visible {
+    flex: 0 0 30%;
+    max-width: 100%;
+    max-height: 30%;
+    padding: $sp-8 $sp-16 $sp-12 $sp-16;
+    gap: 0;
+    overflow: hidden;
+  }
+  .sheet-wrap.visible::after {
+    left: $sp-4; right: $sp-4;
+    top: auto; bottom: 0;
+    width: auto; height: 1px;
+  }
+  .recorder-panel { flex: 1 1 0; min-height: 0; }
+  // #volumeWrap (bottom/right/padding) 는 _base 767 에서 일괄 정의 — 중복 제거.
+  .note-grid { gap: $sp-8; align-content: center; }
+  #recorderStage { overflow: hidden; min-height: 0; }
+  #bottomBar { flex-shrink: 0; }
+  // 폭죽 "정답!" 텍스트 — 모바일에선 96px 가 과대 → 1.5배 전 크기(64px) 유지.
+  .celebration-text { font-size: 64px; }
+}
