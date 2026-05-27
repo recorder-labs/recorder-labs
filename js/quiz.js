@@ -2464,7 +2464,7 @@ function _qzEndOnScroll() {
   _qzEndLastScrollTop = st;
   // 90% 이상: transition 없이 즉시 snap, 타이머 0ms
   const maxST = main.scrollHeight - main.clientHeight;
-  const is90 = maxST > 0 && st >= maxST * 0.9;
+  const is90 = maxST > 0 && st >= maxST * 0.5;
   bar.classList.toggle('quiz-end-near-btm', is90);
   clearTimeout(_qzEndScrollStopTimer);
   const _snapST = main.scrollTop;
