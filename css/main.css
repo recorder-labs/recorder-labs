@@ -2211,6 +2211,7 @@ body {
   font-weight: 800;
   letter-spacing: -0.03em;
   text-align: center;
+  line-height: initial;
   font-family: "KerisKedyuche", "Pretendard", sans-serif;
   background: linear-gradient(to bottom, var(--cta) 0%, color-mix(in srgb, var(--cta) 70%, #fff) 100%);
   -webkit-background-clip: text;

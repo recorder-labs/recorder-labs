@@ -79,7 +79,7 @@
   .qe-deco { display: none; }
 }
 .qe-title {
-  font-size: 52px; font-weight: 800; letter-spacing: -0.03em; text-align: center;
+  font-size: 52px; font-weight: 800; letter-spacing: -0.03em; text-align: center; line-height: initial;
   font-family: $font-keris;
   background: linear-gradient(to bottom,
     var(--cta) 0%,
