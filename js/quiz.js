@@ -2464,7 +2464,7 @@ function _qzEndOnScroll() {
   _qzEndLastScrollTop = st;
   // 바닥 150px 이내 진입 시 ::after 미리 숨김 → atbottom snap-in 때 한꺼번에 등장
   const maxST = main.scrollHeight - main.clientHeight;
-  bar.classList.toggle('quiz-end-near-btm', maxST - st <= 80);
+  bar.classList.toggle('quiz-end-near-btm', maxST - st <= 40);
   clearTimeout(_qzEndScrollStopTimer);
   const _snapST = main.scrollTop;
   if (!isMobile) {
