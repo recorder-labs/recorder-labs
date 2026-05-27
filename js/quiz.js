@@ -2499,15 +2499,29 @@ function _qzEndAttachPersistent(main) {
     }
     _qzEndMomPush(wheelDeltaPx(e));
   };
-  const onUserTouchStart = () => {
+  let _touchLastY = 0;
+  const onUserTouchStart = (e) => {
     // 새 터치 시작 → native scroll 인계, 우리 momentum 중단.
+    _touchLastY = e.touches[0] ? e.touches[0].clientY : 0;
     _qzEndMomStop();
   };
-  main.addEventListener('wheel',       onWheel,           { passive: false });
-  main.addEventListener('touchstart',  onUserTouchStart,  { passive: true });
+  const onTouchMove = (e) => {
+    // 경계(상단/하단)에서 오버슈트 방향으로 움직일 때 preventDefault → native rubber-band 제거.
+    if (!e.cancelable || !e.touches[0]) return;
+    const y  = e.touches[0].clientY;
+    const dy = y - _touchLastY; // +: 손가락 아래 이동 = 콘텐츠 위로 (scrollTop 감소)
+    _touchLastY = y;
+    const atTop    = main.scrollTop <= 0;
+    const atBottom = main.scrollTop >= main.scrollHeight - main.clientHeight - 1;
+    if ((atTop && dy > 0) || (atBottom && dy < 0)) e.preventDefault();
+  };
+  main.addEventListener('wheel',       onWheel,          { passive: false });
+  main.addEventListener('touchstart',  onUserTouchStart, { passive: true });
+  main.addEventListener('touchmove',   onTouchMove,      { passive: false });
   _qzEndPersistentCleanup = () => {
     main.removeEventListener('wheel',      onWheel);
     main.removeEventListener('touchstart', onUserTouchStart);
+    main.removeEventListener('touchmove',  onTouchMove);
     _qzEndPersistentCleanup = null;
   };
 }

@@ -112,6 +112,10 @@ img {
   display: none;
 }
 
+html {
+  overscroll-behavior: none;
+}
+
 body {
   font-family: "Pretendard", -apple-system, "맑은 고딕", sans-serif;
   background: var(--bg);
@@ -119,6 +123,7 @@ body {
   flex-direction: column;
   height: 100dvh;
   overflow: hidden;
+  overscroll-behavior: none;
   color: var(--text);
   min-width: 375px;
   min-height: 480px;

@@ -2,6 +2,7 @@
 @use 'variables' as *;
 @use 'mixins' as *;
 
+html { overscroll-behavior: none; }
 body {
   font-family: $font-pretendard;
   background: var(--bg);
@@ -9,6 +10,7 @@ body {
   flex-direction: column;
   height: 100dvh;
   overflow: hidden;
+  overscroll-behavior: none;
   color: var(--text);
   min-width: 375px;
   min-height: 480px;
