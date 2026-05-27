@@ -1741,7 +1741,7 @@ body {
 }
 
 #volumeWrap {
-  position: fixed;
+  position: absolute;
   right: 1.25rem;
   bottom: 1.25rem;
   display: flex;
@@ -2093,7 +2093,7 @@ body {
     align-self: center;
   }
   #volumeWrap {
-    bottom: 70px;
+    bottom: 1.25rem;
     right: 0.75rem;
     padding: 8px;
   }
