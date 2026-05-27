@@ -2410,6 +2410,7 @@ function _qzEndShowBarAtBottom(main) {
   if (!bar) return;
   bar.classList.remove('quiz-end-bar--hidden');
   bar.classList.remove('quiz-end-bar--peek');
+  bar.classList.remove('quiz-end-near-btm');
 }
 function _qzEndMomStop() {
   _qzEndMomVel = 0;
@@ -2444,6 +2445,7 @@ function _qzEndOnScroll() {
   if (main.classList.contains('main-area--end-scroll-atbottom')) {
     bar.classList.remove('quiz-end-bar--hidden');
     bar.classList.remove('quiz-end-bar--peek');
+    bar.classList.remove('quiz-end-near-btm');
     _qzEndLastScrollTop = main.scrollTop;
     clearTimeout(_qzEndScrollStopTimer);
     return;
@@ -2460,19 +2462,24 @@ function _qzEndOnScroll() {
     bar.classList.remove('quiz-end-bar--hidden');
   }
   _qzEndLastScrollTop = st;
+  // 90% 이상: transition 없이 즉시 snap, 타이머 0ms
+  const maxST = main.scrollHeight - main.clientHeight;
+  const is90 = maxST > 0 && st >= maxST * 0.9;
+  bar.classList.toggle('quiz-end-near-btm', is90);
   clearTimeout(_qzEndScrollStopTimer);
   const _snapST = main.scrollTop;
+  const _delay  = is90 ? 0 : 50;
   if (!isMobile) {
     _qzEndScrollStopTimer = setTimeout(() => {
-      if (main.scrollTop !== _snapST) return; // 아직 스크롤 중 → 발동 안 함
+      if (main.scrollTop !== _snapST) return;
       bar.classList.remove('quiz-end-bar--hidden');
-    }, 50);
+    }, _delay);
   } else {
     _qzEndScrollStopTimer = setTimeout(() => {
       if (main.scrollTop !== _snapST) return;
       bar.classList.remove('quiz-end-bar--hidden');
       bar.classList.add('quiz-end-bar--peek');
-    }, 50);
+    }, _delay);
   }
 }
 

@@ -2739,6 +2739,10 @@ body {
   transform: translateY(100%);
 }
 
+.main-area--end-scroll #quizEndBar.quiz-end-near-btm {
+  transition: none;
+}
+
 .main-area--end-scroll #quizEndBar.quiz-end-bar--peek {
   transform: translateY(100%);
 }
