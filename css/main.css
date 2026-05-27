@@ -2741,7 +2741,7 @@ body {
 
 .main-area--end-scroll #quizEndBar.quiz-end-near-btm::after {
   opacity: 0;
-  transition: opacity 0.15s ease-out;
+  transition: none;
 }
 
 .main-area--end-scroll #quizEndBar.quiz-end-bar--peek {
