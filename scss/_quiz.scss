@@ -408,6 +408,12 @@
 .main-area--end-scroll #quizEndBar.quiz-end-bar--peek {
   transform: translateY(100%);
 }
+// 모바일: peek 상태에서 라운드 영역을 모바일 메뉴바와 여백 확보
+@media (max-width: 767px) {
+  .main-area--end-scroll #quizEndBar.quiz-end-bar--peek::after {
+    bottom: calc(100% + $sp-12);
+  }
+}
 .main-area--end-scroll-atbottom #quizEndBar,
 .main-area--end-scroll-atbottom #quizEndBar::after {
   transition: none;

@@ -2737,6 +2737,11 @@ body {
   transform: translateY(100%);
 }
 
+@media (max-width: 767px) {
+  .main-area--end-scroll #quizEndBar.quiz-end-bar--peek::after {
+    bottom: calc(100% + 12px);
+  }
+}
 .main-area--end-scroll-atbottom #quizEndBar,
 .main-area--end-scroll-atbottom #quizEndBar::after {
   transition: none;
