@@ -75,6 +75,9 @@
   z-index: 1000;
   transform: translate(-300px, -300px);
 }
+@media (pointer: coarse) {
+  .qe-deco { display: none; }
+}
 .qe-title {
   font-size: 52px; font-weight: 800; letter-spacing: -0.03em; text-align: center;
   font-family: $font-keris;
@@ -320,7 +323,7 @@
   left: 50%;
   top: 0px;
   bottom: $sp-4;
-  width: 1px;
+  width: $sp-1;
   background: var(--border);
 }
 
@@ -516,12 +519,13 @@
   justify-content: center;
   align-items: center;
 }
+.qz-end-actions > span { transform: translateY(-$sp-1); }
 .qz-end-icon { width: 1.1em; height: 1.1em; flex-shrink: 0; margin-right: 0.4em; }
 
 // ── 틀린 문제 리뷰 섹션 ──
 .qz-divider {
   width: 100%;
-  height: 1px;
+  height: $sp-1;
   background: var(--border);
   margin: $sp-16 0 $sp-4;
   flex-shrink: 0;
@@ -625,7 +629,7 @@
 }
 .qz-review-card.focused .qz-card-header {
   background: #eaf5ff;
-  border-bottom: 1px solid #eaf5ff;
+  border-bottom: $sp-1 solid #eaf5ff;
 }
 .qz-review-section.has-focus .qz-review-card:not(.focused),
 .qz-review-list.has-focus    .qz-review-card:not(.focused) {
@@ -641,7 +645,7 @@
   padding: $sp-12;
   line-height: 1;
   background: #FAFCFF;
-  border-bottom: 1px solid var(--border);
+  border-bottom: $sp-1 solid var(--border);
 }
 .qz-card-header .q-label {
   font-size: $fs-lg;
@@ -823,7 +827,7 @@
   font-weight: 700;
   text-align: center;
   padding: $sp-12 $sp-4;
-  border: 1px solid var(--border);
+  border: $sp-1 solid var(--border);
   border-radius: 6px;
   color: var(--text-sub);
   background: var(--white);
@@ -989,7 +993,7 @@
     left: 50%;
     top: 0;
     bottom: $sp-4;
-    width: 1px;
+    width: $sp-1;
     background: var(--border);
   }
 
@@ -1015,7 +1019,8 @@
   .qe-desc { line-height: 1.55; }
   .qe-section-label::before { width: 3px; height: var(--qe-bar-h, 12px); }
   // .qe-start 모바일 오버라이드는 _components 의 .qe-start 블록에서 관리.
-  .quiz-type-badge     { font-size: 0.6875rem; padding: 0 $sp-10; }
+  .quiz-type-badge     { padding: 0 $sp-8; }
+  .quiz-count-chip     { min-width: calc(44px + var(--quiz-count-digits, 2) * 0.1ch); gap: $sp-6; }
   .quiz-progress-label { font-size: 0.8125rem; }
 
   // 퀴즈 스테이지 헤더
@@ -1103,58 +1108,47 @@
   .qd-row.qd-wrong-split > .qd-sheet-wrap,
   .qd-row.qd-wrong-split > .qd-answer-wrap { flex: 0 0 50%; width: 100%; min-height: 0; }
   .qd-row.qd-wrong-split::before {
-    top: 50%; bottom: auto; left: $sp-4; right: $sp-4; width: auto; height: 1px;
+    top: 50%; bottom: auto; left: $sp-4; right: $sp-4; width: auto; height: $sp-1;
   }
 }
 
-// ── 480px 이하: 퀴즈 살펴보기 좁은 화면 대응 ──
+// ── 480px 이하: 퀴즈 살펴보기 좁은 화면 대응 (구 420px 규칙 통합) ──
 @media (max-width: 480px) {
   // quiz-type-badge 숨김 → q-label 전체 너비 확보
   .qz-card-header .quiz-type-badge { display: none; }
-  .qz-card-header {
-    padding: $sp-12 $sp-16;
-  }
-  .qz-card-body { padding: $sp-4; }
+  .qz-card-header { padding: $sp-12 $sp-16; }
+  .qz-card-body { padding: 0; }
   .qz-card-header .q-label {
     flex: 1 1 0;
     min-width: 0;
     white-space: normal;
-    transform: translateY(1px);
+    transform: translateY($sp-1);
   }
 
-  .qz-hint-col { padding: $sp-12; }
-  .qz-review-hint-text { margin: 0; }
+  .qz-hint-col { padding: $sp-20 $sp-16; border-radius: 0; }
+  .qz-review-hint-text { margin: 0; font-size: $fs-xs; }
+  .qz-hint-hole { width: 9px; height: 9px; }
 
-  // 계이름 읽기 — 악보 SVG 최소 높이
-  .qz-c-sheet-compare .qz-cmp-card svg { min-height: 80px; }
+  // 계이름 읽기 — 악보 비교 카드
+  .qz-c-sheet-compare { padding: $sp-12; }
+  .qz-c-sheet-compare .qz-cmp-card svg { min-height: 80px; padding: 0; }
   .qz-c-sheet-compare .qz-cmp-card { padding: 0; }
+
+  // Type C — 정답 SVG
+  .qz-compare-area--c .qz-cmp-card svg { margin-bottom: $sp-8; min-height: 80px; }
 
   // Type D — SVG 최소 높이 + padding
   .qz-compare-area--d .qz-cmp-card svg { min-height: 80px; padding: 0 $sp-8; }
 
   // 리코더 유형 — 비교 영역 SVG 최대 높이 축소
   .qz-cmp-half svg { max-height: 240px !important; }
-  .qz-cmp-half { gap: $sp-6; }
-
-  .qz-compare-area { padding: $sp-16 0 $sp-24; }
-  .qz-compare-area--cd .qz-cmp-arrow { padding-top: $sp-28; }
-  .qz-compare-area--c .qz-cmp-card svg { margin-bottom: $sp-8; }
-
-  .qz-review-badge { font-size: $fs-xs; padding: $sp-6 $sp-8; }
-  .qe-chip { padding: $sp-8 $sp-20; }
-}
-
-// ── 420px 이하: 퀴즈 살펴보기 초좁은 화면 추가 대응 ──
-@media (max-width: 420px) {
-  .qz-hint-col { padding: $sp-20 $sp-12; }
-  .qz-compare-area { padding: $sp-20 0; }
   .qz-cmp-half { gap: $sp-4; }
-  .qz-compare-area--cd .qz-cmp-card { padding: 0; }
   .qz-cmp-arrow svg { width: 30px; height: 30px; }
-  .qz-review-hint-text { font-size: $fs-xs; }
-  .qz-hint-hole { width: 9px; height: 9px; }
-  .qz-review-badge { transform: translateX($sp-4); }
-  .qz-compare-area--c .qz-cmp-card svg { min-height: 80px; }
-  .qz-c-sheet-compare { padding: $sp-12; }
-  .qz-c-sheet-compare .qz-cmp-card svg { padding: 0; }
+
+  .qz-compare-area { padding: $sp-20 0; }
+  .qz-compare-area--cd .qz-cmp-arrow { padding-top: $sp-28; }
+  .qz-compare-area--cd .qz-cmp-card { padding: 0; }
+
+  .qz-review-badge { font-size: $fs-xs; padding: $sp-6 $sp-8; transform: translateX($sp-4); }
+  .qe-chip { padding: $sp-8 $sp-20; }
 }

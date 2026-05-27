@@ -63,6 +63,7 @@ $fs-score   : 96px;   // celebration-text (정답 폭죽 텍스트 — 기존 64
 $fs-4xl     : 48px;   // qz-end-badge 태블릿
 
 // ── 간격 (Spacing) ──
+$sp-1  :  1px;   // 분할선 두께, 얇은 border, 미세 보정
 $sp-2  :  2px;   // 토글 그룹 내부 gap/padding
 $sp-4  :  4px;   // legend-item gap (통합 전 2px), note-grid gap (통합 전 5px), mobile-song-selector padding 등
 $sp-6  :  6px;   // pvt/ppr/pp-btn 상하 padding

@@ -2425,18 +2425,22 @@ function _qzEndOnScroll() {
     clearTimeout(_qzEndScrollStopTimer);
     return;
   }
+  // 모바일(≤767px): 스크롤 멈춤·위스크롤 시 bar 노출 안 함 — 맨 아래(atbottom)에서만 노출.
+  const isMobile = window.innerWidth <= 767;
   const st = main.scrollTop;
   const dy = st - _qzEndLastScrollTop;
   if (dy > 2 && st > 20) {
     bar.classList.add('quiz-end-bar--hidden');
-  } else if (dy < -2 || st <= 0) {
+  } else if (!isMobile && (dy < -2 || st <= 0)) {
     bar.classList.remove('quiz-end-bar--hidden');
   }
   _qzEndLastScrollTop = st;
   clearTimeout(_qzEndScrollStopTimer);
-  _qzEndScrollStopTimer = setTimeout(() => {
-    bar.classList.remove('quiz-end-bar--hidden');
-  }, 600);
+  if (!isMobile) {
+    _qzEndScrollStopTimer = setTimeout(() => {
+      bar.classList.remove('quiz-end-bar--hidden');
+    }, 600);
+  }
 }
 
 function _qzEndSwitchOffFit(main) {

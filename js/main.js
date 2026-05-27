@@ -29,6 +29,13 @@ let _pendingQuitMode = null;
 
 function setMode(mode) {
   AudioManager.stopAll();
+  if (window.innerWidth <= 767 && AudioManager.practice) {
+    AudioManager.practice.currentTime = 0;
+    const _ppS = document.getElementById('ppSeek');
+    if (_ppS) { _ppS.value = 0; _ppSeekRefreshFill(_ppS); }
+    const _ppT = document.getElementById('ppTime');
+    if (_ppT) _ppT.textContent = _fmt(0) + ' / ' + _fmt(AudioManager.practice.duration || 0);
+  }
   updatePlayButtons(false);
   _hlStop();
   if (mode === 'quiz' && currentMode !== 'quiz') {

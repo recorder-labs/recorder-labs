@@ -137,7 +137,7 @@
   max-width: 25%;
 }
 .practice-content.view-both .practice-score-panel:not(.hidden)::after {
-  width: 1px;
+  width: $sp-1;
 }
 // ── 악보 단독 뷰 ──
 .practice-content.view-score .practice-score-panel {
