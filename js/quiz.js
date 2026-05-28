@@ -10,6 +10,36 @@ let currentQuestion = null;
 let userSelected = new Set();
 let quizDone = false;
 
+// ── Supabase quiz_logs 로깅 ──
+// 퀴즈 정답/오답을 익명(anon publishable key)으로 insert. RLS 정책 'anon insert' 로 허용됨.
+const SUPABASE_URL = 'https://hvmattcnpfeilvnugwsj.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_vJdvKR0IlK22lS1LgFN26w_o4CTUsBJ';
+// 페이지 로드 시 1회만 생성하는 세션 식별자 (crypto.randomUUID 미지원 시 폴백).
+const QUIZ_SESSION_ID = (typeof crypto !== 'undefined' && crypto.randomUUID)
+  ? crypto.randomUUID()
+  : ('sess-' + Date.now() + '-' + Math.random().toString(36).slice(2));
+
+// 한 문항 판정 결과를 quiz_logs 에 저장. 실패해도 퀴즈 진행에 영향 없게 완전 무시(try/catch + .catch).
+function _logQuizResult(quizType, note, isCorrect) {
+  try {
+    fetch(SUPABASE_URL + '/rest/v1/quiz_logs', {
+      method: 'POST',
+      headers: {
+        'apikey':        SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Content-Type':  'application/json',
+        'Prefer':        'return=minimal',
+      },
+      body: JSON.stringify({
+        quiz_type:  quizType,
+        note:       note,
+        is_correct: !!isCorrect,
+        session_id: QUIZ_SESSION_ID,
+      }),
+    }).catch(() => {});
+  } catch (e) {}
+}
+
 function resetHoles() {
   HOLES.forEach(id => {
     const el = document.getElementById(id);
@@ -429,6 +459,8 @@ function submitQuiz() {
     if (!currentQuestion.pickedHole) return;
     _submitTypeE();
   }
+  // 판정(_submitType*)이 currentQuestion.isCorrect 를 설정한 직후 — Supabase quiz_logs 저장 (실패 무시).
+  _logQuizResult(currentQuestion.type, currentQuestion.note, currentQuestion.isCorrect);
 }
 function _submitTypeA() {
   quizDone = true; quizState = 'feedback';
