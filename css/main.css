@@ -2260,7 +2260,8 @@ body {
   gap: 8px;
 }
 
-.qe-chip {
+.qe-chip,
+.qz-review-chip {
   padding: 10px 20px;
   border: 1.5px solid var(--border);
   border-radius: 999px;
@@ -2275,19 +2276,22 @@ body {
 }
 
 @media (hover: hover) {
-  .qe-chip:hover {
+  .qe-chip:hover, .qz-review-chip:hover {
     background: var(--sky-light);
     color: var(--blue);
   }
 }
-.qe-chip.active {
+.qe-chip.active,
+.qz-review-chip.active {
   background: var(--blue);
   border-color: var(--blue);
   color: var(--white);
 }
 
 .qe-chip:disabled,
-.qe-chip.disabled {
+.qe-chip.disabled,
+.qz-review-chip:disabled,
+.qz-review-chip.disabled {
   opacity: 0.4;
   cursor: not-allowed;
   pointer-events: none;

@@ -102,7 +102,8 @@
 .qe-section-label { font-size: $fs-lg; font-weight: 800; color: var(--text); letter-spacing: -0.02em; display: flex; align-items: center; gap: $sp-6; }
 .qe-section-label::before { content: ''; width: 4px; height: var(--qe-bar-h, 15px); background: var(--cta); border-radius: 2px; }
 .qe-chips { display: flex; flex-wrap: wrap; gap: $sp-8; }
-.qe-chip {
+.qe-chip,
+.qz-review-chip {
   padding: $sp-10 $sp-20;
   border: $border-width solid var(--border);
   border-radius: $radius-pill;
@@ -116,13 +117,16 @@
   letter-spacing: -0.018em;
 }
 @media (hover: hover) {
-  .qe-chip:hover { background: var(--sky-light); color: var(--blue); }
+  .qe-chip:hover, .qz-review-chip:hover { background: var(--sky-light); color: var(--blue); }
 }
-.qe-chip.active {
+.qe-chip.active,
+.qz-review-chip.active {
   background: var(--blue); border-color: var(--blue); color: var(--white);
 }
 .qe-chip:disabled,
-.qe-chip.disabled {
+.qe-chip.disabled,
+.qz-review-chip:disabled,
+.qz-review-chip.disabled {
   opacity: 0.4;
   cursor: not-allowed;
   pointer-events: none;
@@ -572,7 +576,8 @@
   align-items: center;
   gap: $sp-6;
 }
-// 탭 버튼은 .qe-chip 재사용 + font-size 오버라이드.
+// 리뷰 탭 버튼 — base 스타일은 위 .qe-chip 규칙과 공유, 여기선 font-size 만 지정.
+// (.qe-chip 클래스를 빼서 엔트리 화면 실시간 사이즈 계산 JS 대상에서 제외됨)
 .qz-review-chip { font-size: $fs-base; }
 
 // 정답 카드 — 우측 정답 카드·헬퍼 텍스트 숨김.
