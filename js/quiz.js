@@ -1160,6 +1160,25 @@ function _setReviewTab(tab) {
   document.getElementById('qzTabWrong').classList.toggle('active', tab === 'wrong');
   document.getElementById('qzTabAll').classList.toggle('active', tab === 'all');
   _renderReview();
+  // 탭 전환 피드백 — 전체↔오답 결과가 같아도(예: 전부 오답) 화면 변화가 없을 수 있어,
+  // 항상 리뷰 목록 시작(qz-divider)으로 스크롤해 뷰가 갱신됐음을 체감시킨다. (별도 알럿/모달 없음)
+  _qzScrollReviewToDivider();
+}
+
+/* 탭 전환 시 리뷰 목록 시작(qz-divider)으로 스크롤. */
+function _qzScrollReviewToDivider() {
+  const main    = document.querySelector('.main-area');
+  const divider = document.getElementById('qzDivider');
+  if (!main || !divider) return;
+  if (!main.classList.contains('main-area--end-scroll')) return;
+  if (divider.classList.contains('is-hidden')) return;
+  // 재렌더 직후라 레이아웃 확정을 한 프레임 기다린 뒤 측정/스크롤.
+  requestAnimationFrame(() => {
+    if (typeof _qzEndMomStop === 'function') _qzEndMomStop();  // 진행 중인 custom momentum 중단
+    const delta  = divider.getBoundingClientRect().top - main.getBoundingClientRect().top;
+    const target = Math.max(0, main.scrollTop + delta - 12);   // 12px 여유
+    main.scrollTo({ top: target, behavior: 'smooth' });
+  });
 }
 
 /* 진입 시점 — 항상 '전체 보기' 탭으로 초기화 후 렌더. showQuizEnd 가 호출. */
@@ -1768,11 +1787,11 @@ const _C_CORRECT_TEXTS = [
 const _C_WRONG_OUTROS = [
   '오선지에서 줄과 칸을 아래에서부터 하나씩 세어 보세요.',
   '음표가 줄 위에 있는지 칸 안에 있는지부터 살펴보세요.',
-  '맨 아래 도부터 한 칸씩 올라가며 계이름을 세어 보세요.',
-  '아래에서 위로 도·레·미·파·솔 순서로 올라가는 걸 떠올려 보세요.',
+  '맨 아래 〈도〉부터 한 칸씩 올라가며 계이름을 세어 보세요.',
+  '아래에서 위로 〈도·레·미·파·솔〉 순서로 올라가는 걸 떠올려 보세요.',
   '음표 머리가 어느 줄, 어느 칸에 있는지 손가락으로 짚어 보세요.',
   '높은 음일수록 위쪽, 낮은 음일수록 아래쪽이라는 걸 기억해요.',
-  '기준이 되는 도 자리부터 찾고 위로 세어 보세요.',
+  '기준이 되는 〈도〉 자리부터 찾고 위로 세어 보세요.',
   '정답 음표와 내 답의 위치를 나란히 비교해 보세요.',
   '한 칸만 달라도 다른 음이 되니 자리를 또렷이 봐요.',
   '줄과 칸을 번갈아 짚으며 계이름을 소리 내어 읽어 보세요.',
@@ -1799,13 +1818,13 @@ const _D_CORRECT_TEXTS = [
 ];
 const _D_WRONG_OUTROS = [
   '정답 음표 자리와 내가 고른 자리를 나란히 비교해 보세요.',
-  '맨 아래 도부터 한 칸씩 올라가며 자리를 세어 보세요.',
+  '맨 아래 〈도〉부터 한 칸씩 올라가며 자리를 세어 보세요.',
   '음표가 줄 위인지 칸 안인지 먼저 정해 보세요.',
   '높은 음일수록 위쪽에 찍어야 한다는 걸 기억해요.',
   '오른쪽 초록 음표가 있는 줄·칸을 다시 확인해 보세요.',
   '한 칸만 어긋나도 다른 음이 되니 천천히 짚어 보세요.',
-  '기준이 되는 도 자리부터 찾고 위로 세어 보세요.',
-  '아래에서 위로 도·레·미·파·솔 순서를 떠올려 보세요.',
+  '기준이 되는 〈도〉 자리부터 찾고 위로 세어 보세요.',
+  '아래에서 위로 〈도·레·미·파·솔〉 순서를 떠올려 보세요.',
   '줄과 칸을 손가락으로 하나씩 짚으며 자리를 세어 보세요.',
   '내가 찍은 자리가 정답보다 위인지 아래인지 살펴보세요.',
   '같은 이름이라도 옥타브가 다르면 자리가 멀어요. 주의해요.',

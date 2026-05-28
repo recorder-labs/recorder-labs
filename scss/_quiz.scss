@@ -241,7 +241,7 @@
   display: flex; align-items: center; justify-content: center;
   transform: translateY(-10px);
 }
-.qc-sheet-wrap svg { height: 65%; max-height: 65%; width: 65%; padding: 0 $sp-16; box-sizing: border-box; }
+.qc-sheet-wrap svg { height: 65%; max-height: 65%; width: 65%; padding: 0 $sp-16; box-sizing: border-box; transform: translateY(-8px); }
 .qc-options {
   flex: 4 1 0;        // 악보 : 버튼 = 6 : 4
   min-height: 0;
@@ -289,7 +289,7 @@
   width: 100%;
   display: flex; align-items: center; justify-content: center;
 }
-.qd-sheet-wrap svg { height: 55%; max-height: 55%; width: 55%; cursor: default; pointer-events: none; padding: 0 $sp-16; box-sizing: border-box; }
+.qd-sheet-wrap svg { height: 55%; max-height: 55%; width: 55%; cursor: default; pointer-events: none; padding: 0 $sp-16; box-sizing: border-box; transform: translateY(-4px); }
 .qd-sheet-wrap .qd-preview-hover { fill: var(--cta); opacity: 0.55; }
 .qd-sheet-wrap .qd-preview       { fill: var(--cta); opacity: 1; }
 .qd-sheet-wrap .qd-preview path[style*="stroke:#000"],
@@ -909,7 +909,7 @@
   align-items: center;
   gap: $sp-4;
   align-self: center;
-  transform: translateX(8px);
+  transform: translateX(4px);
 }
 .qz-review-badge b { font-weight: 800; margin: 0 $sp-2; }
 .qz-review-badge.user {
@@ -1089,7 +1089,7 @@
   .qz-divider { margin: $sp-8 0 $sp-8; }
 
   // 팝업
-  .popup-card { padding: $sp-24 $sp-24 $sp-16; }
+  .popup-card { padding: $sp-24; }
   .popup-icon { width: 32px; height: 32px; margin-bottom: $sp-8; }
   .popup-title { font-size: $fs-base; margin-bottom: $sp-12; }
   .popup-actions .btn { font-size: $fs-sm; padding: $sp-8 $sp-16; border-radius: 7px; }

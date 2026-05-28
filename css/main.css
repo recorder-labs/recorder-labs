@@ -2012,8 +2012,8 @@ body {
 @media (max-width: 767px) {
   .practice-top-bar {
     flex-wrap: wrap;
-    gap: 12px 6px;
-    padding: 6px;
+    gap: 12px 8px;
+    padding: 4px 6px;
   }
   .pp-transport {
     gap: 4px;
@@ -2478,6 +2478,7 @@ body {
   width: 65%;
   padding: 0 16px;
   box-sizing: border-box;
+  transform: translateY(-8px);
 }
 
 .qc-options {
@@ -2570,6 +2571,7 @@ body {
   pointer-events: none;
   padding: 0 16px;
   box-sizing: border-box;
+  transform: translateY(-4px);
 }
 
 .qd-sheet-wrap .qd-preview-hover {
@@ -3449,7 +3451,7 @@ body {
   align-items: center;
   gap: 4px;
   align-self: center;
-  transform: translateX(8px);
+  transform: translateX(4px);
 }
 
 .qz-review-badge b {
@@ -3746,7 +3748,7 @@ body {
     margin: 8px 0 8px;
   }
   .popup-card {
-    padding: 24px 24px 16px;
+    padding: 24px;
   }
   .popup-icon {
     width: 32px;
