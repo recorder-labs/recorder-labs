@@ -66,7 +66,6 @@ function setMode(mode) {
   document.getElementById('practiceGroup').classList.toggle('active', mode==='practice');
   if (mode !== 'practice') {
     document.getElementById('practiceStage').style.display    = 'none';
-    document.getElementById('comingSoonStage').style.display  = 'none';
     document.getElementById('scoreTitleBar').style.display    = 'none';
   }
   // quiz 모드 외에는 quiz 전용 스테이지 모두 닫기

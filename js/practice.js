@@ -1094,11 +1094,9 @@ function setPracticeSong(song) {
   document.querySelectorAll('.subtab').forEach((t, i) => {
     t.classList.toggle('active', (i===0 && song==='airplane') || (i===1 && song==='hans'));
   });
-  const known = !!SONGS[song];
-  document.getElementById('practiceStage').style.display    = known ? 'flex' : 'none';
-  document.getElementById('comingSoonStage').style.display  = known ? 'none' : 'flex';
+  document.getElementById('practiceStage').style.display = 'flex';
   const titleBar = document.getElementById('scoreTitleBar');
-  if (titleBar) titleBar.style.display = known ? '' : 'none';
+  if (titleBar) titleBar.style.display = '';
   _currentPracticeSong = song;
   // 별 게이지 — 곡별로 분리(airplane/hans 독립 누적). 탭 전환 시 초기화하지 않고
   // 해당 곡의 별만 다시 렌더 (localStorage 하루치 누적 유지, 1일 후 _loadPracticeStars 가 리셋).
