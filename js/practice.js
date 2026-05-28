@@ -1100,10 +1100,10 @@ function setPracticeSong(song) {
   const titleBar = document.getElementById('scoreTitleBar');
   if (titleBar) titleBar.style.display = known ? '' : 'none';
   _currentPracticeSong = song;
-  // 별 게이지 초기화
-  // 탭 전환 시 별 초기화 비활성 (localStorage 하루치 누적 유지)
+  // 별 게이지 — 곡별로 분리(airplane/hans 독립 누적). 탭 전환 시 초기화하지 않고
+  // 해당 곡의 별만 다시 렌더 (localStorage 하루치 누적 유지, 1일 후 _loadPracticeStars 가 리셋).
   // PRACTICE_STARS[song] = 0;
-  // _renderPracticeStars(song);
+  _renderPracticeStars(song);
   // 계이름 상태를 ON 으로 초기화 (디폴트). 버튼 텍스트는 액션 기준 "계이름 OFF" (끄려면 클릭).
   _noteLabelVisible = true;
   const noteBtn = document.getElementById('ppNoteLabel');
