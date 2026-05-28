@@ -2740,6 +2740,10 @@ body {
   opacity: 0;
 }
 
+.main-area--end-scroll-noscroll #quizEndBar::after {
+  opacity: 0;
+}
+
 .main-area--end-scroll #quizEndBar.quiz-end-bar--hidden {
   transform: translateY(100%);
 }

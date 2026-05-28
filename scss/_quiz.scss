@@ -410,6 +410,10 @@
 .main-area--end-scroll #quizEndBar.quiz-end-bar--hidden::after {
   opacity: 0;
 }
+// 스크롤할 콘텐츠가 없어(콘텐츠 ≤ viewport) 스크롤바 자체가 없을 땐 ::after 라운드 코너 숨김.
+.main-area--end-scroll-noscroll #quizEndBar::after {
+  opacity: 0;
+}
 .main-area--end-scroll #quizEndBar.quiz-end-bar--hidden {
   transform: translateY(100%);
 }

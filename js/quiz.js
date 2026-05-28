@@ -1175,6 +1175,7 @@ function _qzScrollReviewToDivider() {
   // 재렌더 직후라 레이아웃 확정을 한 프레임 기다린 뒤 측정/스크롤.
   requestAnimationFrame(() => {
     if (typeof _qzEndMomStop === 'function') _qzEndMomStop();  // 진행 중인 custom momentum 중단
+    _qzEndUpdateAtBottom(main);  // 재렌더로 바뀐 콘텐츠 높이에 맞춰 atbottom/noscroll 재계산
     const delta  = divider.getBoundingClientRect().top - main.getBoundingClientRect().top;
     const target = Math.max(0, main.scrollTop + delta - 12);   // 12px 여유
     main.scrollTo({ top: target, behavior: 'smooth' });
@@ -2458,6 +2459,9 @@ function _qzEndUpdateAtBottom(main) {
   const contentEnd = bar ? Math.max(0, raw - bar.offsetHeight) : raw;
   const atBottom = main.scrollTop >= contentEnd - 1;
   main.classList.toggle('main-area--end-scroll-atbottom', atBottom);
+  // 스크롤할 콘텐츠가 전혀 없을 때(콘텐츠 ≤ viewport → contentEnd 0) ::after 라운드 코너 숨김용 표시.
+  // (모바일에서 스크롤바가 시각적으로 숨겨지는 것과 무관 — 실제로 넘칠 내용이 없을 때만 true)
+  main.classList.toggle('main-area--end-scroll-noscroll', contentEnd <= 0);
 }
 function _qzEndOnScroll() {
   const main = document.querySelector('.main-area');
@@ -2599,6 +2603,9 @@ function _qzEnterEndScrollMode() {
   // 콘텐츠 ≤ viewport 라도 진입 직후 #quizEndBar::before (top shadow) 가 노출 상태로 유지됨.
   // 키보드/터치 fit-trigger 는 fit 모드가 없으므로 부착 불필요. 휠은 _qzEndAttachPersistent
   // 가 처리(custom momentum), 키/터치는 네이티브 스크롤로 작동.
+  // 콘텐츠 렌더(showQuizEnd 의 _renderWrongReview) 완료 다음 프레임에 스크롤 가능 여부 계산
+  // → 넘칠 내용이 없으면 noscroll 클래스로 ::after 숨김.
+  requestAnimationFrame(() => _qzEndUpdateAtBottom(main));
 }
 function _qzLeaveEndScrollMode() {
   const main = document.querySelector('.main-area');
