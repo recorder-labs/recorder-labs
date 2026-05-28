@@ -1233,18 +1233,13 @@ function _renderReview() {
 
   list.innerHTML = '';
 
-  // Type A/B/C/D/E 정답/오답 멘트 픽커 리셋 — 같은 렌더 세션 내 절대 중복 없도록 셔플 순서 처음부터 사용.
+  // Type A/B/C/D/E 정답 칭찬 멘트 픽커 리셋 — 같은 렌더 세션 내 절대 중복 없도록 셔플 순서 처음부터 사용.
   _A_PICK_CORRECT_DO.reset();
   _A_PICK_CORRECT.reset();
-  _A_PICK_WRONG_OUTRO.reset();
   _B_PICK_CORRECT.reset();
-  _B_PICK_WRONG_OUTRO.reset();
   _C_PICK_CORRECT.reset();
-  _C_PICK_WRONG_OUTRO.reset();
   _D_PICK_CORRECT.reset();
-  _D_PICK_WRONG_OUTRO.reset();
   _E_PICK_CORRECT.reset();
-  _E_PICK_WRONG_OUTRO.reset();
 
   const wrongs = quizQueue.filter(q => q.isCorrect === false);
   const items  = _reviewTab === 'all' ? quizQueue : wrongs;
@@ -1749,28 +1744,11 @@ const _A_CORRECT_TEXTS = [
   '〈{L}〉 자리를 빠르게 짚었어요! 다음 음을 향한 손 흐름도 자연스러워 보여요.',
 ];
 
-/* Type A 오답 hint 마지막 문장 — 비교/관찰 유도 멘트 풀. 최대 문항 수(10)보다 큰 12개. */
-const _A_WRONG_OUTROS = [
-  '오른쪽 정답 그림과 빨간 표시된 구멍을 하나씩 맞춰 보세요.',
-  '위에서 아래로 구멍을 하나씩 짚으며 두 그림을 비교해 보세요.',
-  '왼손 구멍과 오른손 구멍을 나눠서 어디가 다른지 찾아보세요.',
-  '정답 그림을 보고 막을 구멍과 열 구멍을 다시 확인해 보세요.',
-  '빨간 구멍이 막는 자리인지 여는 자리인지부터 살펴보세요.',
-  '엄지 구멍부터 차례대로 정답과 같은지 짚어 보세요.',
-  '손가락으로 화면을 따라 짚으며 두 그림을 맞춰 보세요.',
-  '막은 구멍의 개수가 정답과 같은지 세어 보세요.',
-  '정답 그림의 손 모양을 떠올리며 다시 만들어 보세요.',
-  '두 그림에서 색이 다른 구멍부터 찾아보세요.',
-  '한 구멍만 달라도 음이 바뀌니 천천히 비교해 보세요.',
-  '오른쪽 그림과 똑같이 막아 보며 차이를 느껴 보세요.',
-];
-
 /* Type A 전용 비반복 픽커 — _renderReview() 시작 시 reset() 호출로 매 렌더 세션마다 초기화. */
 const _A_PICK_CORRECT_DO   = _makeRoundRobinPicker(_A_CORRECT_TEXTS_DO);
 const _A_PICK_CORRECT      = _makeRoundRobinPicker(_A_CORRECT_TEXTS);
-const _A_PICK_WRONG_OUTRO  = _makeRoundRobinPicker(_A_WRONG_OUTROS);
 
-/* Type B (그림 찾기) — 정답 칭찬 / 오답 outro 풀. {L} → NOTES[note].label 치환. 각 12개. */
+/* Type B (그림 찾기) — 정답 칭찬 풀. {L} → NOTES[note].label 치환. 각 12개. */
 const _B_CORRECT_TEXTS = [
   '4개 그림 중 〈{L}〉 음의 운지 모양을 정확히 골랐어요! 리코더 구멍의 열림·닫힘 패턴을 눈으로 잘 읽었어요.',
   '여러 그림 사이에서 〈{L}〉의 운지를 한눈에 찾아냈어요! 손가락 패턴을 빠르게 알아보는 감각이 좋아요.',
@@ -1785,24 +1763,9 @@ const _B_CORRECT_TEXTS = [
   '〈{L}〉 그림을 한 번에 찾아낼 만큼 운지가 익숙해졌네요! 멋져요.',
   '〈{L}〉의 모양을 정확히 골랐어요! 운지 그림을 보는 눈이 점점 빨라지고 있어요.',
 ];
-const _B_WRONG_OUTROS = [
-  '리코더는 왼손이 위쪽, 오른손이 아래쪽을 담당해요. 두 그림을 손 영역별로 비교하면 차이가 잘 보여요.',
-  '비슷한 그림이라도 닫힌 구멍의 개수와 위치를 하나씩 세어 보면 답이 보여요.',
-  '구멍을 위에서 아래로 차근차근 짚어 가며 두 그림의 차이를 확인해 보세요.',
-  '엄지 구멍부터 새끼 구멍까지 순서대로 비교하면 차이가 더 또렷해져요.',
-  '왼손이 닫는 구멍과 오른손이 닫는 구멍을 따로 나눠서 비교해 보세요.',
-  '한 번에 비교하기 어렵다면 위쪽 절반, 아래쪽 절반으로 나눠서 살펴보세요.',
-  '실제로 손가락을 움직여 두 그림을 따라 짚어 보면 어느 게 맞는지 느껴져요.',
-  '비슷해 보여도 닫힘 구멍이 한 자리만 달라도 음이 바뀌어요. 차이에 집중해 보세요.',
-  '정답 그림을 먼저 본 다음, 다른 그림이 어디서 어긋났는지 거꾸로 찾아보세요.',
-  '운지 그림을 외울 때는 닫은 구멍의 개수와 손 영역을 함께 기억하면 좋아요.',
-  '눈으로만 비교가 어렵다면, 손가락으로 화면을 따라 짚어 보세요.',
-  '음마다 운지 모양이 미세하게 달라요. 천천히 한 자리씩 비교하는 습관을 길러 보세요.',
-];
 const _B_PICK_CORRECT      = _makeRoundRobinPicker(_B_CORRECT_TEXTS);
-const _B_PICK_WRONG_OUTRO  = _makeRoundRobinPicker(_B_WRONG_OUTROS);
 
-/* Type C (계이름 읽기) — 정답 칭찬 / 오답 outro 풀. 각 12개. */
+/* Type C (계이름 읽기) — 정답 칭찬 풀. 각 12개. */
 const _C_CORRECT_TEXTS = [
   '오선지에서 음표가 있는 줄·칸 위치를 읽고 〈{L}〉임을 정확하게 맞혔어요! 악보 읽기 실력이 좋아요.',
   '오선지 위 음표를 보고 〈{L}〉를 한 번에 골랐어요! 줄·칸 위치를 정확히 알고 있네요.',
@@ -1817,24 +1780,9 @@ const _C_CORRECT_TEXTS = [
   '오선지 위 〈{L}〉의 자리를 정확히 읽었어요! 악보 읽기 실력이 한 단계 올라왔어요.',
   '〈{L}〉 음표를 보고 망설임 없이 골랐어요! 좋은 악보 감각이에요.',
 ];
-const _C_WRONG_OUTROS = [
-  '오선지에서 줄과 칸을 아래에서부터 하나씩 세어 보세요.',
-  '음표가 줄 위에 있는지 칸 안에 있는지부터 살펴보세요.',
-  '맨 아래 〈도〉부터 한 칸씩 올라가며 계이름을 세어 보세요.',
-  '아래에서 위로 〈도·레·미·파·솔〉 순서로 올라가는 걸 떠올려 보세요.',
-  '음표 머리가 어느 줄, 어느 칸에 있는지 손가락으로 짚어 보세요.',
-  '높은 음일수록 위쪽, 낮은 음일수록 아래쪽이라는 걸 기억해요.',
-  '기준이 되는 〈도〉 자리부터 찾고 위로 세어 보세요.',
-  '정답 음표와 내 답의 위치를 나란히 비교해 보세요.',
-  '한 칸만 달라도 다른 음이 되니 자리를 또렷이 봐요.',
-  '줄과 칸을 번갈아 짚으며 계이름을 소리 내어 읽어 보세요.',
-  '음표가 몇 번째 줄이나 칸에 있는지 세어 보세요.',
-  '오선지 가운데를 기준으로 위인지 아래인지 먼저 봐요.',
-];
 const _C_PICK_CORRECT      = _makeRoundRobinPicker(_C_CORRECT_TEXTS);
-const _C_PICK_WRONG_OUTRO  = _makeRoundRobinPicker(_C_WRONG_OUTROS);
 
-/* Type D (음표 그리기) — 정답 칭찬 / 오답 outro 풀. 각 12개. */
+/* Type D (음표 그리기) — 정답 칭찬 풀. 각 12개. */
 const _D_CORRECT_TEXTS = [
   '〈{L}〉{S} 오선지 어느 자리에 있는지 정확히 선택했어요! 음표 위치와 계이름을 잘 연결하고 있어요.',
   '〈{L}〉의 자리를 오선지 위에 정확히 찍었어요! 음표 위치를 또렷이 기억하고 있네요.',
@@ -1849,24 +1797,9 @@ const _D_CORRECT_TEXTS = [
   '〈{L}〉의 위치를 또렷이 그릴 수 있겠어요! 음표를 직접 적는 연습에도 도움 되겠네요.',
   '〈{L}〉 자리를 정확히 잡았어요! 악보 위에 음표를 표시하는 감각이 좋아요.',
 ];
-const _D_WRONG_OUTROS = [
-  '정답 음표 자리와 내가 고른 자리를 나란히 비교해 보세요.',
-  '맨 아래 〈도〉부터 한 칸씩 올라가며 자리를 세어 보세요.',
-  '음표가 줄 위인지 칸 안인지 먼저 정해 보세요.',
-  '높은 음일수록 위쪽에 찍어야 한다는 걸 기억해요.',
-  '오른쪽 초록 음표가 있는 줄·칸을 다시 확인해 보세요.',
-  '한 칸만 어긋나도 다른 음이 되니 천천히 짚어 보세요.',
-  '기준이 되는 〈도〉 자리부터 찾고 위로 세어 보세요.',
-  '아래에서 위로 〈도·레·미·파·솔〉 순서를 떠올려 보세요.',
-  '줄과 칸을 손가락으로 하나씩 짚으며 자리를 세어 보세요.',
-  '내가 찍은 자리가 정답보다 위인지 아래인지 살펴보세요.',
-  '같은 이름이라도 옥타브가 다르면 자리가 멀어요. 주의해요.',
-  '오선지 가운데를 기준으로 위아래를 먼저 가늠해 보세요.',
-];
 const _D_PICK_CORRECT      = _makeRoundRobinPicker(_D_CORRECT_TEXTS);
-const _D_PICK_WRONG_OUTRO  = _makeRoundRobinPicker(_D_WRONG_OUTROS);
 
-/* Type E (틀린 구멍 찾기) — 정답 칭찬 / 오답 outro 풀. 각 12개. */
+/* Type E (틀린 구멍 찾기) — 정답 칭찬 풀. 각 12개. */
 const _E_CORRECT_TEXTS = [
   '〈{L}〉 운지법에서 실제로 잘못된 구멍을 정확히 찾아냈어요! 꼼꼼하게 비교하는 눈이 생겼어요.',
   '잘못된 구멍을 한 번에 짚어냈어요! 〈{L}〉 운지를 정확히 알고 있다는 증거예요.',
@@ -1881,22 +1814,7 @@ const _E_CORRECT_TEXTS = [
   '아주 작은 차이도 놓치지 않았네요! 〈{L}〉 운지가 머릿속에 또렷해요.',
   '〈{L}〉 운지법에서 다른 자리를 정확히 골랐어요! 좋은 비교 감각이에요.',
 ];
-const _E_WRONG_OUTROS = [
-  '오른쪽 정답 그림과 한 구멍씩 비교해 보세요.',
-  '위에서 아래로 구멍을 하나씩 짚으며 다른 곳을 찾아보세요.',
-  '왼손 구멍과 오른손 구멍을 나눠서 살펴보세요.',
-  '정답 그림에서 막아야 할 구멍과 열어야 할 구멍을 확인해요.',
-  '엄지 구멍부터 차례대로 정답과 같은지 짚어 보세요.',
-  '한 구멍만 달라도 음이 바뀌니 작은 차이를 잘 봐요.',
-  '초록 표시된 구멍이 정답에서 어떤 상태인지 확인해 보세요.',
-  '두 그림에서 색이 다른 구멍부터 찾아보세요.',
-  '손가락으로 화면을 짚으며 두 그림을 맞춰 보세요.',
-  '정답 모양을 떠올리며 어디가 어긋났는지 비교해 보세요.',
-  '막힌 구멍과 열린 구멍을 하나씩 정답과 맞춰 보세요.',
-  '비슷해 보여도 한 자리씩 천천히 비교하는 습관을 길러요.',
-];
 const _E_PICK_CORRECT      = _makeRoundRobinPicker(_E_CORRECT_TEXTS);
-const _E_PICK_WRONG_OUTRO  = _makeRoundRobinPicker(_E_WRONG_OUTROS);
 
 /* ── 유형별 카드 채우기 ── */
 function _fillReviewA(q, prefix, compareArea, hintCol) {
@@ -1935,38 +1853,25 @@ function _fillReviewA(q, prefix, compareArea, hintCol) {
   const extra  = new Set();
   correct.forEach(h => { if (!user.has(h)) missed.add(h); });
   user.forEach(h => { if (!correct.has(h)) extra.add(h); });
-  // 손별 그룹핑 — 같은 손의 여러 번호는 '왼손 1, 2번' 형태로 묶고, 손 간 구분은 ','가 아닌 '과/와' 로 연결.
-  //   예: 왼손 1, 2번과 오른손 4번  (받침 유무에 따라 과/와 자동 분기)
-  const missedParts = _groupHoleNamesByHand(missed);
-  const extraParts  = _groupHoleNamesByHand(extra);
-  const _last = (arr) => arr[arr.length - 1] || '';
-  const _joinWithParticle = (arr) => {
-    if (!arr.length) return '';
-    let s = arr[0];
-    for (let i = 1; i < arr.length; i++) s += _ko(arr[i-1], 'with') + ' ' + arr[i];
-    return s;
-  };
-  const missedJoined = _joinWithParticle(missedParts);
-  const extraJoined  = _joinWithParticle(extraParts);
   const noteLabel = NOTES[q.note].label;
-  let pattern;
+  // 구멍 집합 → 번호 목록(짝구멍 6/7 병합, 중복 제거·정렬) "1번, 6번" 형태.
+  const _numList = (set) => [...new Set([...set].map(_holeNumber))].sort((a, b) => a - b).map(n => n + '번').join(', ');
+  // 1문장: 어느 구멍이 달랐는지.
+  const pattern = `${_numList(wrongSet)} 구멍이 달라요.`;
+  // 2문장: 〈note〉 정답 운지에서 그 구멍을 막아야/열어야 하는지 (missed=막아야, extra=열어야).
+  let correctTip;
   if (missed.size && !extra.size) {
-    pattern = `〈${noteLabel}〉 운지에서 ${missedJoined}${_ko(_last(missedParts),'object')} 빠뜨렸어요.`;
+    correctTip = `〈${noteLabel}〉는 ${_numList(missed)} 구멍을 막아야 해요.`;
   } else if (!missed.size && extra.size) {
-    pattern = `〈${noteLabel}〉 운지에서 ${extraJoined}${_ko(_last(extraParts),'object')} 더 닫았어요.`;
+    correctTip = `〈${noteLabel}〉는 ${_numList(extra)} 구멍을 열어야 해요.`;
   } else {
-    pattern = `〈${noteLabel}〉 운지에서 ${missedJoined}${_ko(_last(missedParts),'object')} 빠뜨리고, ${extraJoined}${_ko(_last(extraParts),'object')} 더 닫았어요.`;
+    correctTip = `〈${noteLabel}〉는 ${_numList(missed)} 구멍은 막고, ${_numList(extra)} 구멍은 열어야 해요.`;
   }
-  const tip = _NOTE_FINGERING_TIP[q.note] || '';
-  // 비반복 라운드로빈 픽커 사용 → 같은 렌더 세션 내 오답 카드끼리 outro 동일 문장 안 나옴.
-  // q._outroA 에 캐시 → 탭 전환(_renderReview 재호출)때도 같은 카드 문장 고정.
-  if (q._outroA == null) q._outroA = _A_PICK_WRONG_OUTRO.pick();
-  const outro = q._outroA;
   hintCol.innerHTML = `
     <div class="qz-hint-title">❓왜 틀렸을까요</div>
     <div class="qz-hint-box">
       ${pattern}<br>
-      ${outro}
+      ${correctTip}
     </div>
   `;
 }
@@ -2004,15 +1909,20 @@ function _fillReviewB(q, prefix, compareArea, hintCol) {
   // 오답 hint — 사용자가 고른 카드의 운지가 어떤 계이름인지 역매핑해서 표기.
   // (현재 wrong 보기는 어떤 계이름과도 매칭 안 되는 비대칭 운지일 수 있어 null 가능 → 그땐 안전 폴백)
   const pickedNoteLabel = _holesToNote(user);
+  // 1문장: 고른 보기 순서 + 그 그림의 계이름.
   const pickedDescB = pickedNoteLabel
-    ? `고른 그림은 〈${pickedNoteLabel}〉 운지법이에요.`
-    : `고른 그림은 어떤 계이름에도 없는 운지 모양이에요.`;
+    ? `고른 ${pickedOrdinal} 그림은 〈${pickedNoteLabel}〉 운지법이에요.`
+    : `고른 ${pickedOrdinal} 그림은 어떤 계이름에도 없는 운지예요.`;
+  // 2문장: 정답 보기 순서 + 고른 운지와 정답 운지가 다른 구멍(핵심 차이).
+  const _diffNums = [...new Set(HOLES.filter(h => correct.has(h) !== user.has(h)).map(_holeNumber))].sort((a, b) => a - b).map(n => n + '번').join(', ');
+  const correctDescB = (pickedNoteLabel && _diffNums)
+    ? `정답은 ${correctOrdinal} 그림으로, 〈${pickedNoteLabel}〉${_ko(pickedNoteLabel,'with')} 〈${targetLabel}〉${_ko(targetLabel,'topic')} ${_diffNums} 구멍이 달라요.`
+    : `정답은 ${correctOrdinal} 그림이에요.`;
   hintCol.innerHTML = `
     <div class="qz-hint-title">❓왜 틀렸을까요</div>
     <div class="qz-hint-box">
       ${pickedDescB}<br>
-      정답은 〈${targetLabel}〉 운지법이에요.<br>
-      두 그림에서 막은 구멍과 열린 구멍을 위에서부터 하나씩 비교해 보세요.
+      ${correctDescB}
     </div>
   `;
 }
@@ -2075,18 +1985,13 @@ function _fillReviewC(q, prefix, compareArea, hintCol) {
   // 오선지 위치 설명 — '3칸 아래' 같은 상대 표현 대신 줄·칸 자리를 명확히 안내.
   const tPosDesc = _NOTE_STAFF_POS[target] || '오선지 위';
   const pPosDesc = picked ? (_NOTE_STAFF_POS[picked] || '오선지 위') : '';
+  // 1문장: 선택한 계이름 / 2문장: 정답 음표의 오선지 줄·칸 위치 기준 설명.
   let pattern;
   if (!picked) {
-    pattern = `답을 못 골랐어요. 정답은 〈${targetLabel}〉${_ko(targetLabel,'ieyo')}.`;
-  } else if (isOctave) {
-    pattern = `〈${pickedLabel}〉${_ko(pickedLabel,'object')} 골랐어요. 이름은 같지만 정답은 한 옥타브 ${cDir}쪽인 〈${targetLabel}〉${_ko(targetLabel,'ieyo')}.`;
+    pattern = `답을 못 골랐어요. 이 음표는 ${tPosDesc}에 있어서 〈${targetLabel}〉${_ko(targetLabel,'ieyo')}.`;
   } else {
-    pattern = `〈${pickedLabel}〉${_ko(pickedLabel,'object')} 골랐어요. 정답은 〈${targetLabel}〉${_ko(targetLabel,'ieyo')}.`;
+    pattern = `〈${pickedLabel}〉${_ko(pickedLabel,'object')} 선택했어요. 이 음표는 ${tPosDesc}에 있어서 〈${targetLabel}〉${_ko(targetLabel,'ieyo')}.`;
   }
-  // 비반복 라운드로빈 픽커 — 같은 렌더 세션 내 오답 카드끼리 outro 동일 문장 안 나옴.
-  // q._outroC 에 캐시 → 탭 전환(_renderReview 재호출)때도 같은 카드 문장 고정.
-  if (q._outroC == null) q._outroC = _C_PICK_WRONG_OUTRO.pick();
-  const outroC = q._outroC;
   // 오답이고 선택지가 있을 때만 악보 비교 표시 — 나의 선택 vs 정답 악보를 나란히 보여줌.
   const showSheetCompare = !q.isCorrect && !!picked;
   hintCol.innerHTML = `
@@ -2104,8 +2009,7 @@ function _fillReviewC(q, prefix, compareArea, hintCol) {
       </div>
     </div>` : ''}
     <div class="qz-hint-box">
-      ${pattern}<br>
-      ${outroC}
+      ${pattern}
     </div>
   `;
   if (showSheetCompare) {
@@ -2153,21 +2057,19 @@ function _fillReviewD(q, prefix, compareArea, hintCol) {
   const delta = picked ? _noteDelta(picked, target) : null; // +: target 이 위
   const dist  = delta == null ? null : Math.abs(delta);
   const dirWord = delta == null ? '' : (delta > 0 ? '위쪽' : '아래쪽');
+  // 1문장: 선택 위치가 정답보다 위/아래(몇 칸) / 2문장: 정답 계이름의 오선지 줄·칸 위치.
+  const dTPosDesc = _NOTE_STAFF_POS[target] || '오선지 위';
   let pattern;
   if (!picked) {
-    pattern = `위치를 못 골랐어요. 정답은 〈${targetLabel}〉 자리예요.`;
+    pattern = `위치를 못 골랐어요. 〈${targetLabel}〉${_ko(targetLabel,'topic')} ${dTPosDesc}${_ko(dTPosDesc,'ieyo')}.`;
   } else {
-    pattern = `〈${pickedLabel}〉 자리를 골랐어요. 정답은 〈${targetLabel}〉 자리예요.`;
+    const _dir = delta > 0 ? '아래' : '위';  // delta>0: 정답이 위 → 선택은 아래
+    pattern = `선택한 위치가 정답보다 ${dist}칸 ${_dir}예요. 〈${targetLabel}〉${_ko(targetLabel,'topic')} ${dTPosDesc}${_ko(dTPosDesc,'ieyo')}.`;
   }
-  // 비반복 라운드로빈 픽커 — 같은 렌더 세션 내 오답 카드끼리 outro 동일 문장 안 나옴.
-  // q._outroD 에 캐시 → 탭 전환(_renderReview 재호출)때도 같은 카드 문장 고정.
-  if (q._outroD == null) q._outroD = _D_PICK_WRONG_OUTRO.pick();
-  const outroD = q._outroD;
   hintCol.innerHTML = `
     <div class="qz-hint-title">❓왜 틀렸을까요</div>
     <div class="qz-hint-box">
-      ${pattern}<br>
-      ${outroD}
+      ${pattern}
     </div>
   `;
 }
@@ -2249,27 +2151,19 @@ function _fillReviewE(q, prefix, compareArea, hintCol) {
   `;
   if (leftSvg)  compareArea.querySelector('.qz-cmp-card.user').appendChild(leftSvg);
   if (rightSvg) compareArea.querySelector('.qz-cmp-card.correct').appendChild(rightSvg);
-  // 인스턴스 기반 hint — 사용자가 고른 구멍과 실제 잘못된 구멍의 이름/손 영역 비교
-  const flippedArr  = Array.from(flipped);
-  const pickedName  = picked ? _holeFriendlyName(picked) : null;
-  const flippedName = flippedArr.length ? _holeFriendlyName(flippedArr[0]) : null;
-  const pickedHand  = picked ? (_holeIsLeft(picked) ? '왼손' : '오른손') : '';
-  const flippedHand = flippedArr.length ? (_holeIsLeft(flippedArr[0]) ? '왼손' : '오른손') : '';
+  // 1문장: 실제 잘못된 구멍 번호 / 2문장: 〈note〉에서 그 구멍을 막아야(닫기)·열어야(열기) 하는지.
+  // flippedNum, correctAction('닫기'|'열기') 은 위 badge 계산에서 이미 구함.
+  const eVerb = correctAction === '닫기' ? '막아야' : '열어야';
   let pattern;
-  if (!picked) {
-    pattern = `구멍을 못 골랐어요. 실제 잘못된 곳은 ${flippedName} 구멍이에요.`;
+  if (flippedNum != null) {
+    pattern = `잘못된 건 ${flippedNum}번 구멍이에요. 〈${targetLabel}〉${_ko(targetLabel,'topic')} ${flippedNum}번 구멍을 ${eVerb} 해요.`;
   } else {
-    pattern = `${pickedName}을 골랐어요. 실제 잘못된 곳은 ${flippedName} 구멍이에요.`;
+    pattern = `정답 그림과 한 구멍씩 비교해 보세요.`;
   }
-  // 비반복 라운드로빈 픽커 — 같은 렌더 세션 내 오답 카드끼리 outro 동일 문장 안 나옴.
-  // q._outroE 에 캐시 → 탭 전환(_renderReview 재호출)때도 같은 카드 문장 고정.
-  if (q._outroE == null) q._outroE = _E_PICK_WRONG_OUTRO.pick();
-  const outroE = q._outroE;
   hintCol.innerHTML = `
     <div class="qz-hint-title">❓왜 틀렸을까요</div>
     <div class="qz-hint-box">
-      ${pattern}<br>
-      ${outroE}
+      ${pattern}
     </div>
   `;
 }
