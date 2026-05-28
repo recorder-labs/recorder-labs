@@ -524,6 +524,9 @@ function _submitTypeB() {
   // 정답 카드(사용자가 선택하지 않은)에만 .correct(초록) 부여.
   document.querySelectorAll('#qbGrid .qb-card').forEach(c => {
     c.classList.add('disabled');
+    // 제출 후 리코더 그림 영역 완전 비활성화 — 클론된 hole/overlay 에 남은 인라인 cursor:pointer 제거 + 이벤트 차단.
+    c.style.cursor = 'default';
+    c.querySelectorAll('*').forEach(el => { el.style.cursor = 'default'; el.style.pointerEvents = 'none'; });
     if (c === card) return;
     c.classList.remove('picked');
     if (c.dataset.correct === '1') c.classList.add('correct');
@@ -919,8 +922,10 @@ function _submitTypeD() {
   // 리뷰용 — 사용자가 클릭한 음표 위치(계이름) + 정답 여부
   currentQuestion.userAnswer = picked;
   currentQuestion.isCorrect = isCorrect;
-  // 추가 클릭/호버 차단
+  // 추가 클릭/호버 차단 — #body 에 남은 pointer-events:all / cursor:pointer 도 해제(제출 후 커서 기본).
   svg.style.pointerEvents = 'none';
+  const _qdBody = svg.querySelector('#body');
+  if (_qdBody) { _qdBody.style.pointerEvents = 'none'; _qdBody.style.cursor = 'default'; }
   if (isCorrect) {
     _onCorrect();
   } else {
